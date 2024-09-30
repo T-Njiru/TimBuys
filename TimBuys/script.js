@@ -1,38 +1,36 @@
-// script.js
 
-// Array to store the products
 let products = [];
 
-// Add event listener for posting an item
+
 document.getElementById('post-item-form').addEventListener('submit', function(event) {
     event.preventDefault();
 
-    // Get item details from form
+   
     let itemName = document.getElementById('item-name').value;
     let itemPrice = document.getElementById('item-price').value;
     let itemDescription = document.getElementById('item-description').value;
 
-    // Create a product object
+    
     let newItem = {
         name: itemName,
         price: itemPrice,
         description: itemDescription
     };
 
-    // Add product to the products array
+    
     products.push(newItem);
 
-    // Clear the form
+    
     document.getElementById('post-item-form').reset();
 
-    // Display products
+    
     displayProducts();
 });
 
-// Function to display products
+
 function displayProducts() {
     let productList = document.getElementById('product-list');
-    productList.innerHTML = ''; // Clear previous items
+    productList.innerHTML = '';
 
     products.forEach((product, index) => {
         let productDiv = document.createElement('div');
@@ -47,17 +45,17 @@ function displayProducts() {
     });
 }
 
-// Shopping cart array
+
 let cart = [];
 
-// Function to add products to cart
+
 function addToCart(productIndex) {
     cart.push(products[productIndex]);
     alert('Item added to cart!');
     displayCart();
 }
 
-// Function to display cart items
+
 function displayCart() {
     let cartItems = document.getElementById('cart-items');
     cartItems.innerHTML = '';
