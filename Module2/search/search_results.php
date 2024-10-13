@@ -1,4 +1,5 @@
 <?php
+include_once('../../Module3/cart_functions.php');
 // Connect to the database
 $conn = new mysqli('localhost', 'root', '', 'timbuys');
 
