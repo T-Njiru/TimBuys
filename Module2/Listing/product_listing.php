@@ -44,22 +44,16 @@ $result = $conn->query($sql);
         <?php
         if ($result->num_rows > 0) {
             while ($row = $result->fetch_assoc()) {
-                echo "<div class='card mb-3' style='max-width: 540px;'>";
-                echo "<div class='row g-0'>";
-                echo "<div class='col-md-8'>";
-                echo "<div class='card-body'>";
+                echo "<div class='card'>";
                 echo "<h5 class='card-title'>" . htmlspecialchars($row['ProductName']) . " (Category: " . htmlspecialchars($row['CategoryName']) . ")</h5>";
                 echo "<p class='card-text'>Price: KSh " . htmlspecialchars($row['Price']) . "</p>";
                 echo "<p class='card-text'>Quantity Available: " . htmlspecialchars($row['Quantity']) . "</p>";
                 echo "<p class='card-text'>Description: " . htmlspecialchars($row['Description']) . "</p>";
                 echo "<p class='card-text'>Vendor: " . htmlspecialchars($row['VendorName']) . "</p>";
-                echo "<form method='POST' action='../../Module3/add_to_cart.php'>"; // Corrected path
+                echo "<form method='POST' action='../../Module3/add_to_cart.php'>";
                 echo "<input type='hidden' name='product_id' value='" . htmlspecialchars($row['ProductID']) . "'>";
                 echo "<button type='submit' class='btn btn-success'>Add to Cart</button>";
                 echo "</form>";
-                echo "</div>";
-                echo "</div>";
-                echo "</div>";
                 echo "</div>";
             }
         } else {
