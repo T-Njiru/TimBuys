@@ -3,8 +3,12 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>TimBuys - Online Store</title>
-    <link rel="stylesheet" href="styles.css" />
+    <title>Tim Buys</title>
+    <link rel="stylesheet" href="styles/homepage.css" />
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+      rel="stylesheet"
+    />
     <link
       href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap"
       rel="stylesheet"
@@ -94,166 +98,121 @@
     </script>
   </head>
   <body>
-    <header>
-      <div class="container">
-        <h1>TimBuys</h1>
-        <nav>
-          <ul>
-            <li>
-              <select
-                id="languageSelector"
-                onchange="changeLanguage(this.value)"
-              >
-                <option value="en">English</option>
-                <option value="es">Spanish</option>
-              </select>
-            </li>
-            <li><a href="#">Home</a></li>
-            <li><a href="#">Deals</a></li>
-            <li><a href="#">Products</a></li>
-            <li><a href="#">About Us</a></li>
-            <li><a href="register.php" class="btn">Sign Up</a></li>
-            <li><a href="login.php" class="btn">Sign In</a></li>
-            <li>
-              <a
-                href="javascript:void(0)"
-                class="message-icon"
-                onclick="toggleMessages()"
-              >
-                📬 <span class="notification-count">3</span>
-              </a>
-            </li>
-            <li>
-              <a
-                href="javascript:void(0)"
-                class="notification-icon"
-                onclick="showNotification()"
-              >
-                🔔
-              </a>
-            </li>
-          </ul>
-        </nav>
-        <div class="search-bar">
-          <input type="text" placeholder="Search for products..." />
-          <button>Search</button>
-        </div>
+    <div class="navbar">
+      <div class="logo">TIM BUYS</div>
+      <div class="search-bar">
+        <input
+          type="text"
+          placeholder="Search products, brands and categories"
+        />
+        <button>Search</button>
       </div>
-    </header>
-
-    <div id="messageArea" class="message-display">
-      <h3>Messages</h3>
-      <ul>
-        <li>Welcome to TimBuys! Enjoy your shopping.</li>
-        <li>Don't miss our upcoming sales!</li>
-        <li>Your feedback is valuable to us!</li>
-      </ul>
-    </div>
-
-    <main>
-      <section class="banner">
-        <img src="banner.jpg" alt="Special Offer" class="banner-img" />
-      </section>
-
-      <section class="categories">
-        <h2 id="categoriesTitle">Product Categories</h2>
-        <div class="category-list">
-          <div class="category">Electronics</div>
-          <div class="category">Fashion</div>
-          <div class="category">Home & Garden</div>
-          <div class="category">Sports</div>
+      <div class="nav-links">
+        <div class="dropdown">
+          <a href="#" class="account-link">
+            <i class="fas fa-user"></i> ACCOUNT
+          </a>
+          <div class="dropdown-content">
+            <button onclick="location.href='signin.html';">Sign In</button>
+            <button onclick="location.href='signup.html';">Sign Up</button>
+          </div>
         </div>
-      </section>
-
-      <section class="product-list">
-        <h2 id="discountedProductsTitle">Discounted Products</h2>
-        <div class="grid-container">
-          <article class="product">
-            <img src="product1.jpg" alt="Product 1" />
-            <h2>Product 1</h2>
-            <div class="price">
-              <span class="original-price">$39.99</span>
-              <span class="new-price">$29.99</span>
-            </div>
-            <button>Add to Cart</button>
-            <button>Wishlist</button>
-          </article>
-          <article class="product">
-            <img src="product2.jpg" alt="Product 2" />
-            <h2>Product 2</h2>
-            <div class="price">
-              <span class="original-price">$49.99</span>
-              <span class="new-price">$39.99</span>
-            </div>
-            <button>Add to Cart</button>
-            <button>Wishlist</button>
-          </article>
-          <!-- More discounted products can be added here -->
-        </div>
-      </section>
-
-      <section class="product-list">
-        <h2 id="featuredProductsTitle">Featured Products</h2>
-        <div class="grid-container">
-          <article class="product">
-            <img src="product3.jpg" alt="Product 3" />
-            <h2>Products 3</h2>
-            <div class="price">
-              <span class="new-price">$59.99</span>
-            </div>
-            <button>Add to Cart</button>
-            <button>Wishlist</button>
-          </article>
-          <article class="product">
-            <img src="product4.jpg" alt="Product 4" />
-            <h2>Product 4</h2>
-            <div class="price">
-              <span class="new-price">$69.99</span>
-            </div>
-            <button>Add to Cart</button>
-            <button>Wishlist</button>
-          </article>
-          <!-- More featured products can be added here -->
-        </div>
-      </section>
-
-      <section class="feedback-area">
-        <h2 id="feedbackTitle">User Feedback</h2>
-        <textarea rows="4" placeholder="Leave your feedback..."></textarea>
-        <button>Submit Feedback</button>
-        <div class="feedback-display">
-          <h3>Recent Feedback</h3>
-          <p>"Great shopping experience!" - User</p>
-          <p>"Love the discounts!" - User</p>
-          <!-- More feedback entries can be added here -->
-        </div>
-      </section>
-
-      <section class="newsletter">
-        <h2 id="subscribeTitle">Subscribe to Our Newsletter</h2>
-        <input type="email" placeholder="Enter your email..." />
-        <button>Subscribe</button>
-      </section>
-    </main>
-
-    <footer>
-      <div class="container">
-        <p>&copy; 2024 TimBuys. All rights reserved.</p>
-        <button onclick="showTermsPopup()">Terms and Conditions</button>
-      </div>
-    </footer>
-
-    <!-- Terms Popup -->
-    <div id="termsPopup" class="popup">
-      <div class="popup-content">
-        <span class="close" onclick="hideTermsPopup()">&times;</span>
-        <h2 id="termsTitle">Terms and Conditions</h2>
-        <p id="termsContent"></p>
-        <input type="checkbox" id="termsCheckbox" /> I agree to the terms and
-        conditions <br /><br />
-        <button onclick="agreeToTerms()">Accept</button>
-        <button onclick="hideTermsPopup()">Decline</button>
+        <a href="#">HELP</a>
+        <a href="#"><i class="fas fa-shopping-cart"></i> CART</a>
       </div>
     </div>
+
+    <!-- Categories -->
+    <section class="categories">
+      <button>TVs & Accessories</button>
+      <button>Phones & Tablets</button>
+      <button>Appliances</button>
+      <button>Health & Beauty</button>
+      <button>Fashion</button>
+      <button>Computing</button>
+      <button>Other Categories</button>
+    </section>
+
+    <!-- Hero Section -->
+    <section class="hero">
+      <div class="hero-content">
+        <h1>Let us take care of all your shopping needs!</h1>
+        <button>SHOP NOW</button>
+      </div>
+      <img src="images/background.jpeg" alt="Background Image" />
+    </section>
+
+    <!-- Promo Banner -->
+    <section class="promo-banner">
+      <h2>Elevate your style with 20% off</h2>
+      <p>Shop luxury accessories to complete your look.</p>
+      <button>SHOP NOW</button>
+    </section>
+
+    <!-- Most Viewed Items -->
+    <section class="most-viewed">
+      <h2>Most Viewed Items</h2>
+      <div class="items">
+        <div class="item">
+          <img src="nike-shoe.jpg" alt="Nike Air Jordan 1" />
+          <p>Nike Air Jordan 1s in 'Cream'</p>
+          <p>$150</p>
+        </div>
+        <div class="item">
+          <img src="rings.jpg" alt="Colorful Gemstone Rings" />
+          <p>Colorful Gemstone Rings</p>
+          <p>$75</p>
+        </div>
+        <div class="item">
+          <img src="airpods.jpg" alt="Apple AirPods" />
+          <p>Apple AirPods</p>
+          <p>$129</p>
+        </div>
+        <div class="item">
+          <img src="perfume.jpg" alt="Umbro Perfume 50ml" />
+          <p>Umbro Perfume 50ml</p>
+          <p>$300</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Flash Sales -->
+    <section class="flash-sales">
+      <div class="flash-header">
+        <h2>Flash Sales upto 50% off</h2>
+        <p>Time Left: 4d : 12hrs</p>
+        <a href="#">See all</a>
+      </div>
+      <div class="sales-items">
+        <div class="sale-item">
+          <img src="book.jpg" alt="All the Light We Cannot See" />
+          <p>All the Light We Cannot See</p>
+          <p>$9.99</p>
+          <p><span class="discount">50% off</span></p>
+        </div>
+        <div class="sale-item">
+          <img src="pens.jpg" alt="Pilot G2 Gel Pens" />
+          <p>Pilot G2 Gel Pens</p>
+          <p>$5.99</p>
+          <p><span class="discount">24% off</span></p>
+        </div>
+        <div class="sale-item">
+          <img src="diary.jpg" alt="Golden Hour Diary" />
+          <p>Golden Hour Diary</p>
+          <p>$14.99</p>
+          <p><span class="discount">30% off</span></p>
+        </div>
+        <div class="sale-item">
+          <img src="dreamer-cover.jpg" alt="Dream on Little Dreamer Cover" />
+          <p>Dream on Little Dreamer Cover</p>
+          <p>$12.99</p>
+          <p><span class="discount">20% off</span></p>
+        </div>
+      </div>
+    </section>
+
+    <script>
+      // Optional: Add any JavaScript here if needed for interactivity.
+    </script>
   </body>
 </html>
