@@ -15,31 +15,66 @@ $sql = "SELECT p.ProductID, p.ProductName, vp.Price, vp.Quantity, vp.Description
 
 $result = $conn->query($sql);
 
-if ($result->num_rows > 0) {
-    echo "<h1>Product Listings</h1>";
-    echo '<a href="../../Module3/cart.php" class="btn btn-primary mb-3">View Cart</a>'; 
-    while ($row = $result->fetch_assoc()) {
-        echo "<div class='card mb-3' style='max-width: 540px;'>";
-        echo "<div class='row g-0'>";
-        echo "<div class='col-md-8'>";
-        echo "<div class='card-body'>";
-        echo "<h5 class='card-title'>" . htmlspecialchars($row['ProductName']) . " (Category: " . htmlspecialchars($row['CategoryName']) . ")</h5>";
-        echo "<p class='card-text'>Price: KSh " . htmlspecialchars($row['Price']) . "</p>";
-        echo "<p class='card-text'>Quantity Available: " . htmlspecialchars($row['Quantity']) . "</p>";
-        echo "<p class='card-text'>Description: " . htmlspecialchars($row['Description']) . "</p>";
-        echo "<p class='card-text'>Vendor: " . htmlspecialchars($row['VendorName']) . "</p>";
-        echo "<form method='POST' action='../../Module3/add_to_cart.php'>"; // Corrected path
-        echo "<input type='hidden' name='product_id' value='" . htmlspecialchars($row['ProductID']) . "'>";
-        echo "<button type='submit' class='btn btn-success'>Add to Cart</button>";
-        echo "</form>";
-        echo "</div>";
-        echo "</div>";
-        echo "</div>";
-        echo "</div>";
-    }
-} else {
-    echo "No products found.";
-}
-
-$conn->close();
 ?>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Listings</title>
+    <link rel="stylesheet" href="liststyle.css"> <!-- Link to your CSS file -->
+</head>
+<body>
+
+<header>
+    <nav>
+        <ul>
+            <li><a href="../../Module3/home.php">Home</a></li>
+            <li><a href="../../Module3/cart.php">Cart</a></li>
+        </ul>
+    </nav>
+</header>
+
+<section>
+    <h1>Product Listings</h1>
+    <a href="../../Module3/cart.php" class="btn btn-primary mb-3">View Cart</a>
+
+    <div id="product-list">
+        <?php
+        if ($result->num_rows > 0) {
+            while ($row = $result->fetch_assoc()) {
+                echo "<div class='card mb-3' style='max-width: 540px;'>";
+                echo "<div class='row g-0'>";
+                echo "<div class='col-md-8'>";
+                echo "<div class='card-body'>";
+                echo "<h5 class='card-title'>" . htmlspecialchars($row['ProductName']) . " (Category: " . htmlspecialchars($row['CategoryName']) . ")</h5>";
+                echo "<p class='card-text'>Price: KSh " . htmlspecialchars($row['Price']) . "</p>";
+                echo "<p class='card-text'>Quantity Available: " . htmlspecialchars($row['Quantity']) . "</p>";
+                echo "<p class='card-text'>Description: " . htmlspecialchars($row['Description']) . "</p>";
+                echo "<p class='card-text'>Vendor: " . htmlspecialchars($row['VendorName']) . "</p>";
+                echo "<form method='POST' action='../../Module3/add_to_cart.php'>"; // Corrected path
+                echo "<input type='hidden' name='product_id' value='" . htmlspecialchars($row['ProductID']) . "'>";
+                echo "<button type='submit' class='btn btn-success'>Add to Cart</button>";
+                echo "</form>";
+                echo "</div>";
+                echo "</div>";
+                echo "</div>";
+                echo "</div>";
+            }
+        } else {
+            echo "No products found.";
+        }
+        $conn->close();
+        ?>
+    </div>
+</section>
+
+<section>
+    <h2>Your Cart</h2>
+    <div id="cart-items"></div>
+</section>
+
+<script src="cart.js"></script> <!-- Link to your JavaScript file -->
+</body>
+</html>
