@@ -7,7 +7,7 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-$sql = "SELECT p.ProductID, p.ProductName, vp.Price, vp.Quantity, vp.Description, v.Name AS VendorName, c.CategoryName
+$sql = "SELECT p.ProductID, p.ProductName, p.ProductImage, vp.Price, vp.Quantity, vp.Description, v.Name AS VendorName, c.CategoryName
         FROM Product p
         JOIN VendorProduct vp ON p.ProductID = vp.ProductID
         JOIN Vendor v ON vp.VendorID = v.VendorID
@@ -41,27 +41,29 @@ $result = $conn->query($sql);
     <a href="../../Module3/cart.php" class="btn btn-primary mb-3">View Cart</a>
 
     <div id="product-list">
-        <?php
-        if ($result->num_rows > 0) {
-            while ($row = $result->fetch_assoc()) {
-                echo "<div class='card'>";
-                echo "<h5 class='card-title'>" . htmlspecialchars($row['ProductName']) . " (Category: " . htmlspecialchars($row['CategoryName']) . ")</h5>";
-                echo "<p class='card-text'>Price: KSh " . htmlspecialchars($row['Price']) . "</p>";
-                echo "<p class='card-text'>Quantity Available: " . htmlspecialchars($row['Quantity']) . "</p>";
-                echo "<p class='card-text'>Description: " . htmlspecialchars($row['Description']) . "</p>";
-                echo "<p class='card-text'>Vendor: " . htmlspecialchars($row['VendorName']) . "</p>";
-                echo "<form method='POST' action='../../Module3/add_to_cart.php'>";
-                echo "<input type='hidden' name='product_id' value='" . htmlspecialchars($row['ProductID']) . "'>";
-                echo "<button type='submit' class='btn btn-success'>Add to Cart</button>";
-                echo "</form>";
-                echo "</div>";
-            }
-        } else {
-            echo "No products found.";
+    <?php
+    if ($result->num_rows > 0) {
+        while ($row = $result->fetch_assoc()) {
+            echo "<div class='card'>";
+            echo "<img src='" . htmlspecialchars($row['ProductImage']) . "' alt='" . htmlspecialchars($row['ProductName']) . "' class='product-image'>";
+            echo "<h5 class='card-title'>" . htmlspecialchars($row['ProductName']) . " (Category: " . htmlspecialchars($row['CategoryName']) . ")</h5>";
+            echo "<p class='card-text'>Price: KSh " . htmlspecialchars($row['Price']) . "</p>";
+            echo "<p class='card-text'>Quantity Available: " . htmlspecialchars($row['Quantity']) . "</p>";
+            echo "<p class='card-text'>Description: " . htmlspecialchars($row['Description']) . "</p>";
+            echo "<p class='card-text'>Vendor: " . htmlspecialchars($row['VendorName']) . "</p>";
+            echo "<form method='POST' action='../../Module3/add_to_cart.php'>";
+            echo "<input type='hidden' name='product_id' value='" . htmlspecialchars($row['ProductID']) . "'>";
+            echo "<button type='submit' class='btn btn-success'>Add to Cart</button>";
+            echo "</form>";
+            echo "</div>";
         }
-        $conn->close();
-        ?>
-    </div>
+    } else {
+        echo "No products found.";
+    }
+    $conn->close();
+    ?>
+</div>
+
 </section>
 
 <section>
