@@ -20,15 +20,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $lname = htmlspecialchars(trim($_POST['lname']));
     $gender = htmlspecialchars(trim($_POST['gender']));
     $dob = htmlspecialchars(trim($_POST['dob']));
+    $contact = htmlspecialchars(trim($_POST['contact']));
     $password = password_hash(trim($_POST['password']), PASSWORD_DEFAULT); // Hash the password
 
     // Prepare SQL statement to insert user into the database
     try {
-        $stmt = $pdo->prepare("INSERT INTO users (fname, lname, gender, DOB, password) VALUES (:fname, :lname, :gender, :dob, :password)");
+        $stmt = $pdo->prepare("INSERT INTO Customer (FirstName, LastName, Gender, DOB, Contact, Password) VALUES (:fname, :lname, :gender, :dob, :contact, :password)");
         $stmt->bindParam(':fname', $fname);
         $stmt->bindParam(':lname', $lname);
         $stmt->bindParam(':gender', $gender);
         $stmt->bindParam(':dob', $dob);
+        $stmt->bindParam(':contact', $contact);
         $stmt->bindParam(':password', $password);
         $stmt->execute();
 
@@ -36,7 +38,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $_SESSION['user_fname'] = $fname;
 
         // Redirect to the home page after successful registration
-        header("Location: home.php"); 
+        header("Location: login.html"); 
         exit();
     } catch (PDOException $e) {
         // Handle duplicate email or other database-related errors

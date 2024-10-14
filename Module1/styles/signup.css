@@ -1,0 +1,72 @@
+/* General reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  body {
+    font-family: Arial, sans-serif;
+    background-color: #f5f5f5; /* Light background for the page */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    height: 100vh;
+    text-align: center;
+  }
+  
+  /* Style for the logo */
+  img {
+    width: 150px; /* Adjust the size of the logo */
+    margin-bottom: 20px; /* Adds space between logo and form */
+  }
+  
+  /* Style for the form */
+  form {
+    background-color: #fff; /* White background for the form */
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1); /* Soft shadow for the form */
+    width: 300px;
+  }
+  
+  /* Style for the form elements */
+  input[type="text"] {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  
+  button[type="submit"] {
+    width: 100%;
+    padding: 10px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  button[type="submit"]:hover {
+    background-color: #0056b3;
+  }
+  
+  /* Text Styling */
+  p {
+    margin: 10px 0;
+    color: #333;
+  }
+  
+  /* Responsive adjustments */
+  @media (max-width: 600px) {
+    form {
+      width: 90%;
+    }
+  
+    img {
+      width: 120px; /* Smaller logo on smaller screens */
+    }
+  }
