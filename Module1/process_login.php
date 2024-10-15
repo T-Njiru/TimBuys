@@ -1,47 +1,43 @@
 <?php
 session_start();
-require 'connection.php'; // Include your database connection file
+require 'connection.php';  // Database connection
 
 // Create a database connection
 $database = new Database();
 $pdo = $database->getConnection();
 
-// Check if the form is submitted
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $email = filter_var(trim($_POST['email']), FILTER_SANITIZE_EMAIL);
-    $password = trim($_POST['password']);
+    // Ensure both email and password fields are submitted
+    if (isset($_POST['email']) && isset($_POST['password'])) {
+        $email = htmlspecialchars(trim($_POST['email']));
+        $password = htmlspecialchars(trim($_POST['password']));
 
-    // Validate email
-    if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
-        // Prepare SQL statement to fetch user data
-        $stmt = $pdo->prepare("SELECT * FROM Customer WHERE email = :email");
+        // Retrieve the user record from the database by email
+        $stmt = $pdo->prepare("SELECT * FROM Customer WHERE Email = :email");
         $stmt->bindParam(':email', $email);
         $stmt->execute();
+        $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
-        // Check if user exists
-        if ($stmt->rowCount() === 1) {
-            $user = $stmt->fetch(PDO::FETCH_ASSOC);
+        if ($user) {
+            // Use password_verify to check the submitted password against the stored hashed password
+            if (password_verify($password, $user['Password'])) {
+                // If the password is correct, log in the user and start a session
+                $_SESSION['user_fname'] = $user['FirstName'];  // Store user's first name in the session
+                $_SESSION['customer_id'] = $user['CustomerID'];  // Optionally store user ID for later use
 
-            // Verify password
-            if (password_verify($password, $user['password'])) {
-                // Store user data in session
-                $_SESSION['user_id'] = $user['id'];
-                $_SESSION['user_fname'] = $user['FirstName']; // Assuming you want to store first name
-
-                // Redirect to the home page or user dashboard
+                // Redirect to homepage or another authenticated page
                 header("Location: home.php");
                 exit();
             } else {
+                // Password mismatch
                 echo "Invalid password. Please try again.";
             }
         } else {
-            echo "No user found with that email address.";
+            // No user found with the provided email
+            echo "No account found with that email.";
         }
     } else {
-        echo "Invalid email format.";
+        // If email or password is not provided
+        echo "Both email and password are required.";
     }
 }
-
-// Close the connection
-$pdo = null;
-?>

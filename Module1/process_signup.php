@@ -20,24 +20,33 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $lname = htmlspecialchars(trim($_POST['lname']));
     $gender = htmlspecialchars(trim($_POST['gender']));
     $dob = htmlspecialchars(trim($_POST['dob']));
+    $email = filter_var($_POST['email'], FILTER_SANITIZE_EMAIL); // Sanitize the email input
     $contact = htmlspecialchars(trim($_POST['contact']));
     $password = password_hash(trim($_POST['password']), PASSWORD_DEFAULT); // Hash the password
 
+    // Validate email
+    if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        echo "Invalid email format.";
+        exit();
+    }
+
     // Prepare SQL statement to insert user into the database
     try {
-        $stmt = $pdo->prepare("INSERT INTO Customer (FirstName, LastName, Gender, DOB, Contact, Password) VALUES (:fname, :lname, :gender, :dob, :contact, :password)");
+        $stmt = $pdo->prepare("INSERT INTO Customer (FirstName, LastName, Gender, DOB, Contact, Email, Password) VALUES (:fname, :lname, :gender, :dob, :contact, :email, :password)");
         $stmt->bindParam(':fname', $fname);
         $stmt->bindParam(':lname', $lname);
         $stmt->bindParam(':gender', $gender);
         $stmt->bindParam(':dob', $dob);
         $stmt->bindParam(':contact', $contact);
+        $stmt->bindParam(':email', $email);
         $stmt->bindParam(':password', $password);
         $stmt->execute();
 
-        // Store user's first name in session
+        // Store user's first name and email in session
         $_SESSION['user_fname'] = $fname;
+        $_SESSION['email'] = $email;
 
-        // Redirect to the home page after successful registration
+        // Redirect to the login page after successful registration
         header("Location: login.html"); 
         exit();
     } catch (PDOException $e) {
