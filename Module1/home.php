@@ -36,9 +36,7 @@ $customer = $stmt->fetch(PDO::FETCH_ASSOC);
             <li><a href="home.php">Home</a></li>
             <li><a href="products.php">Products</a></li>
             <li><a href="cart.php">Cart</a></li>
-            <li><a href="profile.php" title="View Profile">
-                <img src="profile_icon.png" alt="Profile Icon" style="width: 20px; height: 20px;">
-            </a></li>
+            <li><a href="profile.php">Profile</li>
             <li><a href="logout.php">Logout</a></li>
         </ul>
     </nav>
