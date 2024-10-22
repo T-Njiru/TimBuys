@@ -1,105 +1,47 @@
+<?php
+session_start();
+include_once 'connection.php'; // Include your connection file
+
+// Create a new instance of the Database class
+$database = new Database();
+$pdo = $database->getConnection(); // Get the PDO connection
+
+// Check if the user is logged in
+if (!isset($_SESSION['customer_id'])) {
+    header('Location: login.html'); // Redirect to login if not logged in
+    exit();
+}
+
+// Fetch customer details
+$customer_id = $_SESSION['customer_id'];
+$stmt = $pdo->prepare("SELECT * FROM Customer WHERE CustomerID = :customer_id");
+$stmt->bindParam(':customer_id', $customer_id);
+$stmt->execute();
+$customer = $stmt->fetch(PDO::FETCH_ASSOC);
+?>
+
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Tim Buys</title>
-    <link rel="stylesheet" href="styles/homepage.css" />
-    <link
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
-      rel="stylesheet"
-    />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap"
-      rel="stylesheet"
-    />
-    <script>
-      const translations = {
-        en: {
-          title: "TimBuys - Online Store",
-          categoriesTitle: "Product Categories",
-          featuredProductsTitle: "Featured Products",
-          discountedProductsTitle: "Discounted Products",
-          feedbackTitle: "User Feedback",
-          subscribeTitle: "Subscribe to Our Newsletter",
-          termsTitle: "Terms and Conditions",
-          termsContent: `Welcome to TimBuys. By using our site, you agree to our terms of service. 
-                Please read them carefully. 1. You must be at least 18 years old to use our services. 
-                2. You agree to provide accurate information when registering. 
-                3. We reserve the right to cancel or suspend your account if you violate any terms. 
-                4. Our products are sold as described. If you receive a faulty item, please contact us within 30 days. 
-                5. We are not responsible for any loss or damage caused by the use of our products.`,
-        },
-        es: {
-          title: "TimBuys - Tienda en Línea",
-          categoriesTitle: "Categorías de Productos",
-          featuredProductsTitle: "Productos Destacados",
-          discountedProductsTitle: "Productos Descuentados",
-          feedbackTitle: "Comentarios de Usuarios",
-          subscribeTitle: "Suscríbete a Nuestro Boletín",
-          termsTitle: "Términos y Condiciones",
-          termsContent: `Bienvenido a TimBuys. Al usar nuestro sitio, aceptas nuestros términos de servicio. 
-                Léelos atentamente. 1. Debes tener al menos 18 años para usar nuestros servicios. 
-                2. Aceptas proporcionar información precisa al registrarte. 
-                3. Nos reservamos el derecho de cancelar o suspender tu cuenta si violas alguno de los términos. 
-                4. Nuestros productos se venden como se describen. Si recibes un artículo defectuoso, contáctanos dentro de 30 días. 
-                5. No somos responsables de ninguna pérdida o daño causado por el uso de nuestros productos.`,
-        },
-      };
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tim Buys - Home</title>
+    <link rel="stylesheet" href="styles/homephp.css">
+</head>
+<body>
+<header>
+<div class="logo">TIM BUYS</div>
+    <nav>
+        <ul>
+            <li><a href="home.php">Home</a></li>
+            <li><a href="products.php">Products</a></li>
+            <li><a href="cart.php">Cart</a></li>
+            <li><a href="profile.php">Profile</li>
+            <li><a href="logout.php">Logout</a></li>
+        </ul>
+    </nav>
 
-      function changeLanguage(language) {
-        document.title = translations[language].title;
-        document.getElementById("categoriesTitle").innerText =
-          translations[language].categoriesTitle;
-        document.getElementById("featuredProductsTitle").innerText =
-          translations[language].featuredProductsTitle;
-        document.getElementById("discountedProductsTitle").innerText =
-          translations[language].discountedProductsTitle;
-        document.getElementById("feedbackTitle").innerText =
-          translations[language].feedbackTitle;
-        document.getElementById("subscribeTitle").innerText =
-          translations[language].subscribeTitle;
-        document.getElementById("termsTitle").innerText =
-          translations[language].termsTitle;
-        document.getElementById("termsContent").innerText =
-          translations[language].termsContent;
-      }
-
-      function showTermsPopup() {
-        document.getElementById("termsPopup").style.display = "block";
-      }
-
-      function hideTermsPopup() {
-        document.getElementById("termsPopup").style.display = "none";
-        localStorage.setItem("termsAccepted", "true"); // Store acceptance in local storage
-      }
-
-      function agreeToTerms() {
-        const checkbox = document.getElementById("termsCheckbox");
-        if (checkbox.checked) {
-          alert("Thank you for agreeing to the terms and conditions!");
-          hideTermsPopup();
-        } else {
-          alert("Please agree to the terms and conditions to proceed.");
-        }
-      }
-
-      function checkTermsAcceptance() {
-        const accepted = localStorage.getItem("termsAccepted");
-        if (!accepted) {
-          showTermsPopup();
-        }
-      }
-
-      window.onload = function () {
-        checkTermsAcceptance();
-        changeLanguage("en"); // Default to English
-      };
-    </script>
-  </head>
-  <body>
-    <div class="navbar">
-      <div class="logo">TIM BUYS</div>
+<div class="navbar">
       <div class="search-bar">
         <input
           type="text"
@@ -107,22 +49,9 @@
         />
         <button>Search</button>
       </div>
-      <div class="nav-links">
-        <div class="dropdown">
-          <a href="#" class="account-link">
-            <i class="fas fa-user"></i> ACCOUNT
-          </a>
-          <div class="dropdown-content">
-            <button onclick="location.href='login.html';">Sign In</button>
-            <button onclick="location.href='../Module1.2/signin.html';">
-              Sign Up
-            </button>
-          </div>
-        </div>
-        <a href="#">HELP</a>
-        <a href="#"><i class="fas fa-shopping-cart"></i> CART</a>
-      </div>
-    </div>
+</div>
+</header>
+        
 
     <!-- Categories -->
     <section class="categories">
@@ -452,8 +381,3 @@
       </div>
     </footer>
 
-    <script>
-      // Optional: Add any JavaScript here if needed for interactivity.
-    </script>
-  </body>
-</html>

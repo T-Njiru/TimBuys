@@ -18,7 +18,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 // Clear session and proceed with the next steps (e.g., account creation or login)
                 session_unset();
                 session_destroy();
-                header("Location: signup_page.html"); // Redirect to the signup page
+                header("Location: ../Module1/signup_page.html"); // Redirect to the signup page
                 exit();
             } else {
                 echo "Incorrect verification code.";
