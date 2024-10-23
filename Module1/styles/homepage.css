@@ -69,7 +69,7 @@ body {
 .navbar .dropdown-content {
   display: none;
   position: absolute;
-  background-color: orange;
+  background-color: #daa520;
   min-width: 160px;
   box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
   z-index: 1;
@@ -89,7 +89,7 @@ body {
 }
 
 .navbar .dropdown-content button:hover {
-  background-color: darkgoldenrod;
+  background-color: #8b4513;
 }
 
 .navbar .dropdown:hover .dropdown-content {
@@ -147,7 +147,7 @@ body {
 }
 
 .banner {
-  background-color: #d4a017;
+  background-color: #daa520;
   color: white;
   text-align: center;
   padding: 20px;
