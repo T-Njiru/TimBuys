@@ -1,0 +1,183 @@
+.Tracking{
+    margin: auto; 
+    border: 2px solid; 
+    border-image: linear-gradient(to top, #fff, #000);
+    border-radius: 15px;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+.line{
+    border-bottom: 1px solid #000;
+    display: block;
+    max-width: 170px;
+}
+.Card{
+    display: flex;
+    justify-content: space-around;
+    border: 1px solid #000;
+    padding: 40px;
+    border-radius: 15px;
+}
+.col {
+    text-align: center;
+}
+.col strong {
+    font-weight: bold;
+    display: block;
+    margin-bottom: 5px;
+}
+
+
+.track {
+    position: relative;
+    background-color: #ddd;
+    height: 7px;
+    display: flex;
+    margin: 75px auto 60px;
+    max-width: 1000px;
+}
+.track .step {
+    flex-grow: 1;
+    width: 25%;
+    margin-top: -18px;
+    text-align: center;
+    position: relative;
+}
+.track .step.active::before {
+    background: #daa520;
+}
+.track .step::before {
+    height: 7px;
+    position: absolute;
+    content: "";
+    width: 100%;
+    left: 0;
+    top: 18px;
+}
+.track .step.active .icon {
+    background: #daa520;
+    color: #fff;
+}
+.track .icon {
+    display: inline-block;
+    width: 40px;
+    height: 40px;
+    line-height: 40px;
+    position: relative;
+    border-radius: 100%;
+    background: #ddd;
+    color: #333;
+    font-size: 18px;
+}
+.track .step.active .text {
+    font-weight: bold;
+    color: #000;
+}
+.track .text {
+    display: block;
+    margin-top: 7px;
+}
+.back-button {
+    display: block;
+    margin: 100px auto 30px;
+    padding: 10px 20px;
+    background-color: #daa520;
+    color: white;
+    font-weight: bold;
+    border: none;
+    border-radius: 15px;
+    cursor: pointer;
+    max-width: 200px;
+}
+.back-button:hover {
+    background-color: #ffff;
+    border: 1px solid #daa520;
+    color:#daa520;
+}
+
+
+body{
+    margin: 0;
+    font-family: Radley;
+}
+
+
+.header {
+    background-color: black;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 20px;
+    height: 50px; 
+}
+.logo {
+    font-size: 36px; 
+    font-family: Gidugu;
+    color: white;
+    flex: 1;
+}
+.search-bar {
+    display: flex;
+     align-items: center;
+    justify-content: flex-start; 
+    flex: 2;
+    width: 100%;
+}
+.search-bar input {
+    width: 80%; 
+    height: 30px; 
+    padding: 5px;
+    border: none;
+    border-radius: 5px 0 0 5px;
+}
+.search-bar button {
+    padding: 6px 10px;
+    border: none;
+    border-radius: 0 5px 5px 0;
+    background-color: #daa520;
+    cursor: pointer;
+     height: 40px; 
+}
+.account-section {
+    display: flex;
+    align-items: center;
+    color: white;
+    flex: 1;
+    justify-content: flex-end; 
+    gap: 20px; 
+}
+.account-section span {
+    cursor: pointer;
+}
+.account-section .account-icon,
+.account-section .cart-icon {
+    margin-right: 5px;
+    color: #fff;
+}
+        
+@media (max-width: 768px) {
+.header {
+    flex-wrap: wrap;
+    height: auto;
+            }
+.search-bar {
+    width: 100%;
+    justify-content: center;
+    margin-top: 10px;
+}
+.account-section {
+    justify-content: center;
+    width: 100%;
+    margin-top: 10px;
+}
+.account-section span {
+    margin-left: 10px;
+    margin-right: 10px;
+}
+}
+    
+
+
+
+
