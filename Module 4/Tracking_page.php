@@ -17,28 +17,28 @@
 
     <script>
         function initMap() {
-            // Mock data representing Strathmore University in Nairobi
+            
             var data = {
-                latitude: "-1.3105",  // Strathmore University Latitude
-                longitude: "36.8148"  // Strathmore University Longitude
+                latitude: "-1.3105",  
+                longitude: "36.8148"  
             };
 
             var location = [parseFloat(data.latitude), parseFloat(data.longitude)];
-            var map = L.map('map').setView(location, 15); // Zoom level set to 15 for a closer view
+            var map = L.map('map').setView(location, 15); 
 
-            // Adding OpenStreetMap tiles
+            
             L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
                 maxZoom: 19,
                 attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
             }).addTo(map);
 
-            // Adding a marker for Strathmore University
+            
             L.marker(location).addTo(map)
                 .bindPopup('Current Location: Strathmore University, Nairobi')
                 .openPopup();
         }
 
-        // Load the map when the page is fully loaded
+        
         window.onload = initMap;
     </script>
 </head>
