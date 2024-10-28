@@ -11,18 +11,42 @@
     <style>
       body {
         background-color: #f9f9f9;
+        color: #333;
       }
       .login-wrapper {
         max-width: 400px;
-        margin: 80px auto;
-        background-color: white;
+        margin: 100px auto;
+        background-color: #fff;
         padding: 30px;
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        border-radius: 8px;
+        box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
       }
       .form-title {
         margin-bottom: 20px;
         font-size: 24px;
-        color: #dad520;
+        color: #daa520;
+        text-align: center;
+      }
+      .form-label {
+        color: #333;
+      }
+      .btn-primary {
+        background-color: #daa520;
+        border: none;
+      }
+      .btn-primary:hover {
+        background-color: #b58f20;
+      }
+      .reset-password {
+        display: block;
+        margin-top: 10px;
+        text-align: right;
+        color: #2c2cf2;
+        text-decoration: none;
+        font-size: 14px;
+      }
+      .reset-password:hover {
+        text-decoration: underline;
       }
     </style>
   </head>
@@ -30,7 +54,7 @@
     <div class="login-wrapper">
       <h2 class="form-title">Login</h2>
       <form
-        action="http://localhost/TimBuys/Module1/process_login.php"
+        action="http://localhost/SE/TimBuys/TimBuys/Module1/process_login.php"
         method="POST"
       >
         <div class="mb-3">
@@ -47,6 +71,7 @@
           />
         </div>
         <button type="submit" class="btn btn-primary w-100">Login</button>
+        <a href="http://localhost/TimBuys/module1/reset_password.php" class="reset-password">Forgot Password?</a>
       </form>
     </div>
 

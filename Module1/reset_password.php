@@ -1,7 +1,9 @@
 <?php
 session_start();
 require 'connection.php'; // Include the database connection file
-require 'vendor/autoload.php'; // Include the PHPMailer autoload file
+require 'PHPMailer/src/Exception.php';  
+require 'PHPMailer/src/PHPMailer.php';  
+require 'PHPMailer/src/SMTP.php';  
 
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
@@ -10,9 +12,10 @@ use PHPMailer\PHPMailer\Exception;
 $database = new Database();
 $pdo = $database->getConnection();
 
-// Check if form is submitted
+$message = ""; // Initialize message variable
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $email = $_POST['email'];
+    $email = filter_var($_POST['email'], FILTER_SANITIZE_EMAIL);
 
     // Check if the email exists in the database
     $stmt = $pdo->prepare("SELECT * FROM Customer WHERE Email = :email");
@@ -20,11 +23,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $user = $stmt->fetch();
 
     if ($user) {
-        // Generate a reset token and its expiry time
-        $resetToken = bin2hex(random_bytes(16)); // Generate a secure random token
-        $expiryTime = date('Y-m-d H:i:s', strtotime('+1 hour')); // Token valid for 1 hour
+        $resetToken = bin2hex(random_bytes(16));
+        date_default_timezone_set('Africa/Nairobi');
+        $expiryTime = date('Y-m-d H:i:s', strtotime('+5 hours'));
 
-        // Update the user record with the reset token and expiry
         $stmt = $pdo->prepare("UPDATE Customer SET ResetToken = :token, ResetTokenExpiry = :expiry WHERE CustomerID = :id");
         $stmt->execute([
             'token' => $resetToken,
@@ -32,42 +34,35 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             'id' => $user['CustomerID']
         ]);
 
-        // Create a reset link
         $resetLink = "http://localhost/TimBuys/Module1/reset_password_form.php?token=" . $resetToken;
-
-        // Create a new PHPMailer instance
         $mail = new PHPMailer(true);
 
         try {
-            //Server settings
-            $mail->isSMTP();                                            // Set mailer to use SMTP
-            $mail->Host       = 'smtp.gmail.com';                   // Specify your SMTP server (e.g., smtp.gmail.com)
-            $mail->SMTPAuth   = true;                                 // Enable SMTP authentication
-            $mail->Username   = 'fatumamm99@gmail.com';             // Your SMTP username (can be the sender's email)
-            $mail->Password   = 'mjdn nvnf qkcq iiyi';                // Your SMTP password
-            $mail->SMTPSecure = 'tls';       // Enable TLS encryption
-            $mail->Port       = 587;                                     // TCP port to connect to
+            $mail->isSMTP();
+            $mail->Host       = 'smtp.gmail.com';
+            $mail->SMTPAuth   = true;
+            $mail->Username   = 'fatumamm99@gmail.com';
+            $mail->Password   = 'mjdn nvnf qkcq iiyi';
+            $mail->SMTPSecure = 'tls';
+            $mail->Port       = 587;
+            $mail->setFrom('fatumamm99@gmail.com', 'TimBuys');
+            $mail->addAddress($email);
 
-            //Recipients
-            $mail->setFrom('fatumamm99@gmail.com', 'TimBuys'); // Set the sender email
-            $mail->addAddress($email);                             // Add a recipient
-
-            // Content
-            $mail->isHTML(true);                                    // Set email format to HTML
+            $mail->isHTML(true);
             $mail->Subject = 'Password Reset Request';
             $mail->Body    = "Click the following link to reset your password: <a href='$resetLink'>$resetLink</a>";
 
-            // Send the email
             $mail->send();
-            echo "A password reset link has been sent to your email address.";
+            $message = "A password reset link has been sent to your email address.";
         } catch (Exception $e) {
-            echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
+            $message = "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
         }
     } else {
-        echo "Email not found.";
+        $message = "Email not found.";
     }
-} else {
+}
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -75,29 +70,63 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Reset Password | TimBuys</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #f8f9fa; /* Light background for better contrast */
+        }
+        .container {
+            margin-top: 10%;
+        }
+        .card {
+            border: none;
+            border-radius: 10px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        }
+        .card-header, .btn-primary {
+            background-color: #daa520; 
+            color: #fff; 
+        }
+        .btn-primary {
+            transition: background-color 0.3s ease;
+            border: none; /* Remove default border */
+        }
+        .btn-primary:hover {
+            background-color: #b59416; /* Darker shade on hover */
+        }
+        .alert {
+            display: none; 
+            margin-top: 20px; 
+        }
+    </style>
 </head>
 <body>
-<div class="container mt-5">
+<div class="container">
     <div class="row justify-content-center">
         <div class="col-md-6">
             <div class="card">
-                <div class="card-header">Reset Password</div>
+                <div class="card-header text-center">Reset Password</div>
                 <div class="card-body">
-                    <form method="POST">
+                    <div id="message" class="alert alert-success" role="alert"><?= $message ?></div>
+                    <form method="POST" onsubmit="showMessage();">
                         <div class="mb-3">
                             <label for="email" class="form-label">Enter your email address</label>
                             <input type="email" class="form-control" id="email" name="email" required>
                         </div>
-                        <button type="submit" class="btn btn-primary">Send Reset Link</button>
+                        <button type="submit" class="btn btn-primary w-100">Send Reset Link</button>
                     </form>
                 </div>
             </div>
         </div>
     </div>
 </div>
+<script>
+    function showMessage() {
+        const message = "<?= $message ?>";
+        if (message) {
+            document.getElementById('message').style.display = 'block';
+        }
+    }
+</script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
-<?php
-}
-?>
