@@ -88,7 +88,6 @@ include('includes/header.php');
         </div>
     </div>
 </div>
-
 <!-- Include Chart.js for graphs -->
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
