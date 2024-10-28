@@ -24,9 +24,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 // If the password is correct, log in the user and start a session
                 $_SESSION['user_fname'] = $user['FirstName'];  // Store user's first name in the session
                 $_SESSION['customer_id'] = $user['CustomerID'];  // Optionally store user ID for later use
-
-                // Redirect to homepage or another authenticated page
-                header("Location: home.php");
+                $_SESSION['Role_As'] = $user['role_as'];  // Store the role in the session
+               
+                
+                // Redirect based on role
+                if ($user['role_as'] == 1) {
+                    // Redirect to admin dashboard if user is an admin
+                    header("Location: admin/index.php");
+                } else {
+                    // Redirect to homepage if user is a regular customer
+                    header("Location: home.php");
+                }
                 exit();
             } else {
                 // Password mismatch

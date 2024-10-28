@@ -9,7 +9,7 @@ include('includes/header.php');
             <div class="card text-center">
                 <div class="card-body">
                     <h5>Today's Money</h5>
-                    <h3>$53k</h3>
+                    <h3>Ksh53000</h3>
                     <p class="text-success">+55% than last week</p>
                 </div>
             </div>
@@ -42,7 +42,7 @@ include('includes/header.php');
             <div class="card text-center">
                 <div class="card-body">
                     <h5>Sales</h5>
-                    <h3>$103,430</h3>
+                    <h3>Ksh103,430</h3>
                     <p class="text-success">+5% than yesterday</p>
                 </div>
             </div>

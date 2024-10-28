@@ -53,10 +53,7 @@
   <body>
     <div class="login-wrapper">
       <h2 class="form-title">Login</h2>
-      <form
-        action="http://localhost/SE/TimBuys/TimBuys/Module1/process_login.php"
-        method="POST"
-      >
+      <form action="process_login.php" method="POST">
         <div class="mb-3">
           <label for="email" class="form-label">Email</label>
           <input type="email" name="email" class="form-control" required />
@@ -71,7 +68,11 @@
           />
         </div>
         <button type="submit" class="btn btn-primary w-100">Login</button>
-        <a href="http://localhost/TimBuys/module1/reset_password.php" class="reset-password">Forgot Password?</a>
+        <a
+          href="http://localhost/TimBuys/module1/reset_password.php"
+          class="reset-password"
+          >Forgot Password?</a
+        >
       </form>
     </div>
 
