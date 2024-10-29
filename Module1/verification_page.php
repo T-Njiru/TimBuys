@@ -3,14 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Verify Your Code | My Shop</title>
+    <title>Verify Your Code | TimBuys</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css">
     <style>
         body { background-color: #f9f9f9; }
         .verification-wrapper { max-width: 400px; margin: 80px auto; background-color: white; padding: 30px; text-align: center; }
-        .code-input input { width: 60px; height: 60px; font-size: 24px; text-align: center; }
+        .code-input input { width: 60px; height: 60px; font-size: 24px; text-align: center; margin: 0 5px; }
         .resend-link { margin-top: 15px; }
         .resend-timer { margin-top: 5px; }
+        .btn { background-color: #daa520; }
     </style>
 </head>
 <body>
@@ -36,6 +37,21 @@
     </div>
 
     <script>
+        const inputs = document.querySelectorAll('.code-input input');
+        
+        inputs.forEach((input, index) => {
+            input.addEventListener('input', () => {
+                if (input.value.length === 1 && index < inputs.length - 1) {
+                    inputs[index + 1].focus();
+                }
+            });
+            input.addEventListener('keydown', (e) => {
+                if (e.key === "Backspace" && index > 0 && input.value === "") {
+                    inputs[index - 1].focus();
+                }
+            });
+        });
+
         let countdownElement = document.getElementById("countdown");
         let resendLink = document.getElementById("resendCodeLink");
         let timer = 30;

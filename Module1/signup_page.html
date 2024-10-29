@@ -25,6 +25,17 @@
         color: orange;
       }
     </style>
+    <script>
+      function validatePasswords() {
+        const password = document.querySelector('input[name="password"]').value;
+        const confirmPassword = document.querySelector('input[name="confirm_password"]').value;
+        if (password !== confirmPassword) {
+          alert("Passwords do not match!");
+          return false;
+        }
+        return true;
+      }
+    </script>
   </head>
   <body>
     <div class="signup-wrapper">
@@ -32,6 +43,7 @@
       <form
         action="http://localhost/TimBuys/Module1/process_signup.php"
         method="POST"
+        onsubmit="return validatePasswords()"
       >
         <div class="mb-3">
           <label for="fname" class="form-label">First Name</label>
@@ -67,6 +79,15 @@
           <input
             type="password"
             name="password"
+            class="form-control"
+            required
+          />
+        </div>
+        <div class="mb-3">
+          <label for="confirm_password" class="form-label">Confirm Password</label>
+          <input
+            type="password"
+            name="confirm_password"
             class="form-control"
             required
           />

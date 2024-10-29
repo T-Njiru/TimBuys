@@ -1,0 +1,174 @@
+/* New Styles */
+.Container {
+    margin: auto;
+    border: 2px solid;
+    border-image: linear-gradient(to top, #fff, #333);
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+.Divider {
+    border-bottom: 1px solid #333;
+    max-width: 170px;
+}
+.Box {
+    display: flex;
+    justify-content: space-around;
+    border: 1px solid #333;
+    padding: 30px;
+    border-radius: 12px;
+}
+.Column {
+    text-align: center;
+}
+.Column .title {
+    font-weight: bold;
+    display: block;
+    margin-bottom: 5px;
+}
+.ProgressBar {
+    position: relative;
+    background-color: #ccc;
+    height: 7px;
+    display: flex;
+    margin: 75px auto 60px;
+    max-width: 1000px;
+}
+.ProgressBar .Stage {
+    flex-grow: 1;
+    width: 25%;
+    margin-top: -18px;
+    text-align: center;
+    position: relative;
+}
+.ProgressBar .Stage.active::before {
+    background: #ffb700;
+}
+.ProgressBar .Stage::before {
+    height: 7px;
+    position: absolute;
+    content: "";
+    width: 100%;
+    left: 0;
+    top: 18px;
+}
+.ProgressBar .Stage.active .circle {
+    background: #ffb700;
+    color: #fff;
+}
+.ProgressBar .circle {
+    display: inline-block;
+    width: 40px;
+    height: 40px;
+    line-height: 40px;
+    position: relative;
+    border-radius: 100%;
+    background: #ccc;
+    color: #333;
+    font-size: 18px;
+}
+.ProgressBar .Stage.active .label {
+    font-weight: bold;
+    color: #333;
+}
+.ProgressBar .label {
+    display: block;
+    margin-top: 7px;
+}
+.ReturnButton {
+    display: block;
+    margin: 100px auto 30px;
+    padding: 10px 20px;
+    background-color: #ffb700;
+    color: white;
+    font-weight: bold;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    max-width: 200px;
+}
+.ReturnButton:hover {
+    background-color: #fff;
+    border: 1px solid #ffb700;
+    color: #ffb700;
+}
+.page {
+    margin: 0;
+    font-family: Arial, sans-serif;
+}
+.Navbar {
+    background-color: #333;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 20px;
+    height: 50px;
+}
+.Brand {
+    font-size: 36px;
+    font-family: Arial, sans-serif;
+    color: white;
+    flex: 1;
+}
+.Search {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    flex: 2;
+}
+.Search input {
+    width: 80%;
+    height: 30px;
+    padding: 5px;
+    border: none;
+    border-radius: 5px 0 0 5px;
+}
+.Search button {
+    padding: 6px 10px;
+    border: none;
+    border-radius: 0 5px 5px 0;
+    background-color: #ffb700;
+    cursor: pointer;
+    height: 40px;
+}
+.UserActions {
+    display: flex;
+    align-items: center;
+    color: white;
+    flex: 1;
+    justify-content: flex-end;
+    gap: 20px;
+}
+.UserActions span {
+    cursor: pointer;
+}
+.UserActions .icon-user,
+.UserActions .icon-cart {
+    margin-right: 5px;
+    color: #fff;
+}
+
+@media (max-width: 768px) {
+    .Navbar {
+        flex-wrap: wrap;
+        height: auto;
+    }
+    .Search {
+        width: 100%;
+        justify-content: center;
+        margin-top: 10px;
+    }
+    .UserActions {
+        justify-content: center;
+        width: 100%;
+        margin-top: 10px;
+    }
+    .UserActions span {
+        margin: 0 10px;
+    }
+
+   
+    
+    
+}
