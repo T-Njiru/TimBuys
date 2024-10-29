@@ -27,6 +27,8 @@ $customer = $stmt->fetch(PDO::FETCH_ASSOC);
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tim Buys - Home</title>
     <link rel="stylesheet" href="styles/homephp.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="sha384-k6RqeWeci5ZR/Lv4MR0sA0FfDOMYgDgrLqWtvU8cXWjl5u7v77IXE2KwGOMdM5g" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
     <style>
       body {
           font-family: Arial, sans-serif;
@@ -40,6 +42,10 @@ $customer = $stmt->fetch(PDO::FETCH_ASSOC);
           margin-top: 30px;
           font-weight: bold;
           font-size: 25px;
+      }
+      .profile-icon {
+          margin-right: 5px; /* Spacing between icon and text */
+          vertical-align: middle; /* Align icon with text */
       }
       /* Add more styles as needed */
     </style>
@@ -57,10 +63,10 @@ $customer = $stmt->fetch(PDO::FETCH_ASSOC);
         </ul>
     </nav>
     <div class="welcome-message">
+        <i class="bi bi-person-circle profile-icon"></i> <!-- Profile icon from Bootstrap Icons -->
         Welcome, <?php echo htmlspecialchars($customer['FirstName']); ?>!
     </div>
 </header>
-
     <!-- Categories -->
     <section class="categories">
         <p>CATEGORIES</p>
@@ -132,7 +138,7 @@ $customer = $stmt->fetch(PDO::FETCH_ASSOC);
         </div>
     </div>
     <div class="flash-sales">
-        <h2>Flash Sales upto 50% off</h2>
+        <h2>Flash Sales up to 50% off</h2>
         <p class="time-left">Time Left: 4d : 12hrs</p>
         <a href="#" style="color: white"> See all </a>
     </div>

@@ -31,14 +31,13 @@ if (!$customer) {
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Account Overview</title>
+    <title>Your Profile</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <style>
         body {
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
-        
         }
         .header {
             display: flex;
@@ -110,6 +109,17 @@ if (!$customer) {
             margin-left: 270px;
             padding: 20px;
         }
+        .content .profile-title {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #daa520;
+            margin-bottom: 20px;
+        }
+        .content .profile-title i {
+            font-size: 30px;
+            margin-right: 10px;
+        }
         .content h2 {
             font-size: 24px;
             margin-bottom: 20px;
@@ -120,6 +130,13 @@ if (!$customer) {
             border: 1px solid #ddd;
             border-radius: 4px;
             margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+        }
+        .content .card i {
+            font-size: 30px;
+            color: #daa520;
+            margin-right: 15px;
         }
         .content .card h3 {
             font-size: 18px;
@@ -164,21 +181,33 @@ if (!$customer) {
         <a href="logout.php" class="logout">LOGOUT</a>
     </div>
     <div class="content">
-        <h2>Account Overview</h2>
-        <div class="card">
-            <h3>ACCOUNT DETAILS</h3>
-            <p><?php echo $customer['FirstName'] . ' ' . $customer['LastName']; ?></p>
-            <p><?php echo $customer['Email']; ?></p>
+        <div class="profile-title">
+            <i class="fas fa-user-circle"></i>
+            <h1>Your Profile</h1>
         </div>
         <div class="card">
-            <h3>ADDRESS BOOK</h3>
-            <p>Your default shipping address:</p>
-            <p><?php echo $default_shipping_address; ?></p>
-            <a href="add_address.php">ADD DEFAULT ADDRESS</a>
+            <i class="fas fa-user-circle"></i>
+            <div>
+                <h3>ACCOUNT DETAILS</h3>
+                <p><?php echo $customer['FirstName'] . ' ' . $customer['LastName']; ?></p>
+                <p><?php echo $customer['Email']; ?></p>
+            </div>
         </div>
         <div class="card">
-            <h3>TIMBUYS STORE CREDIT</h3>
-            <a href="#"><i class="fas fa-credit-card"></i> Jumia store credit balance: <?php echo $store_credit_balance; ?></a>
+            <i class="fas fa-map-marker-alt"></i>
+            <div>
+                <h3>ADDRESS BOOK</h3>
+                <p>Your default shipping address:</p>
+                <p><?php echo $default_shipping_address; ?></p>
+                <a href="add_address.php">ADD DEFAULT ADDRESS</a>
+            </div>
+        </div>
+        <div class="card">
+            <i class="fas fa-credit-card"></i>
+            <div>
+                <h3>TIMBUYS STORE CREDIT</h3>
+                <a href="#">Jumia store credit balance: <?php echo $store_credit_balance; ?></a>
+            </div>
         </div>
     </div>
 </body>
