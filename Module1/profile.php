@@ -156,7 +156,7 @@ if (!$customer) {
         <a href="#"><i class="fas fa-star"></i> Pending Reviews</a>
         <a href="#"><i class="fas fa-ticket-alt"></i> Vouchers</a>
         <a href="#"><i class="fas fa-heart"></i> Saved Items</a>
-        <a href="vendor.php"><i class="fas fa-store"></i> Register To Be A Seller</a>
+        <a href="vendor.html"><i class="fas fa-store"></i> Register To Be A Seller</a>
         <a href="#"><i class="fas fa-clock"></i> Recently Viewed</a>
         <a href="#"><i class="fas fa-cog"></i> Account Management</a>
         <a href="#"><i class="fas fa-address-book"></i> Address Book</a>

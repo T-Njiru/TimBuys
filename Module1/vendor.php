@@ -18,11 +18,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if ($pdo) {
         // Prepare and execute the SQL query
         $stmt = $pdo->prepare("INSERT INTO Vendor (Name, Address, Email, Password, Contact) VALUES (?, ?, ?, ?, ?)");
-        $stmt->execute([$name, $address, $email, $password, $contact]);
-
-        echo "<p class='success'>Vendor registered successfully!</p>";
+        
+        // Check for successful execution
+        if ($stmt->execute([$name, $address, $email, $password, $contact])) {
+            // Redirect to the login page after successful registration
+            header("Location: vendorlogin.php"); // Change 'login.php' to the actual path of your login page
+            exit(); // Terminate the script after redirection
+        } else {
+            echo "<p class='error' style='color: red;'>Error: Unable to register vendor. Please try again later.</p>";
+        }
     } else {
-        echo "<p class='error'>Database connection error. Please try again later.</p>";
+        echo "<p class='error' style='color: red;'>Database connection error. Please try again later.</p>";
     }
 }
 ?>
@@ -30,127 +36,81 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Vendor Registration</title>
-    <style>/* General Body Style */
-body {
-    font-family: Arial, sans-serif;
-    background-color: #000; /* Black background */
-    color: #fff; /* White text */
-}
-
-/* Heading Style */
-h2 {
-    color: #daa520; /* Gold color for heading */
-    text-align: center;
-    margin-top: 1em;
-}
-
-/* Form Container */
-form {
-    max-width: 400px;
-    margin: auto;
-    padding: 1.5em;
-    background: #333; /* Dark gray for form background */
-    border-radius: 8px;
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.5); /* Slight shadow for depth */
-}
-
-/* Label Styles */
-label {
-    margin-top: 1em;
-    display: block;
-    color: #daa520; /* Gold color for labels */
-    font-weight: bold;
-}
-
-/* Input Fields */
-input[type="text"],
-input[type="email"],
-input[type="password"] {
-    width: 100%;
-    padding: 10px;
-    margin: 0.5em 0;
-    box-sizing: border-box;
-    border: 1px solid #daa520; /* Gold border */
-    border-radius: 5px;
-    background-color: #1c1c1c; /* Darker background for input fields */
-    color: #fff; /* White text */
-}
-
-input[type="text"]:focus,
-input[type="email"]:focus,
-input[type="password"]:focus {
-    outline: none;
-    border-color: #fff; /* White border on focus */
-}
-
-/* Button Style */
-button {
-    padding: 12px;
-    width: 100%;
-    color: #000; /* Black text */
-    background-color: #daa520; /* Gold background */
-    border: none;
-    border-radius: 5px;
-    font-weight: bold;
-    cursor: pointer;
-    margin-top: 1em;
-    transition: background-color 0.3s ease;
-}
-
-button:hover {
-    background-color: #ffd700; /* Lighter gold on hover */
-    color: #000; /* Keep text black */
-}
-
-/* Error Message Styling */
-.errors {
-    color: #ff4d4d; /* Red for errors */
-    list-style-type: none;
-    padding: 0;
-    margin-bottom: 1em;
-}
-
-.errors li {
-    margin-bottom: 0.5em;
-}
-
-/* Success Message Styling */
-.success {
-    color: #4caf50; /* Green for success message */
-    text-align: center;
-    margin-bottom: 1em;
-}
-
-/* Responsive adjustments */
-@media (max-width: 500px) {
-    form {
-        padding: 1em;
-    }
-}
-</style>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"
+    />
+    <style>
+        body {
+            background-color: #f9f9f9;
+        }
+        .signup-wrapper {
+            max-width: 500px;
+            margin: 80px auto;
+            background-color: white;
+            padding: 30px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        .form-title {
+            margin-bottom: 20px;
+            font-size: 24px;
+            color: orange;
+        }
+    </style>
+    <script>
+        function validatePasswords() {
+            const password = document.querySelector('input[name="password"]').value;
+            const confirmPassword = document.querySelector('input[name="confirm_password"]').value;
+            if (password !== confirmPassword) {
+                alert("Passwords do not match!");
+                return false;
+            }
+            return true;
+        }
+    </script>
 </head>
 <body>
-    <h2>Vendor Registration</h2>
+    <div class="signup-wrapper">
+        <form action="vendor.php" method="post" onsubmit="return validatePasswords()">
+            <h2 class="form-title">Vendor Registration</h2>
+        
+            <div class="mb-3">
+                <label for="name" class="form-label">Name</label>
+                <input type="text" name="name" class="form-control" required />
+            </div>
+            
+            <div class="mb-3">
+                <label for="address" class="form-label">Address</label>
+                <input type="text" name="address" class="form-control" required />
+            </div>
+            
+            <div class="mb-3">
+                <label for="email" class="form-label">Email</label>
+                <input type="email" name="email" class="form-control" required />
+            </div>
+            
+            <div class="mb-3">
+                <label for="contact" class="form-label">Contact</label>
+                <input type="text" name="contact" class="form-control" required />
+            </div>
+            
+            <div class="mb-3">
+                <label for="password" class="form-label">Password</label>
+                <input type="password" name="password" class="form-control" required />
+            </div>
+            
+            <div class="mb-3">
+                <label for="confirm_password" class="form-label">Confirm Password</label>
+                <input type="password" name="confirm_password" class="form-control" required />
+            </div>
+            
+            <button type="submit" class="btn btn-primary w-100">Register</button>
+        </form>
+    </div>
 
-    <form action="vendor.php" method="post">
-        <label for="name">Name:</label>
-        <input type="text" id="name" name="name" required><br>
-
-        <label for="address">Address:</label>
-        <input type="text" id="address" name="address" required><br>
-
-        <label for="email">Email:</label>
-        <input type="email" id="email" name="email" required><br>
-
-        <label for="password">Password:</label>
-        <input type="password" id="password" name="password" required><br>
-
-        <label for="contact">Contact:</label>
-        <input type="text" id="contact" name="contact" required><br>
-
-        <button type="submit">Register</button>
-    </form>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
