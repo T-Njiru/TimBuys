@@ -1,6 +1,12 @@
 <?php
-include('includes/header.php');
+include('../connection.php');
+
+// Initialize Database and get connection
+$database = new Database();
+$pdo = $database->getConnection();
 ?>
+
+<?php include('includes/header.php'); ?>
 <div class="container mt-4">
     <h2>Hello Admin</h2>
     <div class="row">
@@ -9,7 +15,17 @@ include('includes/header.php');
             <div class="card text-center">
                 <div class="card-body">
                     <h5>Today's Money</h5>
-                    <h3>Ksh53000</h3>
+                    <?php
+                    // Fetch today's revenue
+                    $stmt = $pdo->prepare("SELECT SUM(VendorProduct.Price * OrderedProduct.Quantity) as revenue FROM Orders
+                        INNER JOIN OrderedProduct ON Orders.OrderID = OrderedProduct.OrderID
+                        INNER JOIN VendorProduct ON OrderedProduct.VendorProductID = VendorProduct.VendorProductID
+                        WHERE DATE(OrderDate) = CURDATE()");
+                    $stmt->execute();
+                    $result = $stmt->fetch(PDO::FETCH_ASSOC);
+                    $revenue = $result['revenue'] ?? 0;
+                    ?>
+                    <h3>$<?php echo number_format($revenue, 2); ?></h3>
                     <p class="text-success">+55% than last week</p>
                 </div>
             </div>
@@ -20,7 +36,14 @@ include('includes/header.php');
             <div class="card text-center">
                 <div class="card-body">
                     <h5>Today's Users</h5>
-                    <h3>2300</h3>
+                    <?php
+                    // Fetch today's new users count
+                    $stmt = $pdo->prepare("SELECT COUNT(*) as users FROM Customer WHERE DATE(DOB) = CURDATE()");
+                    $stmt->execute();
+                    $result = $stmt->fetch(PDO::FETCH_ASSOC);
+                    $users = $result['users'] ?? 0;
+                    ?>
+                    <h3><?php echo $users; ?></h3>
                     <p class="text-success">+3% than last month</p>
                 </div>
             </div>
@@ -31,7 +54,11 @@ include('includes/header.php');
             <div class="card text-center">
                 <div class="card-body">
                     <h5>Ads Views</h5>
-                    <h3>3,462</h3>
+                    <?php
+                    // Example static value; replace with real data if available
+                    $adViews = 3462;
+                    ?>
+                    <h3><?php echo $adViews; ?></h3>
                     <p class="text-danger">-2% than yesterday</p>
                 </div>
             </div>
@@ -42,7 +69,17 @@ include('includes/header.php');
             <div class="card text-center">
                 <div class="card-body">
                     <h5>Sales</h5>
-                    <h3>Ksh103,430</h3>
+                    <?php
+                    // Fetch total sales value for today
+                    $stmt = $pdo->prepare("SELECT SUM(VendorProduct.Price * OrderedProduct.Quantity) as sales FROM Orders
+                        INNER JOIN OrderedProduct ON Orders.OrderID = OrderedProduct.OrderID
+                        INNER JOIN VendorProduct ON OrderedProduct.VendorProductID = VendorProduct.VendorProductID
+                        WHERE DATE(OrderDate) = CURDATE()");
+                    $stmt->execute();
+                    $result = $stmt->fetch(PDO::FETCH_ASSOC);
+                    $sales = $result['sales'] ?? 0;
+                    ?>
+                    <h3>Ksh<?php echo number_format($sales, 2); ?></h3>
                     <p class="text-success">+5% than yesterday</p>
                 </div>
             </div>
@@ -88,6 +125,7 @@ include('includes/header.php');
         </div>
     </div>
 </div>
+
 <!-- Include Chart.js for graphs -->
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
@@ -136,6 +174,4 @@ new Chart(document.getElementById("completedTasksChart"), {
 });
 </script>
 
-<?php
-include('includes/footer.php');
-?>
+<?php include('includes/footer.php'); ?>
