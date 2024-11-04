@@ -1,76 +1,92 @@
-<?php
-include_once('../../Module3/cart_functions.php'); 
-
-$conn = new mysqli('localhost', 'root', '', 'timbuys_database', 3307);
-
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
-
-$sql = "SELECT p.ProductID, p.ProductName, p.ProductImage, vp.Price, vp.Quantity, vp.Description, v.Name AS VendorName, c.CategoryName
-        FROM Product p
-        JOIN VendorProduct vp ON p.ProductID = vp.ProductID
-        JOIN Vendor v ON vp.VendorID = v.VendorID
-        JOIN Category c ON p.CategoryID = c.CategoryID";
-
-$result = $conn->query($sql);
-
-?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Product Listings</title>
-    <link rel="stylesheet" href="liststyle.css"> <!-- Link to your CSS file -->
+    <title>Product Listing</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        .card {
+            margin-bottom: 20px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            overflow: hidden;
+            transition: transform 0.2s ease;
+        }
+        .card:hover {
+            transform: scale(1.02);
+        }
+        .card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+        .card-body {
+            padding: 15px;
+        }
+        .card-title {
+            font-size: 18px;
+            font-weight: bold;
+        }
+        .card h4 {
+            color: #28a745;
+            font-weight: bold;
+        }
+        .btn-buy {
+            background-color: #28a745;
+            color: white;
+            text-decoration: none;
+            padding: 8px 16px;
+            border-radius: 5px;
+        }
+        .btn-buy:hover {
+            background-color: #218838;
+        }
+        .container {
+            margin-top: 40px;
+        }
+    </style>
 </head>
 <body>
 
-<header>
-    <nav>
-        <ul>
-            <li><a href="../../Module3/home.php">Home</a></li>
-            <li><a href="../../Module3/cart.php">Cart</a></li>
-        </ul>
-    </nav>
-</header>
+<div class="container">
+    <h1>Products</h1>
+    <div class="row">
+        <?php
+            $connect = mysqli_connect('localhost', 'root', '', 'timbuys_database');
+            $query = "
+                SELECT p.ProductID, p.ProductName, p.ProductImage, vp.Price, vp.Quantity 
+                FROM product p
+                JOIN vendorproduct vp ON p.ProductID = vp.ProductID
+                WHERE vp.Quantity > 0
+                ORDER BY p.ProductID ASC
+            ";
+            $result = mysqli_query($connect, $query);
 
-<section>
-    <h1>Product Listings</h1>
-    <a href="../../Module3/cart.php" class="btn btn-primary mb-3">View Cart</a>
-
-    <div id="product-list">
-    <?php
-    if ($result->num_rows > 0) {
-        while ($row = $result->fetch_assoc()) {
-            echo "<div class='card'>";
-            echo "<img src='" . htmlspecialchars($row['ProductImage']) . "' alt='" . htmlspecialchars($row['ProductName']) . "' class='product-image'>";
-            echo "<h5 class='card-title'>" . htmlspecialchars($row['ProductName']) . " (Category: " . htmlspecialchars($row['CategoryName']) . ")</h5>";
-            echo "<p class='card-text'>Price: KSh " . htmlspecialchars($row['Price']) . "</p>";
-            echo "<p class='card-text'>Quantity Available: " . htmlspecialchars($row['Quantity']) . "</p>";
-            echo "<p class='card-text'>Description: " . htmlspecialchars($row['Description']) . "</p>";
-            echo "<p class='card-text'>Vendor: " . htmlspecialchars($row['VendorName']) . "</p>";
-            echo "<form method='POST' action='../../Module3/add_to_cart.php'>";
-            echo "<input type='hidden' name='product_id' value='" . htmlspecialchars($row['ProductID']) . "'>";
-            echo "<button type='submit' class='btn btn-success'>Add to Cart</button>";
-            echo "</form>";
-            echo "</div>";
-        }
-    } else {
-        echo "No products found.";
-    }
-    $conn->close();
-    ?>
+            if ($result):
+                if (mysqli_num_rows($result) > 0):
+                    while ($product = mysqli_fetch_assoc($result)):
+        ?>
+        <div class="col-sm-6 col-md-4 col-lg-3">
+            <div class="card">
+                <img src="uploads/<?php echo $product['ProductImage']; ?>" alt="<?php echo $product['ProductName']; ?>" class="card-img-top">
+                <div class="card-body">
+                    <h5 class="card-title"><?php echo $product['ProductName']; ?></h5>
+                    <h4><?php echo "$" . $product['Price']; ?></h4>
+                    <form method="post" action="index.php?action=add&id=<?php echo $product['ProductID']; ?>">
+                        <button type="submit" class="btn btn-success btn-block">Add to Cart</button>
+                    </form>
+                    <a href="item.php?productid=<?php echo $product['ProductID']; ?>" class="btn-buy d-block text-center mt-2">Buy</a>
+                </div>
+            </div>
+        </div>
+        <?php
+                    endwhile;
+                endif;
+            endif;
+        ?>
+    </div>
 </div>
 
-</section>
-
-<section>
-    <h2>Your Cart</h2>
-    <div id="cart-items"></div>
-</section>
-
-<script src="cart.js"></script> <!-- Link to your JavaScript file -->
 </body>
 </html>
