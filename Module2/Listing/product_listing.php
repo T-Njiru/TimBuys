@@ -1,7 +1,7 @@
 <?php
 include_once('../../Module3/cart_functions.php'); 
 
-$conn = new mysqli('localhost', 'root', '', 'timbuys_database', 3307);
+$conn = new mysqli('localhost', 'root', '', 'timbuys_database', 3306);
 
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
