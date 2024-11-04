@@ -1,6 +1,6 @@
 body {
   margin: 0;
-  font-family: Arial, sans-serif;
+  
   background-color: white;
   
 }
@@ -123,7 +123,7 @@ body {
   background-color: #4a2801;
   color: white;
   background-image:url(../images/newbackground.jpg);
-  height: 450px;
+  height: 400px;
   background-size: cover; /* Use cover or contain based on your needs */
   background-repeat: no-repeat; /* Prevents the image from repeating */
   background-position: center;
