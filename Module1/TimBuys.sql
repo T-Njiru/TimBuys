@@ -1,6 +1,9 @@
--- Create the database
-CREATE DATABASE TimBuys;
+-- Database and Setup
+CREATE DATABASE IF NOT EXISTS TimBuys;
 USE TimBuys;
+
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET time_zone = "+00:00";
 
 -- Customer Table
 CREATE TABLE Customer (
@@ -13,10 +16,13 @@ CREATE TABLE Customer (
     Contact VARCHAR(20) NOT NULL,
     VerificationCode VARCHAR(10) DEFAULT NULL,
     CodeExpiry DATETIME NOT NULL,
-    IsVerified TINYINT(1) DEFAULT 0
+    IsVerified TINYINT(1) DEFAULT 0,
+    ResetToken VARCHAR(255) DEFAULT NULL,
+    ResetTokenExpiry DATETIME DEFAULT NULL,
+    Gender VARCHAR(20)
 );
 
--- County Table (replaces Province)
+-- County Table
 CREATE TABLE County (
     CountyID INT AUTO_INCREMENT PRIMARY KEY,
     CountyName VARCHAR(100) NOT NULL
@@ -48,6 +54,10 @@ CREATE TABLE Category (
     CategoryName VARCHAR(100) NOT NULL
 );
 
+-- Insert initial data for Category
+INSERT INTO Category (CategoryID, CategoryName) VALUES
+(1, 'Electronics'), (2, 'Clothing'), (3, 'Home Appliances');
+
 -- Vendor Table
 CREATE TABLE Vendor (
     VendorID INT AUTO_INCREMENT PRIMARY KEY,
@@ -61,22 +71,35 @@ CREATE TABLE Vendor (
 -- Product Table
 CREATE TABLE Product (
     ProductID INT AUTO_INCREMENT PRIMARY KEY,
-    ProductName VARCHAR(100) NOT NULL,
+    ProductName VARCHAR(255) NOT NULL,
     CategoryID INT,
+    ProductImage VARCHAR(255),
     FOREIGN KEY (CategoryID) REFERENCES Category(CategoryID)
 );
+
+-- Insert initial data for Product
+INSERT INTO Product (ProductID, ProductName, CategoryID, ProductImage) VALUES
+(1, 'Smartphone', 1, ''),
+(2, 'T-Shirt', 2, ''),
+(3, 'Washing Machine', 3, '');
 
 -- VendorProduct Table
 CREATE TABLE VendorProduct (
     VendorProductID INT AUTO_INCREMENT PRIMARY KEY,
     VendorID INT,
     ProductID INT,
-    Price DECIMAL(10, 2) NOT NULL,
+    Price DECIMAL(10,2) NOT NULL,
     Quantity INT NOT NULL,
     Description TEXT,
     FOREIGN KEY (VendorID) REFERENCES Vendor(VendorID),
     FOREIGN KEY (ProductID) REFERENCES Product(ProductID)
 );
+
+-- Insert initial data for VendorProduct
+INSERT INTO VendorProduct (VendorProductID, VendorID, ProductID, Price, Quantity, Description) VALUES
+(1, 1, 1, 15000.00, 10, 'Latest model smartphone with advanced features.'),
+(2, 2, 2, 500.00, 100, 'Comfortable cotton T-shirt in various sizes.'),
+(3, 3, 3, 30000.00, 5, 'High-efficiency washing machine with 7kg capacity.');
 
 -- Courier Table
 CREATE TABLE Courier (
@@ -146,7 +169,7 @@ CREATE TABLE CartProduct (
     FOREIGN KEY (CartID) REFERENCES Cart(CartID)
 );
 
-ALTER TABLE Customer
-ADD COLUMN ResetToken VARCHAR(255) DEFAULT NULL,
-ADD COLUMN ResetTokenExpiry DATETIME DEFAULT NULL,
-ADD COLUMN Gender VARCHAR(20) AFTER LastName;
+-- Indexes for tables with foreign keys
+CREATE INDEX idx_CategoryID ON Product (CategoryID);
+CREATE INDEX idx_VendorID ON VendorProduct (VendorID);
+CREATE INDEX idx_ProductID ON VendorProduct (ProductID);
