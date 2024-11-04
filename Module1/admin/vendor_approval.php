@@ -24,10 +24,12 @@ if (isset($_POST['approve'])) {
 
     if ($vendor) {
         // Insert into vendors table
-        $stmtInsert = $pdo->prepare("INSERT INTO vendor (VendorID, Name, Email) VALUES (:vendorId, :vendorName, :email)");
+        $stmtInsert = $pdo->prepare("INSERT INTO vendor (VendorID, Name, Email, Password , Contact) VALUES (:vendorId, :vendorName, :email , :password , :contact)");
         $stmtInsert->bindParam(':vendorId', $vendor['VendorID']);
         $stmtInsert->bindParam(':vendorName', $vendor['Name']);
         $stmtInsert->bindParam(':email', $vendor['Email']);
+        $stmtInsert->bindParam(':password', $vendor['Password']);
+        $stmtInsert->bindParam(':contact', $vendor['Contact']);
         $stmtInsert->execute();
 
         // Send approval email
