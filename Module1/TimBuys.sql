@@ -12,9 +12,8 @@ CREATE TABLE Customer (
     Password VARCHAR(255) NOT NULL,
     Contact VARCHAR(20) NOT NULL,
     VerificationCode VARCHAR(10) DEFAULT NULL,
-CodeExpiry DATETIME NOT NULL,
-IsVerified TINYINT(1) DEFAULT 0;
-
+    CodeExpiry DATETIME NOT NULL,
+    IsVerified TINYINT(1) DEFAULT 0
 );
 
 -- County Table (replaces Province)
