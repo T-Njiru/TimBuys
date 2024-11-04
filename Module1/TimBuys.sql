@@ -185,3 +185,10 @@ CREATE TABLE PendingVendors (
 );
 
 ALTER TABLE Customer ADD COLUMN Role_as TINYINT(1) DEFAULT 0;
+
+CREATE TABLE newsletter_subscribers (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    email VARCHAR(255) NOT NULL UNIQUE,
+    subscribed_at DATETIME DEFAULT CURRENT_TIMESTAMP
+);
+
