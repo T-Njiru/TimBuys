@@ -13,8 +13,50 @@
       href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap"
       rel="stylesheet"
     />
+    <style>
+      .new-navbar {
+        background-color: white ; /* New navbar background color */
+        text-align: left;
+        padding: 0px 0; /* Increased padding */
+        margin-bottom: 10px; /* Space below the new navbar */
+      }
+
+      .new-navbar a {
+        color: #daa520;
+        text-decoration: underline; /* Underline for clickable link */
+        padding: 5px 5px;
+        font-weight: bold;
+        font-size: 12px;
+      }
+
+      footer {
+        background-color: #000; /* Footer background color */
+        padding: 20px 0;
+        text-align: center;
+        color: white; /* Text color for footer */
+      }
+
+      .social-icons {
+        margin-top: 10px;
+      }
+
+      .social-icons a {
+        color: #fff; /* Icon color */
+        margin: 0 10px;
+        text-decoration: none;
+        font-size: 20px;
+      }
+
+      .social-icons a:hover {
+        color: #da5200; /* Icon hover color */
+      }
+    </style>
   </head>
   <body>
+    <div class="new-navbar">
+      <a href="sell_on_tim_buys.html">Want to sell on Tim Buys?</a>
+    </div>
+
     <div class="navbar">
       <div class="logo">TIM BUYS</div>
       <div class="search-bar">
@@ -98,7 +140,7 @@
             width="200"
           />
           <p>Chunky Gemstone Rings</p>
-          <p>$30</p>
+          <p>Ksh3000</p>
         </div>
         <div class="most-viewed-item">
           <img
@@ -108,7 +150,7 @@
             width="200"
           />
           <p>Apple AirPods</p>
-          <p>$150</p>
+          <p>Ksh15000</p>
         </div>
         <div class="most-viewed-item">
           <img
@@ -118,7 +160,7 @@
             width="200"
           />
           <p>Ultimate Perfume Stand</p>
-          <p>$80</p>
+          <p>Ksh8000</p>
         </div>
       </div>
     </div>
@@ -136,7 +178,7 @@
           width="200"
         />
         <p>Nike Air Jordan 1 Mid 'Canyon'</p>
-        <p>$120</p>
+        <p>Ksh12000</p>
       </div>
       <div class="flash-sales-item">
         <img
@@ -146,7 +188,7 @@
           width="200"
         />
         <p>Chunky Gemstone Rings</p>
-        <p>$30</p>
+        <p>Ksh3000</p>
       </div>
       <div class="flash-sales-item">
         <img
@@ -156,7 +198,7 @@
           width="200"
         />
         <p>Apple AirPods</p>
-        <p>$150</p>
+        <p>Ksh15000</p>
       </div>
       <div class="flash-sales-item">
         <img
@@ -166,40 +208,7 @@
           width="200"
         />
         <p>Ultimate Perfume Stand</p>
-        <p>$80</p>
-      </div>
-    </div>
-
-    <!-- Feedback Section -->
-    <section class="feedback">
-      <h2 id="feedbackTitle">User Feedback</h2>
-      <p>"Great service and fast delivery!" - Jane Doe</p>
-      <p>"I love the variety of products!" - John Smith</p>
-    </section>
-
-    <!-- Subscribe Section -->
-    <section class="subscribe">
-      <h2 id="subscribeTitle">Subscribe to Our Newsletter</h2>
-      <form action="subscribe.php" method="POST">
-        <input
-          type="email"
-          name="email"
-          placeholder="Enter your email"
-          required
-        />
-        <button type="submit">Subscribe</button>
-      </form>
-    </section>
-
-    <!-- Terms and Conditions Popup -->
-    <div id="termsPopup" class="popup" style="display: none">
-      <div class="popup-content">
-        <span class="close" onclick="hideTermsPopup()">&times;</span>
-        <h2 id="termsTitle">Terms and Conditions</h2>
-        <p id="termsContent"></p>
-        <input type="checkbox" id="termsCheckbox" />
-        <label for="termsCheckbox">I agree to the terms and conditions</label>
-        <button onclick="agreeToTerms()">Continue</button>
+        <p>Ksh8000</p>
       </div>
     </div>
 
@@ -208,6 +217,12 @@
       <div class="language-switcher">
         <button onclick="changeLanguage('en')">English</button>
         <button onclick="changeLanguage('es')">Español</button>
+      </div>
+      <div class="social-icons">
+        <a href="#"><i class="fab fa-facebook-f"></i></a>
+        <a href="#"><i class="fab fa-twitter"></i></a>
+        <a href="#"><i class="fab fa-instagram"></i></a>
+        <a href="#"><i class="fab fa-linkedin-in"></i></a>
       </div>
     </footer>
   </body>
