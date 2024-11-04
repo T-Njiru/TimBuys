@@ -173,3 +173,15 @@ CREATE TABLE CartProduct (
 CREATE INDEX idx_CategoryID ON Product (CategoryID);
 CREATE INDEX idx_VendorID ON VendorProduct (VendorID);
 CREATE INDEX idx_ProductID ON VendorProduct (ProductID);
+
+CREATE TABLE PendingVendors (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    Name VARCHAR(255),
+    Address VARCHAR(255),
+    Email VARCHAR(255),
+    Password VARCHAR(255),
+    Contact VARCHAR(20),
+    RegistrationDate TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+ALTER TABLE Customer ADD COLUMN Role_as TINYINT(1) DEFAULT 0;
