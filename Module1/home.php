@@ -53,6 +53,27 @@ $customer = $stmt->fetch(PDO::FETCH_ASSOC);
 <body>
 <header>
     <div class="logo">TIM BUYS</div>
+    <div class="search-bar">
+        <form
+          action="http://localhost/TimBuys/Module1/search_results.php"
+          method="GET"
+        >
+          <input
+            type="text"
+            name="query"
+            placeholder="Search products, brands, and categories"
+            required
+          />
+          <select name="category">
+            <option value="">All Categories</option>
+            <option value="electronics">Electronics</option>
+            <option value="fashion">Fashion</option>
+            <option value="books">Books</option>
+            <option value="furniture">Furniture</option>
+          </select>
+          <button type="submit">Search</button>
+        </form>
+      </div>
     <nav>
         <ul>
             <li><a href="home.php">Home</a></li>
