@@ -54,14 +54,28 @@
             }
         }
 
-        window.onload = function() {
-            const orderID = getOrderID();
-            if (orderID) {
-                initMap(orderID);
-            } else {
-                console.error('Order ID not found in URL parameters.');
-            }
-        };
+        function updateOrderStatus(orderID) { 
+            fetch(`trackingPage.php?order_id=${orderID}`)
+             .then(response => response.json())
+              .then(data => {
+                 document.getElementById('order-status').innerHTML = data.status; 
+                 document.querySelectorAll('.step').forEach((step, index) => {
+                     if (index < data.step) { step.classList.add('active');
+                      } else {
+                         step.classList.remove('active');
+                         } 
+                        });
+                     }) .catch(error => console.error('Error updating status:', error)); 
+                    } 
+                    
+                    window.onload = function() 
+                    { const orderID = getOrderID(); 
+                        if (orderID) { initMap(orderID); 
+                            updateOrderStatus(orderID);
+                             setInterval(() => updateOrderStatus(orderID), 30000); // Update every 30 seconds
+                              } else { console.error('Order ID not found in URL parameters.');
+                               } 
+                            };
     </script>
 </head>
 <body>
