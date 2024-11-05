@@ -1,0 +1,8 @@
+stdClass Object
+(
+    [MerchantRequestID] => dad6-4c34-8787-c8cb963a496d991858
+    [CheckoutRequestID] => ws_CO_30102024101905377115263790
+    [ResponseCode] => 0
+    [ResponseDescription] => Success. Request accepted for processing
+    [CustomerMessage] => Success. Request accepted for processing
+)
