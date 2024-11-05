@@ -29,11 +29,11 @@
             font-weight: bold;
         }
         .card h4 {
-            color: #28a745;
+            color: #FFB700;
             font-weight: bold;
         }
         .btn-buy {
-            background-color: #28a745;
+            background-color: #FFB700;
             color: white;
             text-decoration: none;
             padding: 8px 16px;

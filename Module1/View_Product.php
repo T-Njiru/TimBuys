@@ -95,6 +95,9 @@
 
 <div class="container product-container">
     <?php
+include 'C:/xampp/htdocs/TimBuy\'s/TimBuys/Module3/cart_functions.php';
+
+    
         if (isset($_GET['productid'])) {
             // Get the product ID from the URL
             $productID = $_GET['productid'];
@@ -127,9 +130,10 @@
                     <h1 class="product-title"><?php echo $product['ProductName']; ?></h1>
                     <h2 class="product-price">KSh <?php echo number_format($product['Price'], 2); ?></h2>
                     <p class="product-description"><?php echo $product['Description']; ?></p>
-                    <form method="post" action="cart.php?action=add&id=<?php echo $productID; ?>">
-                        <button type="submit" class="btn btn-add-to-cart">Add to Cart</button>
-                    </form>
+                    <form method="post" action="../Module3/cart.php?action=add&id=<?php echo $productID; ?>">
+                    <button type="submit" class="btn btn-add-to-cart">Add to Cart</button>
+                 </form>
+
                 </div>
     <?php
             } else {
