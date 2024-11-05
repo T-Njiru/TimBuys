@@ -2,8 +2,8 @@
 require_once "transactionfncs.php";
 
  class auth{
-   private $consumer_key = 'KlF3DHj5BPzZgjFSlGNYcE8iM28HKfdZaiZ69zpD53G6EJNF';
-private $consumer_secret = 'uTGTiQJnLrSsOOED5OwJQWSWmk3hArwhk6GA47oj6YY2OGF9mmWDIXmNSKhn7tIA';
+   private $consumer_key = '';
+private $consumer_secret = '';
 private $shortcode = '174379';
 
 private $callbackUrl = 'https://6d93-197-232-135-168.ngrok-free.app/TimBuys/tryingstuff/result.php'; // Replace with your callback URL
