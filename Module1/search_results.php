@@ -33,12 +33,13 @@
             
             echo "<img src='uploads/" . $row['ProductImage'] . "' alt='" . $row['ProductName'] . "' class='card-img-top'>";
             echo "<div class='card-body'>";
-            echo "<h5 class='card-title'><a href='TimBuys\Module2\Listing\View_Product.php?productid=" . $row['ProductID'] . "'>" . $row['ProductName'] . "</a></h5>";
+            echo "<h5 class='card-title'>" . $row['ProductName'] . "</h5>";
             echo "<p class='card-text'>Price: KSh " . $row['Price'] . "</p>";
             echo "<p class='card-text'>Quantity: " . $row['Quantity'] . "</p>";
             echo "<p class='card-text'>Description: " . $row['Description'] . "</p>";
             echo "<p class='card-text'>Vendor: " . $row['VendorName'] . "</p>";
             echo "<p class='card-text'>Category: " . $row['CategoryName'] . "</p>";
+            echo "<a href='View_Product.php?productid=" . $row['ProductID'] . "' class='btn btn-primary'>View Product</a>";
             echo "</div>";
             echo "</div>";
             echo "</div>";
