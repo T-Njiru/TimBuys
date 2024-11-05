@@ -58,13 +58,13 @@
 
 <?php
 
-$conn = new mysqli("hostname", "username", "password", "TimBuys");
+$conn = new mysqli('localhost', 'root', '', 'TimBuys');
 
-
+// Check connection
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
-
+echo "Connected successfully"; 
 
 $orderID = "BC123FD456"; 
 $sql = "SELECT order_date, estimated_delivery_date, status, tracking_number FROM orders WHERE order_id = '$orderID'";
