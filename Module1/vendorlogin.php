@@ -1,9 +1,50 @@
+<?php
+// Include the Database connection class
+require_once 'connection.php';
+
+// Create a Database object and establish a connection
+$database = new Database();
+$pdo = $database->getConnection();
+
+// Start the session
+session_start();
+
+// Login logic
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $email = $_POST['email'];
+    $password = $_POST['password'];
+
+    // Check if the connection is successful
+    if ($pdo) {
+        // Prepare and execute the SQL query
+        $stmt = $pdo->prepare("SELECT * FROM Vendor WHERE Email = ?");
+        $stmt->execute([$email]);
+        $vendor = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        // Verify the password
+        if ($vendor && password_verify($password, $vendor['Password'])) {
+            // Store vendor information in session variables
+            $_SESSION['vendor_id'] = $vendor['VendorID'];
+            $_SESSION['vendor_name'] = $vendor['Name'];
+            
+            // Redirect to a dashboard or homepage after successful login
+            header("Location: ../Module2/vendor/vendor.php"); // Change 'dashboard.php' to the appropriate page
+            exit();
+        } else {
+            $error_message = "Invalid email or password. Please try again.";
+        }
+    } else {
+        $error_message = "Database connection error. Please try again later.";
+    }
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+<head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Login | TimBuys</title>
+    <title>Login | TimBuys Seller</title>
     <link
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"
@@ -49,14 +90,16 @@
         text-decoration: underline;
       }
     </style>
-  </head>
-  <body>
+</head>
+<body>
     <div class="login-wrapper">
       <h2 class="form-title">Login</h2>
-      <form
-        action="http://localhost/TimBuys/Module1/process_login.php"
-        method="POST"
-      >
+      <form action="vendorlogin.php" method="POST">
+        <?php if (isset($error_message)): ?>
+            <div class="alert alert-danger" role="alert">
+                <?php echo $error_message; ?>
+            </div>
+        <?php endif; ?>
         <div class="mb-3">
           <label for="email" class="form-label">Email</label>
           <input type="email" name="email" class="form-control" required />
@@ -80,5 +123,5 @@
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
-  </body>
+</body>
 </html>

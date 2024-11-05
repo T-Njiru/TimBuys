@@ -13,89 +13,6 @@
       href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap"
       rel="stylesheet"
     />
-    <script>
-      const translations = {
-        en: {
-          title: "TimBuys - Online Store",
-          categoriesTitle: "Product Categories",
-          featuredProductsTitle: "Featured Products",
-          discountedProductsTitle: "Discounted Products",
-          feedbackTitle: "User Feedback",
-          subscribeTitle: "Subscribe to Our Newsletter",
-          termsTitle: "Terms and Conditions",
-          termsContent: `Welcome to TimBuys. By using our site, you agree to our terms of service. 
-                Please read them carefully. 1. You must be at least 18 years old to use our services. 
-                2. You agree to provide accurate information when registering. 
-                3. We reserve the right to cancel or suspend your account if you violate any terms. 
-                4. Our products are sold as described. If you receive a faulty item, please contact us within 30 days. 
-                5. We are not responsible for any loss or damage caused by the use of our products.`,
-        },
-        es: {
-          title: "TimBuys - Tienda en Línea",
-          categoriesTitle: "Categorías de Productos",
-          featuredProductsTitle: "Productos Destacados",
-          discountedProductsTitle: "Productos Descuentados",
-          feedbackTitle: "Comentarios de Usuarios",
-          subscribeTitle: "Suscríbete a Nuestro Boletín",
-          termsTitle: "Términos y Condiciones",
-          termsContent: `Bienvenido a TimBuys. Al usar nuestro sitio, aceptas nuestros términos de servicio. 
-                Léelos atentamente. 1. Debes tener al menos 18 años para usar nuestros servicios. 
-                2. Aceptas proporcionar información precisa al registrarte. 
-                3. Nos reservamos el derecho de cancelar o suspender tu cuenta si violas alguno de los términos. 
-                4. Nuestros productos se venden como se describen. Si recibes un artículo defectuoso, contáctanos dentro de 30 días. 
-                5. No somos responsables de ninguna pérdida o daño causado por el uso de nuestros productos.`,
-        },
-      };
-
-      function changeLanguage(language) {
-        document.title = translations[language].title;
-        document.getElementById("categoriesTitle").innerText =
-          translations[language].categoriesTitle;
-        document.getElementById("featuredProductsTitle").innerText =
-          translations[language].featuredProductsTitle;
-        document.getElementById("discountedProductsTitle").innerText =
-          translations[language].discountedProductsTitle;
-        document.getElementById("feedbackTitle").innerText =
-          translations[language].feedbackTitle;
-        document.getElementById("subscribeTitle").innerText =
-          translations[language].subscribeTitle;
-        document.getElementById("termsTitle").innerText =
-          translations[language].termsTitle;
-        document.getElementById("termsContent").innerText =
-          translations[language].termsContent;
-      }
-
-      function showTermsPopup() {
-        document.getElementById("termsPopup").style.display = "block";
-      }
-
-      function hideTermsPopup() {
-        document.getElementById("termsPopup").style.display = "none";
-        localStorage.setItem("termsAccepted", "true"); // Store acceptance in local storage
-      }
-
-      function agreeToTerms() {
-        const checkbox = document.getElementById("termsCheckbox");
-        if (checkbox.checked) {
-          alert("Thank you for agreeing to the terms and conditions!");
-          hideTermsPopup();
-        } else {
-          alert("Please agree to the terms and conditions to proceed.");
-        }
-      }
-
-      function checkTermsAcceptance() {
-        const accepted = localStorage.getItem("termsAccepted");
-        if (!accepted) {
-          showTermsPopup();
-        }
-      }
-
-      window.onload = function () {
-        checkTermsAcceptance();
-        changeLanguage("en"); // Default to English
-      };
-    </script>
   </head>
   <body>
     <div class="navbar">
@@ -125,7 +42,7 @@
           </a>
           <div class="dropdown-content">
             <button onclick="location.href='login.html';">Log In</button>
-            <button onclick="location.href='../Module1.2/signin.html';">
+            <button onclick="location.href='../Module1/signin.html';">
               Sign Up
             </button>
           </div>
@@ -275,15 +192,12 @@
     </section>
 
     <!-- Terms and Conditions Popup -->
-    <div id="termsPopup" class="popup" style="display: none;">
+    <div id="termsPopup" class="popup" style="display: none">
       <div class="popup-content">
         <span class="close" onclick="hideTermsPopup()">&times;</span>
         <h2 id="termsTitle">Terms and Conditions</h2>
         <p id="termsContent"></p>
-        <input
-          type="checkbox"
-          id="termsCheckbox"
-        />
+        <input type="checkbox" id="termsCheckbox" />
         <label for="termsCheckbox">I agree to the terms and conditions</label>
         <button onclick="agreeToTerms()">Continue</button>
       </div>

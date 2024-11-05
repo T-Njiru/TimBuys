@@ -14,6 +14,7 @@ CREATE TABLE Customer (
     VerificationCode VARCHAR(10) DEFAULT NULL,
 CodeExpiry DATETIME NOT NULL,
 IsVerified TINYINT(1) DEFAULT 0;
+
 );
 
 -- County Table (replaces Province)
@@ -145,3 +146,8 @@ CREATE TABLE CartProduct (
     FOREIGN KEY (VendorProductID) REFERENCES VendorProduct(VendorProductID),
     FOREIGN KEY (CartID) REFERENCES Cart(CartID)
 );
+
+ALTER TABLE Customer
+ADD COLUMN ResetToken VARCHAR(255) DEFAULT NULL,
+ADD COLUMN ResetTokenExpiry DATETIME DEFAULT NULL,
+ADD COLUMN Gender VARCHAR(20) AFTER LastName;

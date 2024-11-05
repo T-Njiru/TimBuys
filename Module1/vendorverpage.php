@@ -20,7 +20,7 @@
         <h2 class="form-title">Enter Verification Code</h2>
         <p class="form-subtitle">We have sent a 4-digit code to your email. Please enter it below.</p>
 
-        <form action="code.php" method="POST">
+        <form action="vendorcode.php" method="POST">
             <div class="code-input">
                 <input type="text" maxlength="1" name="digit1" required>
                 <input type="text" maxlength="1" name="digit2" required>
