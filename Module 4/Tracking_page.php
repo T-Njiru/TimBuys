@@ -91,7 +91,7 @@
         <span class="text">Order Arrived</span>
     </div>
 </div>
-<button class="back-button">Back to Orders</button>
+<button class="back-button">Back to Home</button>
 </div>
         
         <!-- Leaflet Map Container -->

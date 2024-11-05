@@ -1,6 +1,12 @@
 <?php
-// Include the Database connection class
+// Include the Database connection class and PHPMailer
 require_once 'connection.php';
+require 'PHPMailer/src/Exception.php';  
+require 'PHPMailer/src/PHPMailer.php';  
+require 'PHPMailer/src/SMTP.php';  
+
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
 
 // Create a Database object and establish a connection
 $database = new Database();
@@ -16,14 +22,52 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // Check if the connection is successful
     if ($pdo) {
-        // Prepare and execute the SQL query
-        $stmt = $pdo->prepare("INSERT INTO Vendor (Name, Address, Email, Password, Contact) VALUES (?, ?, ?, ?, ?)");
+        // Prepare and execute the SQL query to insert into pendingvendors
+        $stmt = $pdo->prepare("INSERT INTO pendingvendors (Name, Address, Email, Password, Contact) VALUES (?, ?, ?, ?, ?)");
         
         // Check for successful execution
         if ($stmt->execute([$name, $address, $email, $password, $contact])) {
-            // Redirect to the login page after successful registration
-            header("Location: vendorlogin.php"); // Change 'login.php' to the actual path of your login page
-            exit(); // Terminate the script after redirection
+            // Send notification to the admin
+            $adminEmail = 'fmarsa99@gmail.com';
+
+            // Create a new PHPMailer instance
+            $mail = new PHPMailer(true);
+            try {
+                //Server settings
+                $mail->isSMTP();                                            // Set mailer to use SMTP
+                $mail->Host       = 'smtp.gmail.com';                     // Specify your SMTP server
+                $mail->SMTPAuth   = true;                                 // Enable SMTP authentication
+                $mail->Username   = 'fatumamm99@gmail.com';               // Your SMTP username
+                $mail->Password   = 'mjdn nvnf qkcq iiyi';                // Your SMTP password
+                $mail->SMTPSecure = 'tls';                                // Enable TLS encryption
+                $mail->Port       = 587;                                  // TCP port for TLS
+
+                // Recipients
+                $mail->setFrom('fatumamm99@gmail.com', 'Fatma');
+                $mail->addAddress($adminEmail);                           // Add the admin's email as a recipient
+
+                // Content
+                $mail->isHTML(true);                                      // Set email format to HTML
+                $mail->Subject = 'New Vendor Registration';
+                $mail->Body    = "A new vendor has registered:<br>
+                                  <strong>Name:</strong> $name<br>
+                                  <strong>Address:</strong> $address<br>
+                                  <strong>Email:</strong> $email<br>
+                                  <strong>Contact:</strong> $contact<br>
+                                  Please review and approve this vendor.";
+
+                $mail->send();
+                
+                // Store vendor email in session to check later
+                session_start();
+                $_SESSION['vendor_email'] = $email;
+
+                // Redirect to loading page
+                header("Location: loading.php");
+                exit();
+            } catch (Exception $e) {
+                echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
+            }
         } else {
             echo "<p class='error' style='color: red;'>Error: Unable to register vendor. Please try again later.</p>";
         }

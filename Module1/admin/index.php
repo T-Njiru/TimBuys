@@ -4,11 +4,69 @@ include('../connection.php');
 // Initialize Database and get connection
 $database = new Database();
 $pdo = $database->getConnection();
+
+// Function to send approval email
+function sendApprovalEmail($email, $vendorName) {
+    // Use PHPMailer or any mail function to send the email
+    $subject = "Vendor Registration Approved";
+    $message = "Dear $vendorName,\n\nYour vendor registration has been approved. You can now log in to your account.\n\nBest regards,\nThe Team";
+    
+    // Mail function (adjust as per your email sending configuration)
+    mail($email, $subject, $message);
+}
+
+// Approve vendor if approved button is clicked
+if (isset($_POST['approve'])) {
+    $vendorId = $_POST['vendor_id'];
+
+    // Fetch vendor details
+    $stmt = $pdo->prepare("SELECT * FROM pendingvendors WHERE VendorID = :vendorId");
+    $stmt->bindParam(':vendorId', $vendorId);
+    $stmt->execute();
+    $vendor = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    if ($vendor) {
+        // Insert into vendors table
+        $stmtInsert = $pdo->prepare("INSERT INTO vendors (VendorID, VendorName, Email) VALUES (:vendorId, :vendorName, :email)");
+        $stmtInsert->bindParam(':vendorId', $vendor['VendorID']);
+        $stmtInsert->bindParam(':vendorName', $vendor['VendorName']);
+        $stmtInsert->bindParam(':email', $vendor['Email']);
+        $stmtInsert->execute();
+
+        // Send approval email
+        sendApprovalEmail($vendor['Email'], $vendor['VendorName']);
+
+        // Remove from pendingvendors table
+        $stmtDelete = $pdo->prepare("DELETE FROM pendingvendors WHERE VendorID = :vendorId");
+        $stmtDelete->bindParam(':vendorId', $vendorId);
+        $stmtDelete->execute();
+
+        echo "<script>alert('Vendor approved and notification sent.');</script>";
+    }
+}
 ?>
 
 <?php include('includes/header.php'); ?>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" href="#">Admin Dashboard</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav">
+            <li class="nav-item active">
+                <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="vendor_approval.php">Vendors</a>
+            </li>
+            <!-- Add more links as needed -->
+        </ul>
+    </div>
+</nav>
 <div class="container mt-4">
     <h2>Hello Admin</h2>
+    <!-- Your existing dashboard content -->
     <div class="row">
         <!-- Today's Money -->
         <div class="col-md-3">
@@ -25,7 +83,7 @@ $pdo = $database->getConnection();
                     $result = $stmt->fetch(PDO::FETCH_ASSOC);
                     $revenue = $result['revenue'] ?? 0;
                     ?>
-                    <h3>$<?php echo number_format($revenue, 2); ?></h3>
+                    <h3>Ksh<?php echo number_format($revenue, 2); ?></h3>
                     <p class="text-success">+55% than last week</p>
                 </div>
             </div>
@@ -147,11 +205,13 @@ new Chart(document.getElementById("websiteViewsChart"), {
 new Chart(document.getElementById("dailySalesChart"), {
     type: 'line',
     data: {
-        labels: ['J', 'F', 'M', 'A', 'M', 'J', 'J', 'A', 'S', 'O', 'N', 'D'],
+        labels: ['J', 'F', 'M', 'A', 'M', 'J', 'J', 'A', 'S', 'O'],
         datasets: [{
             label: 'Sales',
-            data: [300, 400, 150, 200, 500, 250, 400, 300, 350, 220, 400, 380],
-            borderColor: 'rgba(54, 162, 235, 1)',
+            data: [12, 19, 3, 5, 2, 3, 7],
+            backgroundColor: 'rgba(255, 99, 132, 0.6)',
+            borderColor: 'rgba(255, 99, 132, 1)',
+            borderWidth: 1,
             fill: false
         }]
     },
@@ -160,14 +220,13 @@ new Chart(document.getElementById("dailySalesChart"), {
 
 // Data for Completed Tasks Chart
 new Chart(document.getElementById("completedTasksChart"), {
-    type: 'line',
+    type: 'doughnut',
     data: {
-        labels: ['Apr', 'Jun', 'Aug', 'Oct', 'Dec'],
+        labels: ['Completed', 'Pending'],
         datasets: [{
-            label: 'Tasks',
-            data: [100, 300, 400, 320, 450],
-            borderColor: 'rgba(153, 102, 255, 1)',
-            fill: false
+            data: [60, 40],
+            backgroundColor: ['#36A2EB', '#FF6384'],
+            hoverBackgroundColor: ['#36A2EB', '#FF6384']
         }]
     },
     options: { responsive: true }

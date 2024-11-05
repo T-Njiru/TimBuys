@@ -1,6 +1,6 @@
 body {
   margin: 0;
-  font-family: Arial, sans-serif;
+  
   background-color: white;
   
 }
@@ -10,6 +10,7 @@ body {
   align-items: center;
   padding: 10px 20px;
   background-color: #000;
+  justify-content: space-between;
 }
 
 .navbar .logo {
@@ -20,13 +21,12 @@ body {
 }
 
 .navbar .search-bar {
-  flex-grow: 1;
+  width: 500px;/* Adjust this value to control the width of the search bar */
   display: flex;
-  align-items: center;
-}
 
+}
 .navbar .search-bar input[type="text"] {
-  width: 100%;
+    flex-grow: 1; 
   padding: 10px;
   border: none;
   border-radius: 5px 0 0 5px;
@@ -122,8 +122,8 @@ body {
   padding: 20px;
   background-color: #4a2801;
   color: white;
-  background-image:url(../images/background.jpeg);
-  height: 450px;
+  background-image:url(../images/newbackground.jpg);
+  height: 400px;
   background-size: cover; /* Use cover or contain based on your needs */
   background-repeat: no-repeat; /* Prevents the image from repeating */
   background-position: center;
