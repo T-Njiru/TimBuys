@@ -2,8 +2,9 @@
 include_once('cart_functions.php'); 
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['product_id'])) {
+    echo $_POST['product_id'];
     $productID = intval($_POST['product_id']);
-
+echo $productID;
     // Connect to the database
     $conn = new mysqli('localhost', 'root', '', 'timbuys'); 
 
@@ -21,7 +22,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['product_id'])) {
     $stmt->bind_param("i", $productID);
     $stmt->execute();
     $result = $stmt->get_result();
-
+    // $product = $result->fetch_assoc();
+    // print_r($product);
     if ($result->num_rows > 0) {
         $product = $result->fetch_assoc();
         addToCart($product);

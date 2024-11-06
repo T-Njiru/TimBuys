@@ -71,8 +71,13 @@
 <div class="container mt-5">
     <?php
     // Connect to the database
+<<<<<<< HEAD
+    $conn = new mysqli('localhost', 'root', '', 'timbuys_database', '3307');
+
+=======
     $conn = new mysqli('localhost', 'root', '', 'timbuys_database');
   
+>>>>>>> 5aec4eef1f68205180d8a45367156a5dfa64484a
     // Check connection
     if ($conn->connect_error) {
         die("Connection failed: " . $conn->connect_error);
@@ -124,7 +129,11 @@
     // Close the database connection
     $conn->close();
     ?>
+<<<<<<< HEAD
+</div>
+=======
 </div>
 
 </body>
 </html>
+>>>>>>> 5aec4eef1f68205180d8a45367156a5dfa64484a

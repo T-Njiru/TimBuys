@@ -4,7 +4,7 @@ class Database {
     private $dbname = 'timbuys';  // Your database name
     private $username = 'root';   // Your database username
     private $password = '';       // Your database password
-
+   private $port = '3307';     //MY PORT
     public $conn;
 
     public function getConnection() {

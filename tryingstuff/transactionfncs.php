@@ -82,23 +82,5 @@ function stkPushRequest($access_token, $shortcode, $amount, $phoneNumber, $callb
 
 
 
-// $consumer_key = 'KlF3DHj5BPzZgjFSlGNYcE8iM28HKfdZaiZ69zpD53G6EJNF';
-// $consumer_secret = 'uTGTiQJnLrSsOOED5OwJQWSWmk3hArwhk6GA47oj6YY2OGF9mmWDIXmNSKhn7tIA';
-// $shortcode = '174379';
-// $amount = 1; // Replace with desired amount
-// $phoneNumber = '254115263790'; // Replace with customer's phone number
-// $callbackUrl = 'https://7a43-197-232-135-168.ngrok-free.app/TimBuys/tryingstuff/result.php'; // Replace with your callback URL
-// $accountReference = 'Timbuys'; // Replace with reference
-// $transactionDesc = 'Jasons custom charge'; // Replace with transaction description
-
-// // Step 1: Get Access Token
-// $access_token = generateAccessToken($consumer_key, $consumer_secret);
-// echo "Access Token: " . $access_token . "\n"; // Debug line
-
-// // Step 2: Initiate STK Push
-// $response = stkPushRequest($access_token, $shortcode, $amount, $phoneNumber, $callbackUrl, $accountReference, $transactionDesc);
-// // file_put_contents('stk_push_response.txt', print_r($response, true));
-// // Output the response for verification
-// // print_r($response);
 
 ?>
