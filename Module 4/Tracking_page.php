@@ -19,9 +19,9 @@
             return urlParams.get('order_id');
         }
 
-        async function initMap(orderID) {
+        async function initMap(OrderID) {
             try {
-                const response = await fetch(`getCoordinates.php?order_id=${orderID}`); // Fetch coordinates from the backend
+                const response = await fetch(`getCoordinates.php?order_id=${OrderID}`); // Fetch coordinates from the backend
                 const data = await response.json();
 
                 if (data.error) {
@@ -41,7 +41,7 @@
                 }).addTo(map);
 
                 // Route (polyline) between start and end
-                const route = L.polyline([start, end], { color: 'blue' }).addTo(map);
+                const route = L.polyline([start, end], { color: '#daa520' }).addTo(map);
 
                 // Markers at start and end
                 L.marker(start).addTo(map).bindPopup('Picked Up Location').openPopup();
@@ -54,8 +54,8 @@
             }
         }
 
-        function updateOrderStatus(orderID) { 
-            fetch(`trackingPage.php?order_id=${orderID}`)
+        function updateOrderStatus(OrderID) { 
+            fetch(`trackingPage.php?order_id=${OrderID}`)
              .then(response => response.json())
               .then(data => {
                  document.getElementById('order-status').innerHTML = data.status; 
@@ -69,10 +69,10 @@
                     } 
                     
                     window.onload = function() 
-                    { const orderID = getOrderID(); 
-                        if (orderID) { initMap(orderID); 
-                            updateOrderStatus(orderID);
-                             setInterval(() => updateOrderStatus(orderID), 30000); // Update every 30 seconds
+                    { const OrderID = getOrderID(); 
+                        if (OrderID) { initMap(OrderID); 
+                            updateOrderStatus(OrderID);
+                             setInterval(() => updateOrderStatus(OrderID), 30000); // Update every 30 seconds
                               } else { console.error('Order ID not found in URL parameters.');
                                } 
                             };
@@ -118,27 +118,26 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-$orderID = $_GET['order_id']; 
+$OrderID = $_GET['order_id']; 
 
 // Fetch vendor and customer IDs from orders table
-$sql = "SELECT vendor_id, customer_id, order_date, status, tracking_number FROM orders WHERE order_id = '$orderID'";
+$sql = "SELECT customer_id, order_date, status, tracking_number FROM orders WHERE tracking_numbers = '$OrderID'";
 $result = $conn->query($sql);
 
 if ($result->num_rows > 0) {
     $row = $result->fetch_assoc();
-    $vendorID = $row['vendor_id'];
     $customerID = $row['customer_id'];
     $orderDate = $row['order_date'];
     $status = $row['status'];
     $trackingNumber = $row['tracking_number'];
 
     // Fetch vendor address
-    $vendorQuery = "SELECT address FROM vendors WHERE vendor_id = '$vendorID'";
+    $vendorQuery = "SELECT address FROM vendors WHERE vendor_id = '$VendorID'";
     $vendorResult = $conn->query($vendorQuery);
     $vendorAddress = $vendorResult->fetch_assoc()['address'];
 
     // Fetch customer address
-    $customerQuery = "SELECT address FROM customers WHERE customer_id = '$customerID'";
+    $customerQuery = "SELECT address FROM  WHERE customer_id = '$CustomerID'";
     $customerResult = $conn->query($customerQuery);
     $customerAddress = $customerResult->fetch_assoc()['address'];
 
@@ -185,7 +184,7 @@ $conn->close();
 <div class="Tracking">
     <h2>My Order</h2>
     <span class="line"></span>
-    <h4>Order ID: <?= $orderID ?></h4>
+    <h4>Order ID: <?= $OrderID ?></h4>
     <div id="card">
         <div class="Card">
             <div class="col"><strong>Estimated Delivery Date:</strong> <br><?= $estimatedDeliveryDate ?></div>
