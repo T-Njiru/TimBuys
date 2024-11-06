@@ -71,13 +71,8 @@
 <div class="container mt-5">
     <?php
     // Connect to the database
-<<<<<<< HEAD
-    $conn = new mysqli('localhost', 'root', '', 'timbuys, '3307');
-
-=======
     $conn = new mysqli('localhost', 'root', '', 'timbuys');
   
->>>>>>> 5aec4eef1f68205180d8a45367156a5dfa64484a
     // Check connection
     if ($conn->connect_error) {
         die("Connection failed: " . $conn->connect_error);
