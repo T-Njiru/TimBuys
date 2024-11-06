@@ -103,7 +103,7 @@ include 'C:/xampp/htdocs/TimBuys/Module3/cart_functions.php';
             $productID = $_GET['productid'];
             
             // Connect to the database
-            $connect = mysqli_connect('localhost', 'root', '', 'timbuys_database');
+            $connect = mysqli_connect('localhost', 'root', '', 'TimBuys');
             
             // Check connection
             if (!$connect) {
