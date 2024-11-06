@@ -72,10 +72,10 @@
     <?php
     // Connect to the database
 <<<<<<< HEAD
-    $conn = new mysqli('localhost', 'root', '', 'timbuys_database', '3307');
+    $conn = new mysqli('localhost', 'root', '', 'timbuys, '3307');
 
 =======
-    $conn = new mysqli('localhost', 'root', '', 'timbuys_database');
+    $conn = new mysqli('localhost', 'root', '', 'timbuys');
   
 >>>>>>> 5aec4eef1f68205180d8a45367156a5dfa64484a
     // Check connection
