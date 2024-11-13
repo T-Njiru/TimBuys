@@ -1,28 +1,6 @@
 <?php include_once('../Module3/cart_functions.php'); 
 require_once('checkoutfncs.php'); 
-$SessionID=session_id();
-$CustomerID="1";
-$servername="localhost"; 
-$username="root";
-$password="";
-$dbname="timbuys";
 
-$conn = new mysqli($servername, $username, $password, $dbname);
-
-$sql="DELETE from sessionid where CustomerID=?";
-$stmt = $conn->prepare($sql);
-$stmt->bind_param("i",$CustomerID);
-$stmt->execute();
-// Close the statement and connection
-$stmt->close();
-
-
-$sql = "INSERT IGNORE INTO sessionid (SessionID,CustomerID) VALUES (?,?)";
-$stmt = $conn->prepare($sql);
-    $stmt->bind_param("si", $SessionID,$CustomerID);
-    $stmt->execute();
-    $stmt->close();
-    $conn->close();
 $checkout=new checkout();
  ?>
 <!DOCTYPE html>

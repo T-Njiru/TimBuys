@@ -29,7 +29,7 @@ echo $productID;
         addToCart($product);
         $stmt->close();
         $conn->close();
-        header("Location: cart.php"); 
+        header("Location: ../Module1/home.php"); 
         exit();
     } else {
         $stmt->close();

@@ -3,6 +3,7 @@ session_start();
 
 require_once('../Module3/cart_functions.php');
 require_once  '../tryingstuff/cartcontent.php';
+
 $Cart=new cart();
 $Specific=$Cart->load();
 
@@ -17,6 +18,30 @@ if (!isset($_SESSION['customer_id'])) {
     header('Location: login.php'); // Redirect to login if not logged in
     exit();
 }
+
+$SessionID=session_id();
+$CustomerID=$_SESSION['customer_id'];
+$servername="localhost"; 
+$username="root";
+$password="";
+$dbname="timbuys";
+
+$conn = new mysqli($servername, $username, $password, $dbname);
+
+$sql="DELETE from sessionid where CustomerID=?";
+$stmt = $conn->prepare($sql);
+$stmt->bind_param("i",$CustomerID);
+$stmt->execute();
+// Close the statement and connection
+$stmt->close();
+
+
+$sql = "INSERT IGNORE INTO sessionid (SessionID,CustomerID) VALUES (?,?)";
+$stmt = $conn->prepare($sql);
+    $stmt->bind_param("si", $SessionID,$CustomerID);
+    $stmt->execute();
+    $stmt->close();
+    $conn->close();
 
 // Fetch customer details
 $customer_id = $_SESSION['customer_id'];
@@ -35,6 +60,7 @@ $customer = $stmt->fetch(PDO::FETCH_ASSOC);
     <link rel="stylesheet" href="styles/homephp.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="sha384-k6RqeWeci5ZR/Lv4MR0sA0FfDOMYgDgrLqWtvU8cXWjl5u7v77IXE2KwGOMdM5g" crossorigin="anonymous" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
       body {
           font-family: Arial, sans-serif;
@@ -84,15 +110,16 @@ $customer = $stmt->fetch(PDO::FETCH_ASSOC);
         <ul>
             <li><a href="home.php">Home</a></li>
             <li><a href="products.php">Products</a></li>
-            <li><button class="btn " type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasWithBothOptions" aria-controls="offcanvasWithBothOptions"><a href="#"><i class="fas fa-shopping-cart"></i>Cart</a></button></li>
+            <li><button class="btn " type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasWithBothOptions" aria-controls="offcanvasWithBothOptions"><a href="#">Cart</a></button></li>
             <li><a href="profile.php">Profile</a></li>
             <li><a href="logout.php">Logout</a></li>
         </ul>
-    </nav>
-    <!--Cart-->
+         <!--Cart-->
    <?php     
   $Cart->cart($Specific);
   ?>
+    </nav>
+   
     <div class="welcome-message">
         <i class="bi bi-person-circle profile-icon"></i> <!-- Profile icon from Bootstrap Icons -->
         Welcome, <?php echo htmlspecialchars($customer['FirstName']); ?>!
@@ -210,4 +237,5 @@ $customer = $stmt->fetch(PDO::FETCH_ASSOC);
         <p>&copy; 2024 Tim Buys. All rights reserved.</p>
     </footer>
 </body>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </html>

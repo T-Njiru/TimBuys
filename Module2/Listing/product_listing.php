@@ -74,7 +74,7 @@
                     <h5 class="card-title"><?php echo $product['ProductName']; ?></h5>
                     <h4><?php echo "$" . $product['Price']; ?></h4>
                     <form method="post" action="../../Module3/add_to_cart.php">
-                        <input type="hidden" name="product_id" value="<?php $product['ProductID']?>">
+                        <input type="hidden" name="product_id" value="<?php echo $product['ProductID']?>">
                         <button type="submit" class="btn btn-success btn-block">Add to Cart</button>
                     </form>
                     <a href="item.php?productid=<?php echo $product['ProductID']; ?>" class="btn-buy d-block text-center mt-2">Buy</a>
