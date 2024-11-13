@@ -53,7 +53,7 @@
     <h1>Products</h1>
     <div class="row">
         <?php
-            $connect = mysqli_connect('localhost', 'root', '', 'timbuys_database');
+            $connect = mysqli_connect('localhost', 'root', '', 'timbuys');
             $query = "
                 SELECT p.ProductID, p.ProductName, p.ProductImage, vp.Price, vp.Quantity 
                 FROM product p
