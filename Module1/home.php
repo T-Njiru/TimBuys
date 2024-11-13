@@ -2,7 +2,7 @@
 session_start();
 
 require_once('../Module3/cart_functions.php');
-require_once  'cartcontent.php';
+require_once  '../tryingstuff/cartcontent.php';
 $Cart=new cart();
 $Specific=$Cart->load();
 
@@ -84,7 +84,7 @@ $customer = $stmt->fetch(PDO::FETCH_ASSOC);
         <ul>
             <li><a href="home.php">Home</a></li>
             <li><a href="products.php">Products</a></li>
-            <li><button class="btn " type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasWithBothOptions" aria-controls="offcanvasWithBothOptions"><a href="cart.php">Cart</a></button></li>
+            <li><button class="btn " type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasWithBothOptions" aria-controls="offcanvasWithBothOptions"><a href="#"><i class="fas fa-shopping-cart"></i>Cart</a></button></li>
             <li><a href="profile.php">Profile</a></li>
             <li><a href="logout.php">Logout</a></li>
         </ul>

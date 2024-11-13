@@ -53,7 +53,7 @@
     <h1>Products</h1>
     <div class="row">
         <?php
-            $connect = mysqli_connect('localhost', 'root', '', 'timbuys_database');
+            $connect = mysqli_connect('localhost', 'root', '', 'timbuys');
             $query = "
                 SELECT p.ProductID, p.ProductName, p.ProductImage, vp.Price, vp.Quantity 
                 FROM product p
@@ -73,7 +73,8 @@
                 <div class="card-body">
                     <h5 class="card-title"><?php echo $product['ProductName']; ?></h5>
                     <h4><?php echo "$" . $product['Price']; ?></h4>
-                    <form method="post" action="index.php?action=add&id=<?php echo $product['ProductID']; ?>">
+                    <form method="post" action="../../Module3/add_to_cart.php">
+                        <input type="hidden" name="product_id" value="<?php $product['ProductID']?>">
                         <button type="submit" class="btn btn-success btn-block">Add to Cart</button>
                     </form>
                     <a href="item.php?productid=<?php echo $product['ProductID']; ?>" class="btn-buy d-block text-center mt-2">Buy</a>
