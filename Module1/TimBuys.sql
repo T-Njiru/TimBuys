@@ -125,14 +125,6 @@ CREATE TABLE `orders` (
   `Address` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Dumping data for table `orders`
---
-
-INSERT INTO `orders` (`OrderID`, `CustomerID`, `OrderDate`, `Address`) VALUES
-('TBY32118', 1, '2024-11-04 22:03:00', '123 Location, Place'),
-('TBY46475', 1, '2024-11-04 22:05:39', '123 Location, Place'),
-('TBY50440', 1, '2024-11-04 22:19:51', 'Strathmore School');
 
 
 -- OrderedProduct Table
@@ -143,16 +135,7 @@ CREATE TABLE `orderedproduct` (
   `Quantity` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Dumping data for table `orderedproduct`
---
 
-INSERT INTO `orderedproduct` (`OrderedProductID`, `VendorProductID`, `OrderID`, `Quantity`) VALUES
-(23, 1, 'TBY32118', 1),
-(24, 1, 'TBY46475', 1),
-(25, 2, 'TBY46475', 1),
-(28, 1, 'TBY50440', 1),
-(29, 2, 'TBY50440', 1);
 
 
 --
@@ -164,12 +147,7 @@ CREATE TABLE `sessionid` (
   `CustomerID` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Dumping data for table `sessionid`
---
 
-INSERT INTO `sessionid` (`SessionID`, `CustomerID`) VALUES
-('5a4eum5fum1m9j0drqc1p2938u', 1);
 
 -- --------------------------------------------------------
 
