@@ -121,14 +121,14 @@ if ($conn->connect_error) {
 $OrderID = $_GET['OrderID']; 
 
 // Fetch vendor and customer IDs from orders table
-$sql = "SELECT CustomerID, OrderDate, status, tracking_number FROM orders WHERE tracking_numbers = '$OrderID'";
+$sql = "SELECT CustomerID, OrderDate, Status, tracking_number FROM orders WHERE tracking_numbers = '$OrderID'";
 $result = $conn->query($sql);
 
 if ($result->num_rows > 0) {
     $row = $result->fetch_assoc();
-    $customerID = $row['customer_id'];
-    $orderDate = $row['order_date'];
-    $status = $row['status'];
+    $customerID = $row['CustomerID'];
+    $orderDate = $row['OrderDate'];
+    $status = $row['Status'];
     $trackingNumber = $row['tracking_number'];
 
     // Fetch vendor address
