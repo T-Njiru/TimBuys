@@ -118,10 +118,10 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-$OrderID = $_GET['order_id']; 
+$OrderID = $_GET['OrderID']; 
 
 // Fetch vendor and customer IDs from orders table
-$sql = "SELECT customer_id, order_date, status, tracking_number FROM orders WHERE tracking_numbers = '$OrderID'";
+$sql = "SELECT CustomerID, OrderDate, status, tracking_number FROM orders WHERE tracking_numbers = '$OrderID'";
 $result = $conn->query($sql);
 
 if ($result->num_rows > 0) {
