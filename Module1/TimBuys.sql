@@ -132,7 +132,8 @@ CREATE TABLE `orderedproduct` (
   `OrderedProductID` int(11) NOT NULL,
   `VendorProductID` int(11) DEFAULT NULL,
   `OrderID` varchar(255) DEFAULT NULL,
-  `Quantity` int(11) NOT NULL
+  `Quantity` int(11) NOT NULL,
+  'Status' varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 

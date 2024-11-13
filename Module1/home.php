@@ -1,5 +1,11 @@
 <?php
 session_start();
+
+require_once('../Module3/cart_functions.php');
+require_once  'cartcontent.php';
+$Cart=new cart();
+$Specific=$Cart->load();
+
 include_once 'connection.php'; // Include your connection file
 
 // Create a new instance of the Database class
@@ -78,11 +84,15 @@ $customer = $stmt->fetch(PDO::FETCH_ASSOC);
         <ul>
             <li><a href="home.php">Home</a></li>
             <li><a href="products.php">Products</a></li>
-            <li><a href="cart.php">Cart</a></li>
+            <li><button class="btn " type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasWithBothOptions" aria-controls="offcanvasWithBothOptions"><a href="cart.php">Cart</a></button></li>
             <li><a href="profile.php">Profile</a></li>
             <li><a href="logout.php">Logout</a></li>
         </ul>
     </nav>
+    <!--Cart-->
+   <?php     
+  $Cart->cart($Specific);
+  ?>
     <div class="welcome-message">
         <i class="bi bi-person-circle profile-icon"></i> <!-- Profile icon from Bootstrap Icons -->
         Welcome, <?php echo htmlspecialchars($customer['FirstName']); ?>!
