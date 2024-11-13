@@ -16,7 +16,7 @@
     <script>
         function getOrderID() {
             const urlParams = new URLSearchParams(window.location.search);
-            return urlParams.get('order_id');
+            return urlParams.get('OrderID');
         }
 
         async function initMap(OrderID) {
