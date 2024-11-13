@@ -23,7 +23,7 @@ if (isset($_POST['submit'])) {
     // Move the uploaded file
     if (move_uploaded_file($_FILES['product_image']['tmp_name'], $target_file)) {
         // Database connection
-        $conn = new mysqli('localhost:3306', 'root', '', 'timbuys_database');
+        $conn = new mysqli('localhost:3306', 'root', '', 'timbuys');
         if ($conn->connect_error) {
             die("Connection failed: " . $conn->connect_error);
         }
