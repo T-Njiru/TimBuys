@@ -68,6 +68,12 @@ CREATE TABLE Vendor (
     Contact VARCHAR(20) NOT NULL
 );
 
+-- Insert initial data for Vendor
+INSERT INTO Vendor (VendorID, Name, Address, Email, Password, Contact) VALUES
+(1, 'Vendor One', '123 Street', 'vendor1@example.com', 'password123', '0712345678'),
+(2, 'Vendor Two', '456 Avenue', 'vendor2@example.com', 'password123', '0723456789'),
+(3, 'Vendor Three', '789 Boulevard', 'vendor3@example.com', 'password123', '0734567890');
+
 -- Product Table
 CREATE TABLE Product (
     ProductID INT AUTO_INCREMENT PRIMARY KEY,
@@ -119,38 +125,30 @@ CREATE TABLE VendorCourier (
 
 -- Orders Table
 CREATE TABLE `orders` (
-  `OrderID` varchar(255) NOT NULL,
-  `CustomerID` int(11) DEFAULT NULL,
-  `OrderDate` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
-  `Address` varchar(255) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
-
+    `OrderID` VARCHAR(255) PRIMARY KEY,
+    `CustomerID` INT,
+    `OrderDate` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    `Address` VARCHAR(255),
+    FOREIGN KEY (CustomerID) REFERENCES Customer(CustomerID)
+);
 
 -- OrderedProduct Table
 CREATE TABLE `orderedproduct` (
-  `OrderedProductID` int(11) NOT NULL,
-  `VendorProductID` int(11) DEFAULT NULL,
-  `OrderID` varchar(255) DEFAULT NULL,
-  `Quantity` int(11) NOT NULL,
-  'Status' varchar(255) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+    `OrderedProductID` INT AUTO_INCREMENT PRIMARY KEY,
+    `VendorProductID` INT,
+    `OrderID` VARCHAR(255),
+    `Quantity` INT NOT NULL,
+    `Status` VARCHAR(255),
+    FOREIGN KEY (VendorProductID) REFERENCES VendorProduct(VendorProductID),
+    FOREIGN KEY (OrderID) REFERENCES orders(OrderID)
+);
 
-
-
-
---
--- Table structure for table `sessionid`
---
-
+-- SessionID Table
 CREATE TABLE `sessionid` (
-  `SessionID` varchar(255) NOT NULL,
-  `CustomerID` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
-
-
--- --------------------------------------------------------
+    `SessionID` VARCHAR(255) PRIMARY KEY,
+    `CustomerID` INT,
+    FOREIGN KEY (CustomerID) REFERENCES Customer(CustomerID)
+);
 
 -- Review Table
 CREATE TABLE Review (
@@ -160,7 +158,7 @@ CREATE TABLE Review (
     CustomerID INT,
     OrderedProductID INT,
     FOREIGN KEY (CustomerID) REFERENCES Customer(CustomerID),
-    FOREIGN KEY (OrderedProductID) REFERENCES OrderedProduct(OrderedProductID)
+    FOREIGN KEY (OrderedProductID) REFERENCES orderedproduct(OrderedProductID)
 );
 
 -- Cart Table
@@ -181,26 +179,9 @@ CREATE TABLE CartProduct (
     FOREIGN KEY (CartID) REFERENCES Cart(CartID)
 );
 
--- Indexes for tables with foreign keys
-CREATE INDEX idx_CategoryID ON Product (CategoryID);
-CREATE INDEX idx_VendorID ON VendorProduct (VendorID);
-CREATE INDEX idx_ProductID ON VendorProduct (ProductID);
-
-CREATE TABLE PendingVendors (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    Name VARCHAR(255),
-    Address VARCHAR(255),
-    Email VARCHAR(255),
-    Password VARCHAR(255),
-    Contact VARCHAR(20),
-    RegistrationDate TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-);
-
-ALTER TABLE Customer ADD COLUMN role_as TINYINT(1) DEFAULT 0;
-
+-- Newsletter Subscribers Table
 CREATE TABLE newsletter_subscribers (
     id INT AUTO_INCREMENT PRIMARY KEY,
     email VARCHAR(255) NOT NULL UNIQUE,
     subscribed_at DATETIME DEFAULT CURRENT_TIMESTAMP
 );
-
