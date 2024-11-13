@@ -118,27 +118,60 @@ CREATE TABLE VendorCourier (
 );
 
 -- Orders Table
-CREATE TABLE Orders (
-    OrderID INT AUTO_INCREMENT PRIMARY KEY,
-    CustomerID INT,
-    OrderDate DATE NOT NULL,
-    AddressID INT,
-    VendorCourierID INT,
-    TrackingID VARCHAR(50) NOT NULL,
-    FOREIGN KEY (CustomerID) REFERENCES Customer(CustomerID),
-    FOREIGN KEY (AddressID) REFERENCES Address(AddressID),
-    FOREIGN KEY (VendorCourierID) REFERENCES VendorCourier(VendorCourierID)
-);
+CREATE TABLE `orders` (
+  `OrderID` varchar(255) NOT NULL,
+  `CustomerID` int(11) DEFAULT NULL,
+  `OrderDate` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `Address` varchar(255) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `orders`
+--
+
+INSERT INTO `orders` (`OrderID`, `CustomerID`, `OrderDate`, `Address`) VALUES
+('TBY32118', 1, '2024-11-04 22:03:00', '123 Location, Place'),
+('TBY46475', 1, '2024-11-04 22:05:39', '123 Location, Place'),
+('TBY50440', 1, '2024-11-04 22:19:51', 'Strathmore School');
+
 
 -- OrderedProduct Table
-CREATE TABLE OrderedProduct (
-    OrderedProductID INT AUTO_INCREMENT PRIMARY KEY,
-    VendorProductID INT,
-    OrderID INT,
-    Quantity INT NOT NULL,
-    FOREIGN KEY (VendorProductID) REFERENCES VendorProduct(VendorProductID),
-    FOREIGN KEY (OrderID) REFERENCES Orders(OrderID)
-);
+CREATE TABLE `orderedproduct` (
+  `OrderedProductID` int(11) NOT NULL,
+  `VendorProductID` int(11) DEFAULT NULL,
+  `OrderID` varchar(255) DEFAULT NULL,
+  `Quantity` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `orderedproduct`
+--
+
+INSERT INTO `orderedproduct` (`OrderedProductID`, `VendorProductID`, `OrderID`, `Quantity`) VALUES
+(23, 1, 'TBY32118', 1),
+(24, 1, 'TBY46475', 1),
+(25, 2, 'TBY46475', 1),
+(28, 1, 'TBY50440', 1),
+(29, 2, 'TBY50440', 1);
+
+
+--
+-- Table structure for table `sessionid`
+--
+
+CREATE TABLE `sessionid` (
+  `SessionID` varchar(255) NOT NULL,
+  `CustomerID` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `sessionid`
+--
+
+INSERT INTO `sessionid` (`SessionID`, `CustomerID`) VALUES
+('5a4eum5fum1m9j0drqc1p2938u', 1);
+
+-- --------------------------------------------------------
 
 -- Review Table
 CREATE TABLE Review (
