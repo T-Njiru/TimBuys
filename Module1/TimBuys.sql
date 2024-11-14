@@ -20,6 +20,7 @@ CREATE TABLE Customer (
     ResetToken VARCHAR(255) DEFAULT NULL,
     ResetTokenExpiry DATETIME DEFAULT NULL,
     Gender VARCHAR(20)
+
 );
 
 -- County Table
@@ -185,3 +186,5 @@ CREATE TABLE newsletter_subscribers (
     email VARCHAR(255) NOT NULL UNIQUE,
     subscribed_at DATETIME DEFAULT CURRENT_TIMESTAMP
 );
+ALTER TABLE Customer
+ADD COLUMN role_as TINYINT(1) DEFAULT 0;
