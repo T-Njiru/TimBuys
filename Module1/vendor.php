@@ -82,29 +82,85 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Vendor Registration</title>
+    <title>Vendor Registration | TimBuys</title>
     <link
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"
     />
     <style>
         body {
-            background-color: #f9f9f9;
+            background: linear-gradient(135deg, #fceabb 0%, #f8b500 100%);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: #333;
+            padding-top: 20px; /* Added padding to prevent content from being hidden */
         }
+
         .signup-wrapper {
             max-width: 500px;
-            margin: 80px auto;
+            margin: 0 auto;
             background-color: white;
             padding: 30px;
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            border-radius: 15px;
         }
+
         .form-title {
             margin-bottom: 20px;
             font-size: 24px;
-            color: orange;
+            color: #f39c12;
+        }
+
+        .form-control {
+            font-size: 16px;
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+
+        .password-strength {
+            font-size: 14px;
+            color: #f39c12;
+            margin-top: 5px;
+        }
+
+        .btn-primary {
+            background-color: #f39c12;
+            border: none;
+            font-size: 16px;
+            padding: 12px;
+            border-radius: 8px;
+        }
+
+        .btn-primary:hover {
+            background-color: #d87d02;
         }
     </style>
     <script>
+        // Password strength validation function
+        function checkPasswordStrength() {
+            const password = document.querySelector('input[name="password"]').value;
+            const strengthMessage = document.querySelector('.password-strength');
+
+            const regexWeak = /^(?=.*[a-z]).{6,}$/;
+            const regexMedium = /^(?=.*[a-z])(?=.*[A-Z]).{6,}$/;
+            const regexStrong = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*()]).{8,}$/;
+
+            if (regexStrong.test(password)) {
+                strengthMessage.textContent = 'Password Strength: Strong';
+                strengthMessage.style.color = 'green';
+            } else if (regexMedium.test(password)) {
+                strengthMessage.textContent = 'Password Strength: Medium';
+                strengthMessage.style.color = 'orange';
+            } else if (regexWeak.test(password)) {
+                strengthMessage.textContent = 'Password Strength: Weak';
+                strengthMessage.style.color = 'red';
+            } else {
+                strengthMessage.textContent = 'Password Strength: Very Weak';
+                strengthMessage.style.color = 'red';
+            }
+        }
+
+        // Password matching validation
         function validatePasswords() {
             const password = document.querySelector('input[name="password"]').value;
             const confirmPassword = document.querySelector('input[name="confirm_password"]').value;
@@ -143,7 +199,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             
             <div class="mb-3">
                 <label for="password" class="form-label">Password</label>
-                <input type="password" name="password" class="form-control" required />
+                <input type="password" name="password" class="form-control" oninput="checkPasswordStrength()" required />
+                <div class="password-strength">Password Strength: </div>
             </div>
             
             <div class="mb-3">
