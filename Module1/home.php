@@ -21,26 +21,41 @@ if (!isset($_SESSION['customer_id'])) {
 }
 
 $SessionID=session_id();
+
+
 $CustomerID=$_SESSION['customer_id'];
 
 
 
 // Read the existing content of global.php
-$globalFile = 'global.php';
+$globalFile = '../tryingstuff/global.php';
 $globalContent = file_get_contents($globalFile);
 
-// Replace the value of $myVar in the file
-$updatedContent = preg_replace(
-    `/\\$myVar\s*=\s*.*?;/`,
-    '$myVar = ' . var_export($CustomerID, true) . ';',
-    $globalContent
-);
+// Check if the content was read successfully
+if ($globalContent === false) {
+    die("Error reading the global.php file.");
+}
 
-// Save the updated content back to global.php
-file_put_contents($globalFile, $updatedContent);
+// Use a pattern to match the current definition of $CustomerID in global.php
+$pattern = '/\$CustomerID\s*=\s*.*?;/';
+
+// Replace the value with the current session value
+$replacement = '$CustomerID = ' . var_export($CustomerID, true) . ';';
+
+$updatedContent = preg_replace($pattern, $replacement, $globalContent);
+
+// Check if the replacement was successful
+if ($updatedContent === null) {
+    die("Error updating the content of global.php.");
+}
+
+// Write the updated content back to global.php
+if (file_put_contents($globalFile, $updatedContent) === false) {
+    die("Error writing to global.php.");
+}
 
 echo "global.php updated successfully!";
-?>
+
 
 
 $servername="localhost"; 

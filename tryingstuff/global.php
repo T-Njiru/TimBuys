@@ -1,3 +1,4 @@
 <?php
-$CustomerID=null;
+$CustomerID = 1;
+
 ?>

@@ -2,6 +2,7 @@
 // Log the incoming request time
 include_once('checkoutfncs.php');
 require_once 'global.php';
+//echo $CustomerID."Separate<br>";
 
 $input = file_get_contents('php://input');
 file_put_contents('log.txt', "Raw input: " . $input . "\n", FILE_APPEND);
