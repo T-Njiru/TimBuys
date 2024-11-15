@@ -57,60 +57,122 @@ if (isset($_GET['token'])) {
     <title>Reset Password | TimBuys</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css">
     <style>
+        /* Background and Body */
         body {
-            background-color: #f8f9fa;
+            background: linear-gradient(135deg, #fceabb 0%, #f8b500 100%);
+            background-attachment: fixed;
+            color: #333;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex;
+            justify-content: center;
+            padding: 20px 0;
+            margin: 0;
         }
-        .container {
-            margin-top: 100px;
+
+        /* Reset Password Wrapper */
+        .reset-password-wrapper {
+            max-width: 400px;
+            width: 100%;
+            background-color: white;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+            margin-top: 5%;
         }
-        .card {
-            border: none;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-        }
-        .card-header {
-            background-color: #daa520;
-            color: white;
-            text-align: center;
+
+        /* Title and Button Styling */
+        .form-title {
+            margin-bottom: 20px;
+            font-size: 24px;
             font-weight: bold;
+            color: #f39c12;
+            text-align: center;
         }
+
         .btn-primary {
-            background-color: #daa520;
-            border: none;
+            background-color: #f39c12;
+            border-color: #f39c12;
         }
+
         .btn-primary:hover {
-            background-color: #b59416; /* Darker shade on hover */
+            background-color: #d87d02;
+            border-color: #d87d02;
         }
-        .error {
-            color: red;
+
+        /* Input Field Styling */
+        .form-label {
+            color: #555555;
+            font-weight: 500;
+        }
+
+        .form-control {
+            border: 2px solid #e8e8e8;
+            border-radius: 8px;
+        }
+
+        .form-control:focus {
+            border-color: #f39c12;
+            box-shadow: 0 0 0 0.2rem rgba(243, 156, 18, 0.25);
+        }
+
+        /* Password Strength Indicator */
+        .password-strength {
+            font-size: 0.9rem;
+            margin-top: 5px;
+        }
+
+        .strength-weak {
+            color: #e74c3c;
+        }
+
+        .strength-medium {
+            color: #f39c12;
+        }
+
+        .strength-strong {
+            color: #27ae60;
+        }
+
+        /* Error Message Styling */
+        .alert-danger {
+            background-color: #f8d7da;
+            color: #721c24;
+            border-color: #f5c6cb;
+            text-align: center;
+        }
+
+        /* Responsive Styling */
+        @media (max-width: 576px) {
+            .form-title {
+                font-size: 20px;
+            }
+            .reset-password-wrapper {
+                width: 90%;
+            }
         }
     </style>
 </head>
 <body>
-<div class="container mt-5">
-    <div class="row justify-content-center">
-        <div class="col-md-6">
-            <div class="card">
-                <div class="card-header">Reset Your Password</div>
-                <div class="card-body">
-                    <?php if (isset($errorMessage)): ?>
-                        <div class="alert alert-danger"><?= $errorMessage ?></div>
-                    <?php endif; ?>
-                    <form method="POST" onsubmit="return validatePasswords();">
-                        <div class="mb-3">
-                            <label for="password" class="form-label">New Password</label>
-                            <input type="password" class="form-control" id="password" name="password" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="confirm_password" class="form-label">Confirm Password</label>
-                            <input type="password" class="form-control" id="confirm_password" name="confirm_password" required>
-                        </div>
-                        <button type="submit" class="btn btn-primary">Reset Password</button>
-                    </form>
-                </div>
-            </div>
+<div class="reset-password-wrapper">
+    <h2 class="form-title">Reset Password</h2>
+    <form method="POST" onsubmit="return validatePasswords();">
+        <div class="mb-3">
+            <label for="password" class="form-label">New Password</label>
+            <input type="password" class="form-control" id="password" name="password" oninput="checkPasswordStrength()" required>
+            <div id="strength-indicator" class="password-strength">Password strength</div>
         </div>
-    </div>
+        <div class="mb-3">
+            <label for="confirm_password" class="form-label">Confirm Password</label>
+            <input type="password" class="form-control" id="confirm_password" name="confirm_password" required>
+        </div>
+        <button type="submit" class="btn btn-primary w-100">Reset Password</button>
+
+        <?php if (isset($errorMessage)): ?>
+            <div class="alert alert-danger mt-3"><?= $errorMessage ?></div>
+        <?php endif; ?>
+    </form>
 </div>
+
 <script>
     function validatePasswords() {
         const password = document.getElementById('password').value;
@@ -121,6 +183,30 @@ if (isset($_GET['token'])) {
             return false; // Prevent form submission
         }
         return true; // Allow form submission
+    }
+
+    function checkPasswordStrength() {
+        const password = document.getElementById('password').value;
+        const strengthIndicator = document.getElementById("strength-indicator");
+        let strength = 0;
+
+        // Password strength criteria
+        if (password.length >= 8) strength++;
+        if (/[A-Z]/.test(password)) strength++;
+        if (/[0-9]/.test(password)) strength++;
+        if (/[\W_]/.test(password)) strength++;
+
+        // Update the strength indicator
+        if (strength <= 1) {
+            strengthIndicator.textContent = "Weak";
+            strengthIndicator.className = "password-strength strength-weak";
+        } else if (strength === 2) {
+            strengthIndicator.textContent = "Medium";
+            strengthIndicator.className = "password-strength strength-medium";
+        } else if (strength >= 3) {
+            strengthIndicator.textContent = "Strong";
+            strengthIndicator.className = "password-strength strength-strong";
+        }
     }
 </script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
