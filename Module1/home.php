@@ -146,7 +146,7 @@ $customer = $stmt->fetch(PDO::FETCH_ASSOC);
     <nav>
         <ul>
             <li><a href="home.php">Home</a></li>
-            <li><a href="products.php">Products</a></li>
+            <li><a href="../Module2/Listing/product_listing.php">Products</a></li>
             <li><button class="btn " type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasWithBothOptions" aria-controls="offcanvasWithBothOptions"><a href="#">Cart</a></button></li>
             <li><a href="profile.php">Profile</a></li>
             <li><a href="logout.php">Logout</a></li>
