@@ -57,34 +57,6 @@ while (count($salesData) < 7) { // Fill in missing days if there are fewer than 
 ?>
 
 <?php include('includes/header.php'); ?>
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <a class="navbar-brand" href="#">Admin Dashboard</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav">
-            <li class="nav-item active">
-                <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="vendor_approval.php">Vendors</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="product_management.php">Products</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="order_management.php">Orders</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="customer_management.php">Customers</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="transaction_management.php">Financials</a>
-            </li>
-        </ul>
-    </div>
-</nav>
 
 <div class="container mt-4">
     <h2>Welcome, Admin</h2>
