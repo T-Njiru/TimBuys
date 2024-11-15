@@ -5,45 +5,32 @@ include('../connection.php');
 $database = new Database();
 $pdo = $database->getConnection();
 
-// Function to send approval email
-function sendApprovalEmail($email, $vendorName) {
-    // Use PHPMailer or any mail function to send the email
-    $subject = "Vendor Registration Approved";
-    $message = "Dear $vendorName,\n\nYour vendor registration has been approved. You can now log in to your account.\n\nBest regards,\nThe Team";
-    
-    // Mail function (adjust as per your email sending configuration)
-    mail($email, $subject, $message);
-}
+// Fetch today's revenue
+$stmt = $pdo->prepare("SELECT SUM(VendorProduct.Price * OrderedProduct.Quantity) as revenue FROM Orders
+                        INNER JOIN OrderedProduct ON Orders.OrderID = OrderedProduct.OrderID
+                        INNER JOIN VendorProduct ON OrderedProduct.VendorProductID = VendorProduct.VendorProductID
+                        WHERE DATE(OrderDate) = CURDATE()");
+$stmt->execute();
+$result = $stmt->fetch(PDO::FETCH_ASSOC);
+$revenue = $result['revenue'] ?? 0;
 
-// Approve vendor if approved button is clicked
-if (isset($_POST['approve'])) {
-    $vendorId = $_POST['vendor_id'];
+// Fetch today's new users count
+$stmt = $pdo->prepare("SELECT COUNT(*) as users FROM Customer WHERE DATE(DOB) = CURDATE()");
+$stmt->execute();
+$result = $stmt->fetch(PDO::FETCH_ASSOC);
+$users = $result['users'] ?? 0;
 
-    // Fetch vendor details
-    $stmt = $pdo->prepare("SELECT * FROM pendingvendors WHERE VendorID = :vendorId");
-    $stmt->bindParam(':vendorId', $vendorId);
-    $stmt->execute();
-    $vendor = $stmt->fetch(PDO::FETCH_ASSOC);
+// Fetch total sales value for today
+$stmt = $pdo->prepare("SELECT SUM(VendorProduct.Price * OrderedProduct.Quantity) as sales FROM Orders
+                        INNER JOIN OrderedProduct ON Orders.OrderID = OrderedProduct.OrderID
+                        INNER JOIN VendorProduct ON OrderedProduct.VendorProductID = VendorProduct.VendorProductID
+                        WHERE DATE(OrderDate) = CURDATE()");
+$stmt->execute();
+$result = $stmt->fetch(PDO::FETCH_ASSOC);
+$sales = $result['sales'] ?? 0;
 
-    if ($vendor) {
-        // Insert into vendors table
-        $stmtInsert = $pdo->prepare("INSERT INTO vendors (VendorID, VendorName, Email) VALUES (:vendorId, :vendorName, :email)");
-        $stmtInsert->bindParam(':vendorId', $vendor['VendorID']);
-        $stmtInsert->bindParam(':vendorName', $vendor['VendorName']);
-        $stmtInsert->bindParam(':email', $vendor['Email']);
-        $stmtInsert->execute();
-
-        // Send approval email
-        sendApprovalEmail($vendor['Email'], $vendor['VendorName']);
-
-        // Remove from pendingvendors table
-        $stmtDelete = $pdo->prepare("DELETE FROM pendingvendors WHERE VendorID = :vendorId");
-        $stmtDelete->bindParam(':vendorId', $vendorId);
-        $stmtDelete->execute();
-
-        echo "<script>alert('Vendor approved and notification sent.');</script>";
-    }
-}
+// Example static value for Ads Views; replace with real data if available
+$adViews = 3462;
 ?>
 
 <?php include('includes/header.php'); ?>
@@ -60,29 +47,32 @@ if (isset($_POST['approve'])) {
             <li class="nav-item">
                 <a class="nav-link" href="vendor_approval.php">Vendors</a>
             </li>
-            <!-- Add more links as needed -->
+            <li class="nav-item">
+                <a class="nav-link" href="product_management.php">Products</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="order_management.php">Orders</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="customer_management.php">Customers</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="financials.php">Financials</a>
+            </li>
         </ul>
     </div>
 </nav>
+
 <div class="container mt-4">
-    <h2>Hello Admin</h2>
-    <!-- Your existing dashboard content -->
+    <h2>Welcome, Admin</h2>
+
+    <!-- Dashboard Overview -->
     <div class="row">
         <!-- Today's Money -->
         <div class="col-md-3">
             <div class="card text-center">
                 <div class="card-body">
                     <h5>Today's Money</h5>
-                    <?php
-                    // Fetch today's revenue
-                    $stmt = $pdo->prepare("SELECT SUM(VendorProduct.Price * OrderedProduct.Quantity) as revenue FROM Orders
-                        INNER JOIN OrderedProduct ON Orders.OrderID = OrderedProduct.OrderID
-                        INNER JOIN VendorProduct ON OrderedProduct.VendorProductID = VendorProduct.VendorProductID
-                        WHERE DATE(OrderDate) = CURDATE()");
-                    $stmt->execute();
-                    $result = $stmt->fetch(PDO::FETCH_ASSOC);
-                    $revenue = $result['revenue'] ?? 0;
-                    ?>
                     <h3>Ksh<?php echo number_format($revenue, 2); ?></h3>
                     <p class="text-success">+55% than last week</p>
                 </div>
@@ -94,30 +84,8 @@ if (isset($_POST['approve'])) {
             <div class="card text-center">
                 <div class="card-body">
                     <h5>Today's Users</h5>
-                    <?php
-                    // Fetch today's new users count
-                    $stmt = $pdo->prepare("SELECT COUNT(*) as users FROM Customer WHERE DATE(DOB) = CURDATE()");
-                    $stmt->execute();
-                    $result = $stmt->fetch(PDO::FETCH_ASSOC);
-                    $users = $result['users'] ?? 0;
-                    ?>
                     <h3><?php echo $users; ?></h3>
                     <p class="text-success">+3% than last month</p>
-                </div>
-            </div>
-        </div>
-        
-        <!-- Ads Views -->
-        <div class="col-md-3">
-            <div class="card text-center">
-                <div class="card-body">
-                    <h5>Ads Views</h5>
-                    <?php
-                    // Example static value; replace with real data if available
-                    $adViews = 3462;
-                    ?>
-                    <h3><?php echo $adViews; ?></h3>
-                    <p class="text-danger">-2% than yesterday</p>
                 </div>
             </div>
         </div>
@@ -127,18 +95,19 @@ if (isset($_POST['approve'])) {
             <div class="card text-center">
                 <div class="card-body">
                     <h5>Sales</h5>
-                    <?php
-                    // Fetch total sales value for today
-                    $stmt = $pdo->prepare("SELECT SUM(VendorProduct.Price * OrderedProduct.Quantity) as sales FROM Orders
-                        INNER JOIN OrderedProduct ON Orders.OrderID = OrderedProduct.OrderID
-                        INNER JOIN VendorProduct ON OrderedProduct.VendorProductID = VendorProduct.VendorProductID
-                        WHERE DATE(OrderDate) = CURDATE()");
-                    $stmt->execute();
-                    $result = $stmt->fetch(PDO::FETCH_ASSOC);
-                    $sales = $result['sales'] ?? 0;
-                    ?>
                     <h3>Ksh<?php echo number_format($sales, 2); ?></h3>
                     <p class="text-success">+5% than yesterday</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Ads Views -->
+        <div class="col-md-3">
+            <div class="card text-center">
+                <div class="card-body">
+                    <h5>Ads Views</h5>
+                    <h3><?php echo $adViews; ?></h3>
+                    <p class="text-danger">-2% than yesterday</p>
                 </div>
             </div>
         </div>
@@ -187,7 +156,7 @@ if (isset($_POST['approve'])) {
 <!-- Include Chart.js for graphs -->
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
-// Data for Website Views Chart
+// Website Views Chart
 new Chart(document.getElementById("websiteViewsChart"), {
     type: 'bar',
     data: {
@@ -201,7 +170,7 @@ new Chart(document.getElementById("websiteViewsChart"), {
     options: { responsive: true }
 });
 
-// Data for Daily Sales Chart
+// Daily Sales Chart
 new Chart(document.getElementById("dailySalesChart"), {
     type: 'line',
     data: {
@@ -218,7 +187,7 @@ new Chart(document.getElementById("dailySalesChart"), {
     options: { responsive: true }
 });
 
-// Data for Completed Tasks Chart
+// Completed Tasks Chart
 new Chart(document.getElementById("completedTasksChart"), {
     type: 'doughnut',
     data: {

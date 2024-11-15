@@ -1,101 +1,177 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Sign Up | My Shop</title>
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"
-    />
-    <style>
-      body {
-        background-color: #f9f9f9;
-      }
-      .signup-wrapper {
-        max-width: 500px;
-        margin: 80px auto;
-        background-color: white;
-        padding: 30px;
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-      }
-      .form-title {
-        margin-bottom: 20px;
-        font-size: 24px;
-        color: orange;
-      }
-    </style>
-    <script>
-      function validatePasswords() {
-        const password = document.querySelector('input[name="password"]').value;
-        const confirmPassword = document.querySelector('input[name="confirm_password"]').value;
-        if (password !== confirmPassword) {
-          alert("Passwords do not match!");
-          return false;
-        }
-        return true;
-      }
-    </script>
-  </head>
-  <body>
-    <div class="signup-wrapper">
-      <h2 class="form-title">Create Your Account</h2>
-      <form
-        action="http://localhost/TimBuys/Module1/process_signup.php"
-        method="POST"
-        onsubmit="return validatePasswords()"
-      >
-        <div class="mb-3">
-          <label for="fname" class="form-label">First Name</label>
-          <input type="text" name="fname" class="form-control" required />
-        </div>
-        <div class="mb-3">
-          <label for="lname" class="form-label">Last Name</label>
-          <input type="text" name="lname" class="form-control" required />
-        </div>
-        <div class="mb-3">
-          <label for="gender" class="form-label">Gender</label>
-          <select name="gender" class="form-select" required>
-            <option value="" disabled selected>Select your gender</option>
-            <option value="Male">Male</option>
-            <option value="Female">Female</option>
-            <option value="Other">Other</option>
-          </select>
-        </div>
-        <div class="mb-3">
-          <label for="dob" class="form-label">Date of Birth</label>
-          <input type="date" name="dob" class="form-control" required />
-        </div>
-        <div class="mb-3">
-          <label for="email" class="form-label">Email</label>
-          <input type="email" name="email" class="form-control" required />
-        </div>
-        <div class="mb-3">
-          <label for="contact" class="form-label">Contact Number</label>
-          <input type="text" name="contact" class="form-control" required />
-        </div>
-        <div class="mb-3">
-          <label for="password" class="form-label">Password</label>
-          <input
-            type="password"
-            name="password"
-            class="form-control"
-            required
-          />
-        </div>
-        <div class="mb-3">
-          <label for="confirm_password" class="form-label">Confirm Password</label>
-          <input
-            type="password"
-            name="confirm_password"
-            class="form-control"
-            required
-          />
-        </div>
-        <button type="submit" class="btn btn-primary w-100">Sign Up</button>
-      </form>
-    </div>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sign Up | My Shop</title>
+  <link
+    rel="stylesheet"
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"
+  />
+  <style>
+    /* Background and Body */
+    body {
+      background: linear-gradient(135deg, #fceabb 0%, #f8b500 100%);
+      background-attachment: fixed;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0;
+      padding: 20px 0; /* Added padding for spacing on top and bottom */
+      display: flex;
+      justify-content: center;
+    }
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
-  </body>
+    /* Signup Wrapper */
+    .signup-wrapper {
+      max-width: 500px;
+      width: 100%;
+      background-color: white;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+    }
+
+    /* Title and Button Styling */
+    .form-title {
+      margin-bottom: 20px;
+      font-size: 26px;
+      font-weight: bold;
+      color: #f39c12;
+      text-align: center;
+    }
+    .btn-primary {
+      background-color: #f39c12;
+      border-color: #f39c12;
+    }
+    .btn-primary:hover {
+      background-color: #d87d02;
+      border-color: #d87d02;
+    }
+
+    /* Input Field Styling */
+    .form-label {
+      color: #555555;
+      font-weight: 500;
+    }
+    .form-control {
+      border: 2px solid #e8e8e8;
+      border-radius: 8px;
+    }
+    .form-control:focus {
+      border-color: #f39c12;
+      box-shadow: 0 0 0 0.2rem rgba(243, 156, 18, 0.25);
+    }
+
+    /* Password Strength Indicator */
+    .password-strength {
+      font-size: 0.9rem;
+      margin-top: 5px;
+    }
+    .strength-weak {
+      color: #e74c3c;
+    }
+    .strength-medium {
+      color: #f39c12;
+    }
+    .strength-strong {
+      color: #27ae60;
+    }
+  </style>
+  <script>
+    function validatePasswords() {
+      const password = document.querySelector('input[name="password"]').value;
+      const confirmPassword = document.querySelector('input[name="confirm_password"]').value;
+      if (password !== confirmPassword) {
+        alert("Passwords do not match!");
+        return false;
+      }
+      return true;
+    }
+
+    function checkPasswordStrength() {
+      const password = document.querySelector('input[name="password"]').value;
+      const strengthIndicator = document.getElementById("strength-indicator");
+      let strength = 0;
+
+      // Check password strength criteria
+      if (password.length >= 8) strength++;
+      if (/[A-Z]/.test(password)) strength++;
+      if (/[0-9]/.test(password)) strength++;
+      if (/[\W_]/.test(password)) strength++;
+
+      // Update the strength indicator
+      if (strength <= 1) {
+        strengthIndicator.textContent = "Weak";
+        strengthIndicator.className = "password-strength strength-weak";
+      } else if (strength === 2) {
+        strengthIndicator.textContent = "Medium";
+        strengthIndicator.className = "password-strength strength-medium";
+      } else if (strength >= 3) {
+        strengthIndicator.textContent = "Strong";
+        strengthIndicator.className = "password-strength strength-strong";
+      }
+    }
+  </script>
+</head>
+<body>
+  <div class="signup-wrapper">
+    <h2 class="form-title">Create Your Account</h2>
+    <form
+      action="http://localhost/TimBuys/Module1/process_signup.php"
+      method="POST"
+      onsubmit="return validatePasswords()"
+    >
+      <div class="mb-3">
+        <label for="fname" class="form-label">First Name</label>
+        <input type="text" name="fname" class="form-control" required />
+      </div>
+      <div class="mb-3">
+        <label for="lname" class="form-label">Last Name</label>
+        <input type="text" name="lname" class="form-control" required />
+      </div>
+      <div class="mb-3">
+        <label for="gender" class="form-label">Gender</label>
+        <select name="gender" class="form-select" required>
+          <option value="" disabled selected>Select your gender</option>
+          <option value="Male">Male</option>
+          <option value="Female">Female</option>
+        </select>
+      </div>
+      <div class="mb-3">
+        <label for="dob" class="form-label">Date of Birth</label>
+        <input type="date" name="dob" class="form-control" required />
+      </div>
+      <div class="mb-3">
+        <label for="email" class="form-label">Email</label>
+        <input type="email" name="email" class="form-control" required />
+      </div>
+      <div class="mb-3">
+        <label for="contact" class="form-label">Contact Number</label>
+        <input type="text" name="contact" class="form-control" required />
+      </div>
+      <div class="mb-3">
+        <label for="password" class="form-label">Password</label>
+        <input
+          type="password"
+          name="password"
+          class="form-control"
+          required
+          oninput="checkPasswordStrength()"
+        />
+        <div id="strength-indicator" class="password-strength">Password strength</div>
+      </div>
+      <div class="mb-3">
+        <label for="confirm_password" class="form-label">Confirm Password</label>
+        <input
+          type="password"
+          name="confirm_password"
+          class="form-control"
+          required
+        />
+      </div>
+      <button type="submit" class="btn btn-primary w-100">Sign Up</button>
+    </form>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
 </html>

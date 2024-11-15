@@ -3,23 +3,152 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="styless.css" />
-    <title>SignIn</title>
+    <title>Sign In | TimBuys</title>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"
+    />
+    <style>
+      /* Background and Body */
+      body {
+        background: linear-gradient(135deg, #fceabb 0%, #f8b500 100%);
+        background-attachment: fixed;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        color: #333;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+        padding: 20px;
+      }
+
+      /* Form Wrapper */
+      .signin-wrapper {
+        max-width: 400px;
+        width: 100%;
+        background-color: #fff;
+        padding: 40px;
+        border-radius: 15px;
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        text-align: center;
+        transition: transform 0.3s ease-in-out;
+      }
+      .signin-wrapper:hover {
+        transform: none;
+      }
+
+      /* Title and Button Styling */
+      .form-title {
+        font-size: 24px;
+        font-weight: bold;
+        color: #f39c12;
+        margin-bottom: 15px;
+      }
+      .btn-primary {
+        background-color: #f39c12;
+        border: none;
+        font-size: 16px;
+        font-weight: 500;
+        padding: 12px;
+        border-radius: 8px;
+      }
+      .btn-primary:hover {
+        background-color: #d87d02;
+      }
+
+      /* Input Field Styling */
+      .form-control {
+        border: 2px solid #e0e0e0;
+        border-radius: 8px;
+        padding: 10px;
+        font-size: 15px;
+      }
+      .form-control:focus {
+        border-color: #f39c12;
+        box-shadow: 0 0 0 0.2rem rgba(243, 156, 18, 0.25);
+      }
+
+      /* Additional Text Styling */
+      .terms-text,
+      .support-text {
+        font-size: 13px;
+        color: #666;
+        margin-top: 15px;
+      }
+      .terms-text a,
+      .support-text a {
+        color: #333;
+        font-weight: 500;
+        text-decoration: none;
+      }
+      .terms-text a:hover,
+      .support-text a:hover {
+        color: #f39c12;
+        text-decoration: underline;
+      }
+
+      /* Modal Background Scroll Lock */
+      body.modal-open {
+        overflow-y: hidden;
+      }
+    </style>
   </head>
   <body>
-    <p>Type your e-mail to log in or create a TimBuys account</p>
-    <form
-      method="POST"
-      action="http://localhost/TimBuys/module1/verify_email.php"
-    >
-      <p>Sign In</p>
-      <input type="text" name="email" placeholder="E-mail" required />
-      <button type="submit">Continue</button>
-    </form>
-    <p>By continuing you agree to TimBuys Terms and Conditions</p>
-    <p>
-      For further support, you may visit the Help Centre or contact the customer
-      service team
-    </p>
+    <div class="signin-wrapper">
+      <h2 class="form-title">Sign In</h2>
+      <p>Type your email to log in or create a TimBuys account</p>
+      <form
+        method="POST"
+        action="http://localhost/TimBuys/module1/verify_email.php"
+      >
+        <div class="mb-3">
+          <input
+            type="email"
+            name="email"
+            placeholder="Email"
+            class="form-control"
+            required
+          />
+        </div>
+        <button type="submit" class="btn btn-primary w-100">Continue</button>
+      </form>
+      <!-- Link to Open Terms and Conditions Modal -->
+      <p class="terms-text">
+        By continuing, you agree to TimBuys 
+        <a href="#" data-bs-toggle="modal" data-bs-target="#termsModal">Terms and Conditions</a>.
+      </p>
+
+      <!-- Terms and Conditions Modal -->
+      <div class="modal" id="termsModal" tabindex="-1" aria-labelledby="termsModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="termsModalLabel">Terms and Conditions</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <p><strong>TimBuys - Terms and Conditions</strong></p>
+              <p>Welcome to TimBuys! By using our website, you agree to the following terms and conditions:</p>
+              <ul>
+                <li><strong>Account Registration:</strong> To shop with us, you need to create an account...</li>
+                <li><strong>Purchases and Payments:</strong> All prices are listed in [Currency]...</li>
+                <li><strong>Shipping and Delivery:</strong> Shipping times are estimated...</li>
+                <li><strong>Returns and Refunds:</strong> If you’re not satisfied with your purchase...</li>
+                <li><strong>Privacy and Data Security:</strong> Your personal information is protected...</li>
+                <li><strong>User Responsibilities:</strong> You agree not to misuse our website...</li>
+                <li><strong>Changes to Terms:</strong> We may update these Terms and Conditions periodically...</li>
+              </ul>
+              <p>If you have any questions, please contact our Customer Service team. Thank you for choosing TimBuys!</p>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Close</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
   </body>
 </html>

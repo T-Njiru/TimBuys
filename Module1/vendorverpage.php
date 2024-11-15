@@ -6,12 +6,74 @@
     <title>Verify Your Code | TimBuys</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css">
     <style>
-        body { background-color: #f9f9f9; }
-        .verification-wrapper { max-width: 400px; margin: 80px auto; background-color: white; padding: 30px; text-align: center; }
-        .code-input input { width: 60px; height: 60px; font-size: 24px; text-align: center; margin: 0 5px; }
-        .resend-link { margin-top: 15px; }
-        .resend-timer { margin-top: 5px; }
-        .btn { background-color: #daa520; }
+        body {
+            background: linear-gradient(135deg, #fceabb 0%, #f8b500 100%);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: #333;
+            padding-top: 30px;
+        }
+
+        .verification-wrapper {
+            max-width: 400px;
+            margin: 0 auto;
+            background-color: white;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .form-title {
+            margin-bottom: 20px;
+            font-size: 24px;
+            color: #f39c12;
+        }
+
+        .form-subtitle {
+            margin-bottom: 30px;
+            font-size: 16px;
+            color: #555;
+        }
+
+        .code-input input {
+            width: 60px;
+            height: 60px;
+            font-size: 24px;
+            text-align: center;
+            margin: 0 5px;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+        }
+
+        .btn-primary {
+            background-color: #f39c12;
+            border: none;
+            font-size: 16px;
+            padding: 12px;
+            border-radius: 8px;
+        }
+
+        .btn-primary:hover {
+            background-color: #d87d02;
+        }
+
+        .resend-link {
+            margin-top: 20px;
+        }
+
+        .resend-timer {
+            margin-top: 5px;
+            font-size: 14px;
+            color: #f39c12;
+        }
+
+        .resend-link a {
+            text-decoration: none;
+            color: #007bff;
+        }
+
+        .resend-link a:hover {
+            color: #0056b3;
+        }
     </style>
 </head>
 <body>

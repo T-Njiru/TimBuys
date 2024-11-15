@@ -20,6 +20,7 @@ CREATE TABLE Customer (
     ResetToken VARCHAR(255) DEFAULT NULL,
     ResetTokenExpiry DATETIME DEFAULT NULL,
     Gender VARCHAR(20)
+
 );
 
 -- County Table
@@ -185,3 +186,17 @@ CREATE TABLE newsletter_subscribers (
     email VARCHAR(255) NOT NULL UNIQUE,
     subscribed_at DATETIME DEFAULT CURRENT_TIMESTAMP
 );
+ALTER TABLE Customer
+ADD COLUMN role_as TINYINT(1) DEFAULT 0;
+
+CREATE TABLE pendingvendors (
+    id INT AUTO_INCREMENT PRIMARY KEY,  
+    VendorID VARCHAR(255) NOT NULL,     
+    Name VARCHAR(255) NOT NULL,       
+    Email VARCHAR(255) NOT NULL,       
+    Password VARCHAR(255) NOT NULL,    
+    Contact VARCHAR(20) NOT NULL,      
+    DateRegistered TIMESTAMP DEFAULT CURRENT_TIMESTAMP  
+);
+ALTER TABLE pendingvendors ADD COLUMN Address VARCHAR(255) NOT NULL;
+

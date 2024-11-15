@@ -53,3 +53,47 @@
     </main>
 </body>
 </html>
+<style>
+        /* Navbar styling to match TimBuys theme */
+        .Navbar {
+            background-color: #000;
+            padding: 10px 0;
+        }
+        .Navbar-brand {
+            font-size: 24px;
+            font-weight: bold;
+            color: white;
+        }
+        .Navbar input[type="text"] {
+            width: 300px;
+            border-radius: 0;
+        }
+        .Navbar .btn-search {
+            background-color: #333;
+            color: white;
+            border: none;
+        }
+        
+        /* Product cards styling */
+        .card {
+            margin-bottom: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .card-title {
+            font-size: 18px;
+            font-weight: bold;
+            color: #333;
+        }
+        .card-text {
+            font-size: 14px;
+            color: #555;
+        }
+        .btn-primary {
+            background-color:  #FFB700;
+            border: none;
+        }
+        .btn-primary:hover {
+            background-color:  #FFB700;
+        }
+    </style>
