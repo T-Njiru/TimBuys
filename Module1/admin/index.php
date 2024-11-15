@@ -5,32 +5,55 @@ include('../connection.php');
 $database = new Database();
 $pdo = $database->getConnection();
 
-// Fetch today's revenue
-$stmt = $pdo->prepare("SELECT SUM(VendorProduct.Price * OrderedProduct.Quantity) as revenue FROM Orders
+// Fetch today's total revenue
+$stmt = $pdo->prepare("SELECT SUM(VendorProduct.Price * OrderedProduct.Quantity) AS revenue
+                        FROM Orders
                         INNER JOIN OrderedProduct ON Orders.OrderID = OrderedProduct.OrderID
                         INNER JOIN VendorProduct ON OrderedProduct.VendorProductID = VendorProduct.VendorProductID
-                        WHERE DATE(OrderDate) = CURDATE()");
+                        WHERE DATE(Orders.OrderDate) = CURDATE()");
 $stmt->execute();
 $result = $stmt->fetch(PDO::FETCH_ASSOC);
 $revenue = $result['revenue'] ?? 0;
 
-// Fetch today's new users count
-$stmt = $pdo->prepare("SELECT COUNT(*) as users FROM Customer WHERE DATE(DOB) = CURDATE()");
+// Fetch today's total orders count
+$stmt = $pdo->prepare("SELECT COUNT(*) AS totalOrders FROM Orders WHERE DATE(OrderDate) = CURDATE()");
 $stmt->execute();
 $result = $stmt->fetch(PDO::FETCH_ASSOC);
-$users = $result['users'] ?? 0;
+$totalOrders = $result['totalOrders'] ?? 0;
 
-// Fetch total sales value for today
-$stmt = $pdo->prepare("SELECT SUM(VendorProduct.Price * OrderedProduct.Quantity) as sales FROM Orders
+// Fetch today's new users count
+$stmt = $pdo->prepare("SELECT COUNT(*) AS newUsers FROM Customer WHERE DATE(DOB) = CURDATE()");
+$stmt->execute();
+$result = $stmt->fetch(PDO::FETCH_ASSOC);
+$newUsers = $result['newUsers'] ?? 0;
+
+// Fetch total completed orders count
+$stmt = $pdo->prepare("SELECT COUNT(*) AS completedOrders FROM OrderedProduct 
+                        INNER JOIN Orders ON Orders.OrderID = OrderedProduct.OrderID
+                        WHERE OrderedProduct.Status = 'Completed' AND DATE(Orders.OrderDate) = CURDATE()");
+$stmt->execute();
+$result = $stmt->fetch(PDO::FETCH_ASSOC);
+$completedOrders = $result['completedOrders'] ?? 0;
+
+// Fetch daily sales for the last 7 days
+$stmt = $pdo->prepare("SELECT SUM(VendorProduct.Price * OrderedProduct.Quantity) AS dailySales
+                        FROM Orders
                         INNER JOIN OrderedProduct ON Orders.OrderID = OrderedProduct.OrderID
                         INNER JOIN VendorProduct ON OrderedProduct.VendorProductID = VendorProduct.VendorProductID
-                        WHERE DATE(OrderDate) = CURDATE()");
+                        WHERE DATE(Orders.OrderDate) BETWEEN CURDATE() - INTERVAL 6 DAY AND CURDATE()
+                        GROUP BY DATE(Orders.OrderDate) ORDER BY DATE(Orders.OrderDate) DESC");
 $stmt->execute();
-$result = $stmt->fetch(PDO::FETCH_ASSOC);
-$sales = $result['sales'] ?? 0;
+$dailySalesData = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-// Example static value for Ads Views; replace with real data if available
-$adViews = 3462;
+// Get the sales data for the graph (latest 7 days)
+$salesData = [];
+foreach ($dailySalesData as $daySales) {
+    $salesData[] = $daySales['dailySales'] ?? 0;
+}
+while (count($salesData) < 7) { // Fill in missing days if there are fewer than 7
+    array_unshift($salesData, 0);
+}
+
 ?>
 
 <?php include('includes/header.php'); ?>
@@ -57,7 +80,7 @@ $adViews = 3462;
                 <a class="nav-link" href="customer_management.php">Customers</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="financials.php">Financials</a>
+                <a class="nav-link" href="transaction_management.php">Financials</a>
             </li>
         </ul>
     </div>
@@ -68,46 +91,43 @@ $adViews = 3462;
 
     <!-- Dashboard Overview -->
     <div class="row">
-        <!-- Today's Money -->
+        <!-- Today's Revenue -->
         <div class="col-md-3">
             <div class="card text-center">
                 <div class="card-body">
-                    <h5>Today's Money</h5>
+                    <h5>Today's Revenue</h5>
                     <h3>Ksh<?php echo number_format($revenue, 2); ?></h3>
-                    <p class="text-success">+55% than last week</p>
+                    <!-- No percentage comparison for now -->
                 </div>
             </div>
         </div>
         
-        <!-- Today's Users -->
+        <!-- Today's Orders -->
         <div class="col-md-3">
             <div class="card text-center">
                 <div class="card-body">
-                    <h5>Today's Users</h5>
-                    <h3><?php echo $users; ?></h3>
-                    <p class="text-success">+3% than last month</p>
+                    <h5>Today's Orders</h5>
+                    <h3><?php echo $totalOrders; ?></h3>
                 </div>
             </div>
         </div>
         
-        <!-- Sales -->
+        <!-- Today's New Users -->
         <div class="col-md-3">
             <div class="card text-center">
                 <div class="card-body">
-                    <h5>Sales</h5>
-                    <h3>Ksh<?php echo number_format($sales, 2); ?></h3>
-                    <p class="text-success">+5% than yesterday</p>
+                    <h5>Today's New Users</h5>
+                    <h3><?php echo $newUsers; ?></h3>
                 </div>
             </div>
         </div>
 
-        <!-- Ads Views -->
+        <!-- Today's Completed Orders -->
         <div class="col-md-3">
             <div class="card text-center">
                 <div class="card-body">
-                    <h5>Ads Views</h5>
-                    <h3><?php echo $adViews; ?></h3>
-                    <p class="text-danger">-2% than yesterday</p>
+                    <h5>Completed Orders</h5>
+                    <h3><?php echo $completedOrders; ?></h3>
                 </div>
             </div>
         </div>
@@ -115,38 +135,32 @@ $adViews = 3462;
 
     <!-- Graphs Section -->
     <div class="row mt-4">
-        <!-- Website Views Graph -->
-        <div class="col-md-4">
-            <div class="card">
-                <div class="card-body">
-                    <h5>Website Views</h5>
-                    <p>Last Campaign Performance</p>
-                    <canvas id="websiteViewsChart"></canvas>
-                    <p class="text-muted">Campaign sent 2 days ago</p>
-                </div>
-            </div>
-        </div>
-
         <!-- Daily Sales Graph -->
         <div class="col-md-4">
             <div class="card">
                 <div class="card-body">
                     <h5>Daily Sales</h5>
-                    <p>(+15%) increase in today's sales</p>
                     <canvas id="dailySalesChart"></canvas>
-                    <p class="text-muted">Updated 4 min ago</p>
                 </div>
             </div>
         </div>
 
-        <!-- Completed Tasks Graph -->
+        <!-- Completed Orders Graph -->
         <div class="col-md-4">
             <div class="card">
                 <div class="card-body">
-                    <h5>Completed Tasks</h5>
-                    <p>Last Campaign Performance</p>
-                    <canvas id="completedTasksChart"></canvas>
-                    <p class="text-muted">Just updated</p>
+                    <h5>Completed Orders</h5>
+                    <canvas id="completedOrdersChart"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <!-- Website Views Graph -->
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5>Website Views</h5>
+                    <canvas id="websiteViewsChart"></canvas>
                 </div>
             </div>
         </div>
@@ -156,49 +170,71 @@ $adViews = 3462;
 <!-- Include Chart.js for graphs -->
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
-// Website Views Chart
-new Chart(document.getElementById("websiteViewsChart"), {
-    type: 'bar',
-    data: {
-        labels: ['M', 'T', 'W', 'T', 'F', 'S', 'S'],
-        datasets: [{
-            label: 'Views',
-            data: [50, 30, 20, 40, 70, 90, 80],
-            backgroundColor: 'rgba(75, 192, 192, 0.6)',
-        }]
-    },
-    options: { responsive: true }
-});
-
-// Daily Sales Chart
+// Daily Sales Chart (based on data from the database)
 new Chart(document.getElementById("dailySalesChart"), {
     type: 'line',
     data: {
-        labels: ['J', 'F', 'M', 'A', 'M', 'J', 'J', 'A', 'S', 'O'],
+        labels: ['M', 'T', 'W', 'T', 'F', 'S', 'S'],
         datasets: [{
             label: 'Sales',
-            data: [12, 19, 3, 5, 2, 3, 7],
+            data: <?php echo json_encode($salesData); ?>, // Dynamic data from the database
             backgroundColor: 'rgba(255, 99, 132, 0.6)',
             borderColor: 'rgba(255, 99, 132, 1)',
             borderWidth: 1,
             fill: false
         }]
     },
-    options: { responsive: true }
+    options: {
+        responsive: true,
+        scales: {
+            y: {
+                ticks: {
+                    beginAtZero: true,
+                    max: 100 // Adjusting the maximum value to be realistic
+                }
+            }
+        }
+    }
 });
 
-// Completed Tasks Chart
-new Chart(document.getElementById("completedTasksChart"), {
-    type: 'doughnut',
+// Completed Orders Chart
+new Chart(document.getElementById("completedOrdersChart"), {
+    type: 'pie',
     data: {
         labels: ['Completed', 'Pending'],
         datasets: [{
-            data: [60, 40],
+            data: [<?php echo $completedOrders; ?>, <?php echo $totalOrders - $completedOrders; ?>],
             backgroundColor: ['#36A2EB', '#FF6384'],
             hoverBackgroundColor: ['#36A2EB', '#FF6384']
         }]
     },
     options: { responsive: true }
+});
+
+// Website Views Chart (example data, adjust as needed)
+new Chart(document.getElementById("websiteViewsChart"), {
+    type: 'bar',
+    data: {
+        labels: ['M', 'T', 'W', 'T', 'F', 'S', 'S'],
+        datasets: [{
+            label: 'Website Views',
+            data: [50, 60, 80, 40, 90, 70, 85], // Replace with actual data as needed
+            backgroundColor: 'rgba(75, 192, 192, 0.6)',
+            borderColor: 'rgba(75, 192, 192, 1)',
+            borderWidth: 1
+        }]
+    },
+    options: {
+        responsive: true,
+        scales: {
+            y: {
+                ticks: {
+                    beginAtZero: true,
+                    max: 100 // Adjusting the maximum value to be realistic
+                }
+            }
+        }
+    }
 });
 </script>
 

@@ -207,4 +207,5 @@ CREATE TABLE pendingvendors (
     DateRegistered TIMESTAMP DEFAULT CURRENT_TIMESTAMP  
 );
 ALTER TABLE pendingvendors ADD COLUMN Address VARCHAR(255) NOT NULL;
+ALTER TABLE Customer ADD COLUMN created_at DATETIME;
 

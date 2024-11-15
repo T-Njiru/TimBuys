@@ -9,27 +9,56 @@
     <div class="collapse navbar-collapse  w-auto  max-height-vh-100" id="sidenav-collapse-main">
       <ul class="navbar-nav">
         <li class="nav-item">
-          <a class="nav-link text-white " href="../pages/dashboard.html">
+          <a class="nav-link text-white " href="#">
             <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
-              <i class="material-icons opacity-10">dashboard</i>
+              <i class="material-icons opacity-10">Home</i>
             </div>
-            <span class="nav-link-text ms-1">First page</span>
+            
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link text-white " href="../pages/tables.html">
+          <a class="nav-link text-white " href="vendor_approval.php">
             <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
-              <i class="material-icons opacity-10">table_view</i>
+              <i class="material-icons opacity-10">Vendors</i>
             </div>
-            <span class="nav-link-text ms-1">Second Page</span>
+            
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link text-white " href="product_management.php">
+            <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+              <i class="material-icons opacity-10">Products</i>
+            </div>
+            
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link text-white " href="order_management.php">
+            <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+              <i class="material-icons opacity-10">Orders</i>
+            </div>
+            
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link text-white " href="customer_management.php">
+            <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+              <i class="material-icons opacity-10">Customers</i>
+            </div>
+            
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link text-white " href="transaction_management.php">
+            <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+              <i class="material-icons opacity-10">Financials</i>
+            </div>
+            
           </a>
         </li>
       </ul>
     </div>
-    <div class="sidenav-footer position-absolute w-100 bottom-0 ">
-      <div class="mx-3">
-        <a class="btn bg-gradient-primary mt-4 w-100" href="https://www.creative-tim.com/product/material-dashboard-pro?ref=sidebarfree" type="button">Upgrade to pro</a>
-      </div>
+    
     </div>
   </aside>
     
