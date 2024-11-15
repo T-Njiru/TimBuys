@@ -56,7 +56,7 @@
 <nav class="navbar navbar-expand-lg navbar-dark">
     <div class="container">
         <a class="navbar-brand" href="#">TIM BUYS</a>
-        <form class="form-inline mx-auto" action="search.php" method="GET">
+        <form class="form-inline mx-auto" action="search_results.php" method="GET">
             <input class="form-control mr-sm-2" type="text" name="query" placeholder="Search products, brands, and categories" aria-label="Search">
             <button class="btn btn-search my-2 my-sm-0" type="submit">Search</button>
         </form>
