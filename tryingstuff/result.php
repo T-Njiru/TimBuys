@@ -1,6 +1,7 @@
 <?php  // Start session at the top of the script
 // Log the incoming request time
 include_once('checkoutfncs.php');
+require_once 'global.php';
 
 $input = file_get_contents('php://input');
 file_put_contents('log.txt', "Raw input: " . $input . "\n", FILE_APPEND);
@@ -10,7 +11,6 @@ $username="root";
 $password="";
 $dbname="timbuys";
 
-$CustomerID="1";
 $conn = new mysqli($servername, $username, $password, $dbname);
 
 // Prepare and execute the SQL statement to retrieve the session ID

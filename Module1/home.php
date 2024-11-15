@@ -8,6 +8,7 @@ $Cart=new cart();
 $Specific=$Cart->load();
 
 include_once 'connection.php'; // Include your connection file
+require_once '../tryingstuff/global.php';
 
 // Create a new instance of the Database class
 $database = new Database();
@@ -21,6 +22,27 @@ if (!isset($_SESSION['customer_id'])) {
 
 $SessionID=session_id();
 $CustomerID=$_SESSION['customer_id'];
+
+
+
+// Read the existing content of global.php
+$globalFile = 'global.php';
+$globalContent = file_get_contents($globalFile);
+
+// Replace the value of $myVar in the file
+$updatedContent = preg_replace(
+    `/\\$myVar\s*=\s*.*?;/`,
+    '$myVar = ' . var_export($CustomerID, true) . ';',
+    $globalContent
+);
+
+// Save the updated content back to global.php
+file_put_contents($globalFile, $updatedContent);
+
+echo "global.php updated successfully!";
+?>
+
+
 $servername="localhost"; 
 $username="root";
 $password="";
