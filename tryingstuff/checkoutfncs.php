@@ -47,7 +47,7 @@ public function items(){?>
                                     </tr>
                                     <?php $this->grandtotal += $product['Price'] * $product['Quantity'];
                                 }
-                                $this->amount=$this->grandtotal+200;
+                                $this->amount=$this->grandtotal;
                             } else { 
                                 echo "fail";
                             } ?>
