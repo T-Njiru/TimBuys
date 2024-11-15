@@ -150,9 +150,9 @@ CREATE TABLE `sessionid` (
     `CustomerID` INT,
     FOREIGN KEY (CustomerID) REFERENCES Customer(CustomerID)
 );
---Transaction Table
+-- Transaction Table
 CREATE TABLE `transaction` (
-  `ReceiptID` varchar(255) NOT NULL,
+  `ReceiptID` varchar(255) PRIMARY KEY,
   `Phonenumber` varchar(255) NOT NULL,
   `Amount` int(11) NOT NULL,
   `TransactionDate` datetime NOT NULL
