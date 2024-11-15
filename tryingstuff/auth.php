@@ -6,7 +6,7 @@ require_once "transactionfncs.php";
 private $consumer_secret = 'uTGTiQJnLrSsOOED5OwJQWSWmk3hArwhk6GA47oj6YY2OGF9mmWDIXmNSKhn7tIA';
 private $shortcode = '174379';
 
-private $callbackUrl = 'https://eb37-156-0-232-51.ngrok-free.app/TimBuys/tryingstuff/result.php'; // Replace with your callback URL
+private $callbackUrl = 'https://7047-197-232-135-168.ngrok-free.app/TimBuys/tryingstuff/result.php'; // Replace with your callback URL
 private $accountReference = 'TimBuys Checkout'; // Replace with reference
 private $transactionDesc = 'Payment for Items from Timbuys'; // Replace with transaction description
 function Payment($CheckoutObj){
@@ -15,10 +15,10 @@ function Payment($CheckoutObj){
 
         $access_token = generateAccessToken($this->consumer_key, $this->consumer_secret);
 
-        //echo "Works";
+        echo "Works";
     // Step 2: Initiate STK Push
         $response = stkPushRequest($access_token, $this->shortcode, $amount, $phoneNumber, $this->callbackUrl, $this->accountReference, $this->transactionDesc);
-        //echo "Done as well";
+        echo "Done as well";
    
 }
 }
