@@ -150,6 +150,14 @@ CREATE TABLE `sessionid` (
     `CustomerID` INT,
     FOREIGN KEY (CustomerID) REFERENCES Customer(CustomerID)
 );
+--Transaction Table
+CREATE TABLE `transaction` (
+  `ReceiptID` varchar(255) NOT NULL,
+  `Phonenumber` varchar(255) NOT NULL,
+  `Amount` int(11) NOT NULL,
+  `TransactionDate` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
 
 -- Review Table
 CREATE TABLE Review (
