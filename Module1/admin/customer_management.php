@@ -14,32 +14,71 @@ $customers = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 <?php include('includes/header.php'); ?>
 
-<div class="container mt-4">
-    <h2>Customer Management</h2>
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Customer ID</th>
-                <th>Name</th>
-                <th>Email</th>
-                <th>Contact</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            <?php foreach ($customers as $customer): ?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Customer Management</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+        .container {
+            margin-top: 20px;
+        }
+        .table {
+            background-color: #fff;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+        .table th {
+            background-color: #daa520; /* Honey yellow */
+            color: #fff;
+            text-align: center;
+        }
+        .btn-info {
+            background-color: #daa520 !important; /* Honey yellow */
+            border: none;
+            color: #fff;
+        }
+        .btn-info:hover {
+            background-color: #b59416 !important; /* Darker honey yellow */
+        }
+    </style>
+</head>
+<body>
+    <div class="container mt-4">
+        <h2 class="text-center">Customer Management</h2>
+        <table class="table table-striped table-bordered">
+            <thead>
                 <tr>
-                    <td><?php echo $customer['CustomerID']; ?></td>
-                    <td><?php echo $customer['FirstName'] . ' ' . $customer['LastName']; ?></td>
-                    <td><?php echo $customer['Email']; ?></td>
-                    <td><?php echo $customer['Contact']; ?></td>
-                    <td>
-                        <a href="view_customer.php?customer_id=<?php echo $customer['CustomerID']; ?>" class="btn btn-info">View</a>
-                    </td>
+                    <th>Customer ID</th>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Contact</th>
+                    <th>Actions</th>
                 </tr>
-            <?php endforeach; ?>
-        </tbody>
-    </table>
-</div>
+            </thead>
+            <tbody>
+                <?php foreach ($customers as $customer): ?>
+                    <tr>
+                        <td><?php echo htmlspecialchars($customer['CustomerID']); ?></td>
+                        <td><?php echo htmlspecialchars($customer['FirstName'] . ' ' . $customer['LastName']); ?></td>
+                        <td><?php echo htmlspecialchars($customer['Email']); ?></td>
+                        <td><?php echo htmlspecialchars($customer['Contact']); ?></td>
+                        <td>
+                            <a href="view_customer.php?customer_id=<?php echo htmlspecialchars($customer['CustomerID']); ?>" class="btn btn-info">View</a>
+                        </td>
+                    </tr>
+                <?php endforeach; ?>
+            </tbody>
+        </table>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
 
 <?php include('includes/footer.php'); ?>

@@ -39,7 +39,7 @@ $totalPages = ceil($totalRows / $limit);
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css">
     <style>
         body {
-            background-color: #f8f9fa;
+            background-color: #f8f9fa !important;
         }
         .container {
             margin-top: 50px;
@@ -51,14 +51,14 @@ $totalPages = ceil($totalRows / $limit);
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
         }
         .table th {
-            background-color: #daa520;
-            color: #fff;
-            text-align: center;
+            background-color: #daa520 !important;
+            color: #fff !important;
+            text-align: center !important;
         }
         .btn-search {
-            background-color: #daa520;
-            color: white;
-            border: none;
+            background-color: #daa520 !important;
+            color: white !important;
+            border: none !important;
         }
         .btn-search:hover {
             background-color: #b59416;
@@ -68,6 +68,16 @@ $totalPages = ceil($totalRows / $limit);
         }
         .pagination a:hover {
             text-decoration: underline;
+        }
+        .form-control {
+            border: 2px solid #daa520 !important;
+            background-color: #ffffff !important;
+            border-radius: 5px !important;
+            padding: 8px !important;
+        }
+        .form-control:focus {
+            outline: none !important;
+            box-shadow: 0 0 5px #daa520 !important;
         }
     </style>
 </head>

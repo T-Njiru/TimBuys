@@ -64,14 +64,14 @@ $totalPages = ceil($totalRows / $limit);
             margin-top: 20px;
         }
         .table {
-            background-color: #fff;
+            background-color: fff;
             border-radius: 10px;
             overflow: hidden;
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
         }
         .table th {
-            background-color: #daa520;
-            color: #fff;
+            background-color: #daa520 !important; 
+            color: white !important;
             text-align: center;
         }
         .btn-action {
@@ -79,9 +79,9 @@ $totalPages = ceil($totalRows / $limit);
             font-size: 14px;
         }
         .btn-search {
-            background-color: #daa520;
-            color: white;
-            border: none;
+            background-color: #daa520 !important;
+            color: white !important;
+            border: solid !important;
         }
         .btn-search:hover {
             background-color: #b59416;
@@ -95,6 +95,16 @@ $totalPages = ceil($totalRows / $limit);
         .actions a {
             margin-right: 5px;
         }
+        .search-field {
+            background-color: white !important;;
+            border: 1px solid #ccc !important;;
+            border-radius: 5px !important;;
+            padding: 3px 10px !important;;
+        }
+        .search-field:focus {
+            border-color: #daa520;
+            outline: none;
+        }
     </style>
 </head>
 <?php include('includes/header.php'); ?>
@@ -104,10 +114,10 @@ $totalPages = ceil($totalRows / $limit);
     
     <!-- Search Form -->
     <form class="d-flex mb-4" method="GET">
-        <input type="text" class="form-control me-2" name="search" placeholder="Search by Product Name or Vendor" value="<?= htmlspecialchars($search) ?>">
+        <input type="text" class="form-control search-field me-2" name="search" placeholder="Search by Product Name or Vendor" value="<?= htmlspecialchars($search) ?>">
         <button type="submit" class="btn btn-search">Search</button>
     </form>
-    
+
     <!-- Products Table -->
     <table class="table table-striped table-bordered">
         <thead>
