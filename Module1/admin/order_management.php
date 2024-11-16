@@ -119,6 +119,7 @@ $totalPages = ceil($totalRows / $limit);
         
     </style>
 </head>
+<?php include('includes/header.php'); ?>
 <body>
 
 <!-- Main Content -->
@@ -188,4 +189,5 @@ $totalPages = ceil($totalRows / $limit);
 <!-- Bootstrap JS and Popper.js -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 </body>
+<?php include('includes/footer.php'); ?>
 </html>
