@@ -1,3 +1,5 @@
+
+
 <footer class="footer pt-5">
     <div class="container-fluid">
         <p>&copy; <?php echo date("Y"); ?> TimBuys. All rights reserved.</p>
