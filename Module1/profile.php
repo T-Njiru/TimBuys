@@ -19,14 +19,29 @@ $stmt->bindParam(':customer_id', $customer_id);
 $stmt->execute();
 $customer = $stmt->fetch(PDO::FETCH_ASSOC);
 
-$default_shipping_address = "No default shipping address available";
-$store_credit_balance = "KSh 0";
-
 // Check if customer data was retrieved
 if (!$customer) {
     echo "Customer not found.";
     exit();
 }
+
+// Fetch the customer's address
+$stmt = $pdo->prepare("
+    SELECT a.HouseNo, a.Street, a.Area, c.CountyName, ci.CityName
+    FROM Address a
+    JOIN County c ON a.CountyID = c.CountyID
+    JOIN City ci ON a.CityID = ci.CityID
+    WHERE a.CustomerID = :customer_id
+");
+$stmt->execute([':customer_id' => $customer_id]);
+$address = $stmt->fetch(PDO::FETCH_ASSOC);
+
+// Prepare default shipping address
+$default_shipping_address = $address
+    ? "{$address['HouseNo']}, {$address['Street']}, {$address['Area']}, {$address['CityName']}, {$address['CountyName']}"
+    : "No default shipping address available";
+
+$store_credit_balance = "KSh 0"; // Placeholder for store credit balance
 ?>
 <!DOCTYPE html>
 <html>
@@ -170,12 +185,9 @@ if (!$customer) {
         <a href="#"><i class="fas fa-user"></i> My TIMBUYS Account</a>
         <a href="#"><i class="fas fa-box"></i> Orders</a>
         <a href="#"><i class="fas fa-envelope"></i> Inbox</a>
-        <a href="#"><i class="fas fa-star"></i> Pending Reviews</a>
-        <a href="#"><i class="fas fa-ticket-alt"></i> Vouchers</a>
         <a href="#"><i class="fas fa-heart"></i> Saved Items</a>
         <a href="vendor.html"><i class="fas fa-store"></i> Register To Be A Seller</a>
-        <a href="#"><i class="fas fa-clock"></i> Recently Viewed</a>
-        <a href="#"><i class="fas fa-cog"></i> Account Management</a>
+        <a href="account_management.php"><i class="fas fa-cog"></i> Account Management</a>
         <a href="#"><i class="fas fa-address-book"></i> Address Book</a>
         <a href="#"><i class="fas fa-times-circle"></i> Close Account</a>
         <a href="logout.php" class="logout">LOGOUT</a>
@@ -206,7 +218,7 @@ if (!$customer) {
             <i class="fas fa-credit-card"></i>
             <div>
                 <h3>TIMBUYS STORE CREDIT</h3>
-                <a href="#">Jumia store credit balance: <?php echo $store_credit_balance; ?></a>
+                <a href="#">Store credit balance: <?php echo $store_credit_balance; ?></a>
             </div>
         </div>
     </div>

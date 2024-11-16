@@ -1,6 +1,7 @@
 <?php
 
 function generateAccessToken($consumer_key, $consumer_secret) {
+    date_default_timezone_set('Africa/Nairobi');
     $url = 'https://sandbox.safaricom.co.ke/oauth/v1/generate?grant_type=client_credentials';
 
     // Encode key and secret
@@ -31,12 +32,23 @@ function generateAccessToken($consumer_key, $consumer_secret) {
 }
 
 function stkPushRequest($access_token, $shortcode, $amount, $phoneNumber, $callbackUrl, $accountReference, $transactionDesc) {
+    date_default_timezone_set('Africa/Nairobi');
     $url = 'https://sandbox.safaricom.co.ke/mpesa/stkpush/v1/processrequest';
 
     // Generate the password
     $timestamp = date('YmdHis');
-    $passkey = ''; // Replace with your actual passkey
+    $passkey = 'bfb279f9aa9bdbcf158e97dd71a467cd2e0c893059b10f78e6b72ada1ed2c919'; // Replace with your actual passkey
     $password = base64_encode($shortcode . $passkey . $timestamp);
+
+     // Setup headers
+     $headers = [
+        'Content-Type: application/json',
+        'Authorization: Bearer ' . $access_token
+    ];
+
+    $curl = curl_init();
+    curl_setopt($curl, CURLOPT_URL, $url);
+    curl_setopt($curl, CURLOPT_HTTPHEADER, $headers);
 
     // Prepare the data
     $data = [
@@ -45,7 +57,7 @@ function stkPushRequest($access_token, $shortcode, $amount, $phoneNumber, $callb
         'Timestamp' => $timestamp,
         'TransactionType' => 'CustomerPayBillOnline',
         'Amount' => $amount,
-        'PartyA' => "254115263790", // Initiator's phone number
+        'PartyA' => $phoneNumber, // Initiator's phone number
         'PartyB' => $shortcode,
         'PhoneNumber' => $phoneNumber,
         'CallBackURL' => $callbackUrl,
@@ -53,19 +65,11 @@ function stkPushRequest($access_token, $shortcode, $amount, $phoneNumber, $callb
         'TransactionDesc' => $transactionDesc
     ];
 
-    // Setup headers
-    $headers = [
-        'Content-Type: application/json',
-        'Authorization: Bearer ' . $access_token
-    ];
-
     // Initialize cURL
-    $curl = curl_init();
-    curl_setopt($curl, CURLOPT_URL, $url);
-    curl_setopt($curl, CURLOPT_HTTPHEADER, $headers);
+
+    curl_setopt($curl, CURLOPT_POSTFIELDS, json_encode($data));
     curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
     curl_setopt($curl, CURLOPT_POST, true);
-    curl_setopt($curl, CURLOPT_POSTFIELDS, json_encode($data));
 
     // Execute cURL and handle response
     $response = curl_exec($curl);
@@ -74,8 +78,10 @@ function stkPushRequest($access_token, $shortcode, $amount, $phoneNumber, $callb
 
     // Check for successful response
     if ($status == 200) {
+        echo $response;
         return json_decode($response);
     } else {
+        echo $response;
         die("STK Push Request failed: HTTP Status $status - " . $response);
     }
 }

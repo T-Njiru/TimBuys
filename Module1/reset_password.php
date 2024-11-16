@@ -13,6 +13,8 @@ $database = new Database();
 $pdo = $database->getConnection();
 
 $message = ""; // Initialize message variable
+$showPopup = false; // Track if the popup should be shown
+$email = ""; // Retain the email input
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $email = filter_var($_POST['email'], FILTER_SANITIZE_EMAIL);
@@ -54,11 +56,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             $mail->send();
             $message = "A password reset link has been sent to your email address.";
+            $showPopup = true; // Trigger the popup message
         } catch (Exception $e) {
             $message = "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
+            $showPopup = true;
         }
     } else {
         $message = "Email not found.";
+        $showPopup = true;
     }
 }
 ?>
@@ -71,62 +76,93 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <title>Reset Password | TimBuys</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css">
     <style>
+        /* Background and Body */
         body {
-            background-color: #f8f9fa; /* Light background for better contrast */
+            background: linear-gradient(135deg, #fceabb 0%, #f8b500 100%);
+            background-attachment: fixed;
+            color: #333;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex;
+            justify-content: center;
+            padding: 20px 0;
+            height: 100vh;
+            margin: 0;
         }
-        .container {
-            margin-top: 10%;
+
+        /* Reset Password Wrapper */
+        .reset-password-wrapper {
+            max-width: 400px;
+            width: 100%;
+            background-color: white;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+            margin-top: 5%;
+            margin-bottom:12%;
         }
-        .card {
-            border: none;
-            border-radius: 10px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-        }
-        .card-header, .btn-primary {
-            background-color: #daa520; 
-            color: #fff; 
+
+        /* Title and Button Styling */
+        .form-title {
+            margin-bottom: 20px;
+            font-size: 24px;
+            font-weight: bold;
+            color: #f39c12;
+            text-align: center;
         }
         .btn-primary {
-            transition: background-color 0.3s ease;
-            border: none; /* Remove default border */
+            background-color: #f39c12;
+            border-color: #f39c12;
         }
         .btn-primary:hover {
-            background-color: #b59416; /* Darker shade on hover */
+            background-color: #d87d02;
+            border-color: #d87d02;
         }
-        .alert {
-            display: none; 
-            margin-top: 20px; 
+
+        /* Input Field Styling */
+        .form-label {
+            color: #555555;
+            font-weight: 500;
+        }
+        .form-control {
+            border: 2px solid #e8e8e8;
+            border-radius: 8px;
+        }
+        .form-control:focus {
+            border-color: #f39c12;
+            box-shadow: 0 0 0 0.2rem rgba(243, 156, 18, 0.25);
+        }
+
+        /* Responsive Styling */
+        @media (max-width: 576px) {
+            .form-title {
+                font-size: 20px;
+            }
+            .reset-password-wrapper {
+                width: 90%;
+            }
         }
     </style>
 </head>
 <body>
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-6">
-            <div class="card">
-                <div class="card-header text-center">Reset Password</div>
-                <div class="card-body">
-                    <div id="message" class="alert alert-success" role="alert"><?= $message ?></div>
-                    <form method="POST" onsubmit="showMessage();">
-                        <div class="mb-3">
-                            <label for="email" class="form-label">Enter your email address</label>
-                            <input type="email" class="form-control" id="email" name="email" required>
-                        </div>
-                        <button type="submit" class="btn btn-primary w-100">Send Reset Link</button>
-                    </form>
-                </div>
-            </div>
+<div class="reset-password-wrapper">
+    <h2 class="form-title">Reset Password</h2>
+
+    <!-- Display the popup message -->
+    <?php if ($showPopup): ?>
+        <div class="alert <?= strpos($message, 'successfully') !== false ? 'alert-success' : 'alert-danger' ?>" role="alert">
+            <?= htmlspecialchars($message) ?>
         </div>
-    </div>
+    <?php endif; ?>
+
+    <form method="POST">
+        <div class="mb-3">
+            <label for="email" class="form-label">Enter your email address</label>
+            <input type="email" name="email" class="form-control" value="<?= htmlspecialchars($email) ?>" required />
+        </div>
+        <button type="submit" class="btn btn-primary w-100">Send Reset Link</button>
+    </form>
 </div>
-<script>
-    function showMessage() {
-        const message = "<?= $message ?>";
-        if (message) {
-            document.getElementById('message').style.display = 'block';
-        }
-    }
-</script>
+
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
