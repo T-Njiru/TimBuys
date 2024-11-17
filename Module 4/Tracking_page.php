@@ -208,7 +208,7 @@ window.onload = () => {
         <div class="step <?= ($status == 'Order En Route' || $status == 'Order Arrived') ? 'active' : '' ?>"><span class="icon"><i class="fa fa-shipping-fast"></i></span><span class="text">Order En Route</span></div>
         <div class="step <?= ($status == 'Order Arrived') ? 'active' : '' ?>"><span class="icon"><i class="fa fa-home"></i></span><span class="text">Order Arrived</span></div>
     </div>
-    <a href="home.php"><button class="back-button">Back</button></a>
+    <a href="TimBuys/Module1/home.php"><button class="back-button">Back</button></a>
 </div>
 
 </body>
