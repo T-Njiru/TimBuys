@@ -209,3 +209,10 @@ CREATE TABLE pendingvendors (
 ALTER TABLE pendingvendors ADD COLUMN Address VARCHAR(255) NOT NULL;
 ALTER TABLE Customer ADD COLUMN created_at DATETIME;
 
+CREATE TABLE contact_messages (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    email VARCHAR(255) NOT NULL,
+    subject VARCHAR(255) NOT NULL,
+    message TEXT NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);

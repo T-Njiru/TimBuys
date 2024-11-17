@@ -16,12 +16,42 @@ function isVendorApproved($pdo, $email) {
     return $stmt->fetch(PDO::FETCH_ASSOC);
 }
 
+// Function to check if vendor is still pending approval
+function isVendorPending($pdo, $email) {
+    $stmt = $pdo->prepare("SELECT * FROM pendingvendors WHERE Email = :email");
+    $stmt->bindParam(':email', $email);
+    $stmt->execute();
+    return $stmt->fetch(PDO::FETCH_ASSOC);
+}
+
 // Check approval status
 $vendorApproved = isVendorApproved($pdo, $vendorEmail);
+$vendorPending = isVendorPending($pdo, $vendorEmail);
 
 // Redirect if approved
 if ($vendorApproved) {
     header("Location: vendorlogin.php");
+    exit();
+}
+
+// If not approved and no longer pending, show rejection message
+if (!$vendorApproved && !$vendorPending) {
+    echo "<!DOCTYPE html>
+    <html lang='en'>
+    <head>
+        <meta charset='UTF-8' />
+        <meta name='viewport' content='width=device-width, initial-scale=1.0' />
+        <title>Registration Rejected</title>
+        <link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css' />
+    </head>
+    <body>
+        <div class='container text-center mt-5'>
+            <h2>Registration Rejected</h2>
+            <p>We regret to inform you that your vendor registration has been rejected. If you have any questions, please <a href='contact.php'>contact us</a>.</p>
+            <a href='home.html' class='btn btn-primary mt-3'>Go Back to Home</a>
+        </div>
+    </body>
+    </html>";
     exit();
 }
 ?>
@@ -43,7 +73,7 @@ if ($vendorApproved) {
         </div>
     </div>
     <script>
-        // Check for approval every few seconds
+        // Check for approval or rejection every few seconds
         setInterval(() => {
             window.location.reload();
         }, 5000); // Check every 5 seconds
