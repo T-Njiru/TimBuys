@@ -127,6 +127,8 @@ function processTransaction($callbackItems) {
         
         $checkout = new checkout();
         $checkout->updateTable();
+        header( "Location:tryingstuff/orders.php");
+        exit;
     } else {
         echo "Error updating record: " . $stmt->error;
     }
