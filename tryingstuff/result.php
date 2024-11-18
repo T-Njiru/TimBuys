@@ -162,8 +162,8 @@ function sendEmailNotification($to, $orderId, $status) {
         $mail->isSMTP();
         $mail->Host = 'smtp.example.com'; // Specify main and backup SMTP servers
         $mail->SMTPAuth = true;
-        $mail->Username = 'your-email@example.com'; // SMTP username
-        $mail->Password = 'your-email-password';   // SMTP password
+        $mail->Username = 'huberttim55@gmail.com'; // SMTP username
+        $mail->Password = 'hbpc oqqg jklq eqlk';   // SMTP password
         $mail->SMTPSecure = 'tls';
         $mail->Port = 587;
 
