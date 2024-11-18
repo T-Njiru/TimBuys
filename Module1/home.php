@@ -86,6 +86,19 @@ $stmt = $pdo->prepare("SELECT * FROM Customer WHERE CustomerID = :customer_id");
 $stmt->bindParam(':customer_id', $customer_id);
 $stmt->execute();
 $customer = $stmt->fetch(PDO::FETCH_ASSOC);
+
+$productQuery = "
+    SELECT p.ProductID, p.ProductName, p.ProductImage, vp.Price, vp.Quantity 
+    FROM product p
+    JOIN vendorproduct vp ON p.ProductID = vp.ProductID
+    WHERE vp.Quantity > 0
+    ORDER BY p.ProductID ASC
+    LIMIT 4
+";
+$productStmt = $pdo->prepare($productQuery);
+$productStmt->execute();
+$products = $productStmt->fetchAll(PDO::FETCH_ASSOC);
+?>
 ?>
 
 <!DOCTYPE html>
@@ -210,48 +223,15 @@ $customer = $stmt->fetch(PDO::FETCH_ASSOC);
         <button>SHOP NOW</button>
     </div>
     <div class="most-viewed">
-        <h2>Most Viewed Items</h2>
-        <div class="most-viewed-items">
+    <h2>Most Viewed Items</h2>
+    <div class="most-viewed-items">
+        <?php foreach ($products as $product): ?>
             <div class="most-viewed-item">
-                <img
-                    alt="Nike Air Jordan 1 Mid 'Canyon'"
-                    height="200"
-                    src="https://storage.googleapis.com/a1aa/image/WgtDTf9HcpxWcChaiRg41Mk1ZuTLzKo8gC0hyBqcYrbW4ZzJA.jpg"
-                    width="200"
-                />
-                <p>Nike Air Jordan 1 Mid 'Canyon'</p>
-                <p>Ksh 12,000</p> 
+                <img alt="<?php echo htmlspecialchars($product['ProductName']); ?>" height="200" src="<?php echo htmlspecialchars($product['ProductImage']); ?>" width="200" />
+                <p><?php echo htmlspecialchars($product['ProductName']); ?></p>
+                <p>Ksh <?php echo htmlspecialchars($product['Price']); ?></p>
             </div>
-            <div class="most-viewed-item">
-                <img
-                    alt="Chunky Gemstone Rings"
-                    height="200"
-                    src="https://storage.googleapis.com/a1aa/image/4p09IveCkmR8YSjQwCePCyAO3fKj3WEW1u8XwifzGBMFDPbOB.jpg"
-                    width="200"
-                />
-                <p>Chunky Gemstone Rings</p>
-                <p>Ksh 3,000</p> 
-            </div>
-            <div class="most-viewed-item">
-                <img
-                    alt="Apple AirPods"
-                    height="200"
-                    src="https://storage.googleapis.com/a1aa/image/92bFe8fIx2rN0EJ011yiaRAh8K25dxbj6lwSyWaOe4YUhnNnA.jpg"
-                    width="200"
-                />
-                <p>Apple AirPods</p>
-                <p>Ksh 15,000</p> 
-            </div>
-            <div class="most-viewed-item">
-                <img
-                    alt="Ultimate Perfume Stand"
-                    height="200"
-                    src="https://storage.googleapis.com/a1aa/image/18FfkAQnlqVjBKUH8MfVf13tAq29CPM100fUvXSeMzihGes5E.jpg"
-                    width="200"
-                />
-                <p>Ultimate Perfume Stand</p>
-                <p>Ksh 8,000</p> 
-            </div>
+        <?php endforeach; ?>
         </div>
     </div>
     <div class="flash-sales">
@@ -280,16 +260,7 @@ $customer = $stmt->fetch(PDO::FETCH_ASSOC);
             <p>Writing Set for Journaling</p>
             <p>Ksh 1,500</p> 
         </div>
-        <div class="flash-sales-item">
-            <img
-                alt="Leather Backpack"
-                height="200"
-                src="https://storage.googleapis.com/a1aa/image/zRZ3QUqkA56H3y0lhWoJWvTZbUajNBiip9gyIX6yyf5s1N4C.jpg"
-                width="200"
-            />
-            <p>Leather Backpack</p>
-            <p>Ksh 4,500</p> 
-        </div>
+        
     </div>
 
     <footer>
