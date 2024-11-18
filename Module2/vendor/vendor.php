@@ -14,7 +14,7 @@
         </div>
         <div class="UserActions">
             <span><i class="icon-user">Account</i></span>
-            <span><i class="icon-cart">Cart</i></span>
+            <span><i class="icon-cart">Logout</i></span>
         </div>
     </header>
 
