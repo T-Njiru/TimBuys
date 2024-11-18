@@ -4,7 +4,11 @@ include_once('checkoutfncs.php');
 require_once 'global.php';
 //echo $CustomerID."Separate<br>";
 
+
 $input = file_get_contents('php://input');
+if ($input==null){
+    echo json_encode(['status' => 'received']);
+}
 file_put_contents('log.txt', "Raw input: " . $input . "\n", FILE_APPEND);
 
 $servername="localhost"; 
@@ -127,8 +131,7 @@ function processTransaction($callbackItems) {
         
         $checkout = new checkout();
         $checkout->updateTable();
-        header( "Location:tryingstuff/orders.php");
-        exit;
+        
     } else {
         echo "Error updating record: " . $stmt->error;
     }

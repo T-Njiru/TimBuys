@@ -25,7 +25,7 @@ $data = [
 $jsonData = json_encode($data);
 
 // Initialize cURL
-$ch = curl_init('https://d120-197-232-135-168.ngrok-free.app/TimBuys/tryingstuff/result.php');
+$ch = curl_init('https://b2d6-197-232-135-168.ngrok-free.app/TimBuys/tryingstuff/result.php');
 
 // Set cURL options
 curl_setopt($ch, CURLOPT_POST, 1);
@@ -39,6 +39,8 @@ if ($response === false) {
     error_log('cURL Error: ' . curl_error($ch));
 }
 curl_close($ch);
+header( "Location:orders.php");
+        exit;
 
 // Output the response
-echo $response;
+//echo $response;

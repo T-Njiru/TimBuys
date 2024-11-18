@@ -1,7 +1,7 @@
 
 
  <?php 
- 
+
  require('auth.php');
 
  class checkout{
