@@ -176,7 +176,7 @@ function sendEmailNotification($to, $orderId, $status) {
         $mail->SMTPSecure = 'tls';
         $mail->Port = 587;
 
-        $mail->setFrom('no-reply@example.com', 'Tim Buys');
+        $mail->setFrom('huberttim55@gmail.com', 'Tim Buys');
         $mail->addAddress($to);
 
         $mail->isHTML(true);

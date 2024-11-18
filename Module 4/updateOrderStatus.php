@@ -46,7 +46,7 @@ if ($stmt->execute()) {
             $mail->Port = 587;                                       // TCP port to connect to
 
             //Recipients
-            $mail->setFrom('no-reply@example.com', 'Tim Buys');
+            $mail->setFrom('huberttim55@gmail.com', 'Tim Buys');
             $mail->addAddress($customerEmail);                       // Add a recipient
 
             //Content
