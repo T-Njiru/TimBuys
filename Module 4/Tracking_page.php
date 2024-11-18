@@ -14,62 +14,49 @@
 </head>
 <body>
 <header class="header">
-  <div class="logo">TIM BUYS</div>
-  <div class="search-bar">
-      <input type="text" placeholder="Search products, brands and categories">
-      <button>Search</button>
-  </div>
-  <div class="account-section">
-      <span class="account"><i class="fas fa-user account-icon"></i> ACCOUNT</span>
-      <span class="help">HELP</span>
-      <span class="cart"><i class="fas fa-shopping-cart cart-icon"></i> CART</span>
-  </div>
+    <div class="logo">TIM BUYS</div>
+    <div class="search-bar">
+        <input type="text" placeholder="Search products, brands and categories">
+        <button>Search</button>
+    </div>
+    <div class="account-section">
+        <span class="account"><i class="fas fa-user account-icon"></i> ACCOUNT</span>
+        <span class="help">HELP</span>
+        <span class="cart"><i class="fas fa-shopping-cart cart-icon"></i> CART</span>
+    </div>
 </header>
-
 
 <?php
 function getCoordinates($address) {
-    // Your API Key is embedded in the URL
     $url = "https://api.geoapify.com/v1/geocode/search?text=" . urlencode($address) . "&apiKey=2260ba8f348a499aa8684d2a0d335755";
-
-    // Fetch the API response
     $response = @file_get_contents($url);
-
-    // Check if the response is successful
     if ($response === FALSE) {
-        return null; // Return null if the API call fails
+        return null;
     }
 
     $json = json_decode($response, true);
-
-    // Extract coordinates if available
     if (isset($json['features'][0]['geometry']['coordinates'])) {
         return [
-            'lat' => $json['features'][0]['geometry']['coordinates'][1], // Latitude
-            'lng' => $json['features'][0]['geometry']['coordinates'][0], // Longitude
+            'lat' => $json['features'][0]['geometry']['coordinates'][1],
+            'lng' => $json['features'][0]['geometry']['coordinates'][0],
         ];
     }
 
-    return null; // Return null if no coordinates found
+    return null;
 }
 
-
-
-// Get OrderID from query parameters
 $OrderID = isset($_GET['OrderID']) ? $_GET['OrderID'] : null;
 
 if (!$OrderID) {
     die("Error: Order ID not found in URL parameters.");
 }
 
-// Database connection
 $conn = new mysqli('localhost', 'root', '', 'TimBuys');
 
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-// SQL query to retrieve order details
 $sql = "SELECT 
             o.CustomerID AS CustomerID, 
             o.OrderDate, 
@@ -83,7 +70,6 @@ $sql = "SELECT
         JOIN Vendor v ON vp.VendorID = v.VendorID
         WHERE o.OrderID = ?";
 
-// Prepare and execute the query
 $stmt = $conn->prepare($sql);
 $stmt->bind_param("s", $OrderID);
 $stmt->execute();
@@ -119,7 +105,6 @@ $conn->close();
 async function initMap() {
     const data = <?= json_encode($response) ?>;
 
-    // Validate start and end coordinates
     if (!data.start || !data.end) {
         console.error("Coordinates are missing.");
         document.getElementById("map").innerHTML = "<p>Map data unavailable.</p>";
@@ -129,29 +114,22 @@ async function initMap() {
     const start = [parseFloat(data.start.lat), parseFloat(data.start.lng)];
     const end = [parseFloat(data.end.lat), parseFloat(data.end.lng)];
 
-    // Initialize the map centered on the start location
     const map = L.map("map").setView(start, 13);
-
-    // Add OpenStreetMap tiles
     L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
         maxZoom: 19,
         attribution: "&copy; <a href='https://www.openstreetmap.org/copyright'>OpenStreetMap</a>"
     }).addTo(map);
 
-    // Add a polyline between start and end points
     const route = L.polyline([start, end], { color: "#daa520", weight: 5 }).addTo(map);
-
-    // Add markers with popups for the start and end locations
     L.marker(start).addTo(map).bindPopup("Picked Up Location").openPopup();
     L.marker(end).addTo(map).bindPopup("Delivery Destination").openPopup();
-
-    // Adjust map view to fit the route
     map.fitBounds(route.getBounds());
 }
 
-
 async function updateOrderStatus() {
     const orderID = <?= json_encode($OrderID) ?>;
+    const statuses = ["Order Picked by Courier", "Order En Route", "Order Arrived"];
+    let statusIndex = 0;
 
     const fetchAndUpdateStatus = async () => {
         const response = await fetch(`getOrderStatus.php?OrderID=${orderID}`);
@@ -161,11 +139,25 @@ async function updateOrderStatus() {
         if (data.status !== currentStatus) {
             currentStatus = data.status;
         }
+
+        // Schedule the next status update if there are more statuses
+        if (statusIndex < statuses.length) {
+            setTimeout(() => {
+                updateStatusInServer(orderID, statuses[statusIndex]);
+                statusIndex++;
+            }, 30000);
+        }
     };
 
     let currentStatus = "<?= $status ?>";
     await fetchAndUpdateStatus();
     setInterval(fetchAndUpdateStatus, 30000);
+}
+
+async function updateStatusInServer(orderID, status) {
+    const response = await fetch(`updateOrderStatus.php?OrderID=${orderID}&status=${status}`);
+    const data = await response.json();
+    updateStatusElements(data);
 }
 
 function updateStatusElements(data) {
@@ -202,15 +194,6 @@ window.onload = () => {
         </div>
     </div>
     <div id="map" style="height: 400px;"></div>
-    <div class="track">
-        <div class="step <?= ($status == 'Processed' || $status == 'Order Picked by Courier' || $status == 'Order En Route' || $status == 'Order Arrived') ? 'active' : '' ?>"><span class="icon"><i class="fa fa-check"></i></span><span class="text">Order Processed</span></div>
-        <div class="step <?= ($status == 'Order Picked by Courier' || $status == 'Order En Route' || $status == 'Order Arrived') ? 'active' : '' ?>"><span class="icon"><i class="fa fa-truck"></i></span><span class="text">Picked by Courier</span></div>
-        <div class="step <?= ($status == 'Order En Route' || $status == 'Order Arrived') ? 'active' : '' ?>"><span class="icon"><i class="fa fa-shipping-fast"></i></span><span class="text">Order En Route</span></div>
-        <div class="step <?= ($status == 'Order Arrived') ? 'active' : '' ?>"><span class="icon"><i class="fa fa-home"></i></span><span class="text">Order Arrived</span></div>
-    </div>
-    <a href="TimBuys/Module1/home.php"><button class="back-button">Back</button></a>
 </div>
-
 </body>
 </html>
-
