@@ -194,17 +194,7 @@ $customer = $stmt->fetch(PDO::FETCH_ASSOC);
         Welcome, <?php echo htmlspecialchars($customer['FirstName']); ?>!
     </div>
 </header>
-    <!-- Categories -->
-    <section class="categories">
-        <p>CATEGORIES</p>
-        <button>TVs & Accessories</button>
-        <button>Phones & Tablets</button>
-        <button>Appliances</button>
-        <button>Health & Beauty</button>
-        <button>Fashion</button>
-        <button>Computing</button>
-        <button>Other Categories</button>
-    </section>
+    
 
     <!-- Hero Section -->
     <section class="hero">
