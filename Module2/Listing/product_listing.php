@@ -69,10 +69,10 @@
         ?>
         <div class="col-sm-6 col-md-4 col-lg-3">
             <div class="card">
-                <img src="uploads/<?php echo $product['ProductImage']; ?>" alt="<?php echo $product['ProductName']; ?>" class="card-img-top">
+                <img src="module2/uploads/<?php echo $product['ProductImage']; ?>" alt="<?php echo $product['ProductName']; ?>" class="card-img-top">
                 <div class="card-body">
                     <h5 class="card-title"><?php echo $product['ProductName']; ?></h5>
-                    <h4><?php echo "$" . $product['Price']; ?></h4>
+                    <h4><?php echo "Ksh" . $product['Price']; ?></h4>
                     <form method="post" action="../../Module3/add_to_cart.php">
                         <input type="hidden" name="product_id" value="<?php echo $product['ProductID']?>">
                         <button type="submit" class="btn btn-success btn-block">Add to Cart</button>

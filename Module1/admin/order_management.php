@@ -86,8 +86,8 @@ $totalPages = ceil($totalRows / $limit);
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
         }
         .table th {
-            background-color: #daa520;
-            color: #fff;
+            background-color: #daa520 !important;;
+            color: #fff !important;;
             text-align: center;
         }
         .btn-action {
@@ -95,9 +95,9 @@ $totalPages = ceil($totalRows / $limit);
             font-size: 14px;
         }
         .btn-search {
-            background-color: #daa520;
-            color: white;
-            border: none;
+            background-color: #daa520 !important;;
+            color: white !important;;
+            border: none !important;;
         }
         .btn-search:hover {
             background-color: #b59416;
@@ -112,13 +112,21 @@ $totalPages = ceil($totalRows / $limit);
             margin-right: 5px;
         }
         .buttonn {
-            background-color: #daa520;
-            border-color: #f8f9fa;
+            background-color: #daa520 !important;;
+            border-color: #f8f9fa !important;;
 
+        
+        }
+        .search-field {
+            background-color: white !important;;
+            border: 1px solid #ccc !important;;
+            border-radius: 5px !important;;
+            padding: 3px 10px !important;;
         }
         
     </style>
 </head>
+<?php include('includes/header.php'); ?>
 <body>
 
 <!-- Main Content -->
@@ -127,7 +135,7 @@ $totalPages = ceil($totalRows / $limit);
     
     <!-- Search Form -->
     <form class="d-flex mb-4" method="GET">
-        <input type="text" class="form-control me-2" name="search" placeholder="Search by Product Name or Vendor" value="<?= htmlspecialchars($search) ?>">
+        <input type="text" class="form-control search-field me-2" name="search" placeholder="Search by Product Name or Vendor" value="<?= htmlspecialchars($search) ?>">
         <button type="submit" class="buttonn">Search</button>
     </form>
 
@@ -188,4 +196,5 @@ $totalPages = ceil($totalRows / $limit);
 <!-- Bootstrap JS and Popper.js -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 </body>
+<?php include('includes/footer.php'); ?>
 </html>
