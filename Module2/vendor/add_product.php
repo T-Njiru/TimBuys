@@ -2,12 +2,13 @@
 session_start(); // Start the session to access `$_SESSION` variables
 
 // Check if the vendor is logged in
-if (!isset($_SESSION['VendorID'])) {
+if (!isset($_SESSION['vendor_id'])) {
     die("Access denied: Please log in as a vendor.");
 }
 
 // Get the logged-in Vendor ID
-$vendor_id = $_SESSION['VendorID'];
+$vendor_id = $_SESSION['vendor_id'];
+
 
 // Database connection
 $conn = new mysqli('localhost:3306', 'root', '', 'timbuys');
