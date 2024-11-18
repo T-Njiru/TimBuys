@@ -1,5 +1,12 @@
 <?php
 
-$CustomerID = 1;
 
+$CustomerID = 2;
+
+
+ 
+$CustomerID = 2;
+
+
+$CustomerID = 12;
 ?>

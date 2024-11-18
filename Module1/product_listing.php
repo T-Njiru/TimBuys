@@ -6,6 +6,9 @@
     <title>Product Listing</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <style>
+        body {
+    background-color: #daa520;
+}
         .card {
             margin-bottom: 20px;
             border: 1px solid #ddd;
@@ -32,19 +35,18 @@
             color: #FFB700;
             font-weight: bold;
         }
-        .btn-buy {
-            background-color: #FFB700;
-            color: white;
-            text-decoration: none;
-            padding: 8px 16px;
-            border-radius: 5px;
-        }
-        .btn-buy:hover {
-            background-color: #218838;
-        }
+       
         .container {
+           
             margin-top: 40px;
         }
+        .cart {
+    background-color: black;
+    color: white; /* Change text color to white for contrast */
+    padding: 10px; /* Optional: adds some padding to the content */
+    border-radius: 5px; /* Optional: rounds the corners of the background */
+}
+
     </style>
 </head>
 <body>
@@ -83,9 +85,9 @@
                     <p><strong>Vendor:</strong> <?php echo $product['VendorName']; ?></p> <!-- Display Vendor Name -->
                     <form method="post" action="../Module3/add_to_cart.php">
                         <input type="hidden" name="product_id" value="<?php echo $product['ProductID']?>">
-                        <button type="submit" class="btn btn-success btn-block">Add to Cart</button>
+                        <button type="submit" class="cart">Add to Cart</button>
                     </form>
-                    <a href="item.php?productid=<?php echo $product['ProductID']; ?>" class="btn-buy d-block text-center mt-2">Buy</a>
+                    
                 </div>
             </div>
         </div>
