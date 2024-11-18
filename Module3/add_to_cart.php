@@ -13,7 +13,7 @@ echo $productID;
     }
 
  
-    $stmt = $conn->prepare("SELECT p.ProductID, p.ProductName, vp.Price, vp.Quantity, vp.Description, v.Name AS VendorName, c.CategoryName
+    $stmt = $conn->prepare("SELECT p.ProductID, p.ProductName,p.ProductImage, vp.Price, vp.Quantity, vp.Description, v.Name AS VendorName, c.CategoryName
                             FROM Product p
                             JOIN VendorProduct vp ON p.ProductID = vp.ProductID
                             JOIN Vendor v ON vp.VendorID = v.VendorID
