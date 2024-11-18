@@ -100,13 +100,15 @@ public function area3(){
                     if (isset($_POST['address']) && isset($_POST['delivery']) ) {  
                         $this->method= $_POST['delivery'];
                         if(isset($_POST['Address'])&& $_POST['Address']!=null){
-                            echo "Address set\n";
-                        $holdaddress= $_SESSION['address']=$_POST['Address']; 
-                        $this->address=$holdaddress;
-                        echo $this->address; } 
+                            echo "Address set: ";
+                            $holdaddress= $_SESSION['address']=$_POST['Address']; 
+                            $this->address=$holdaddress;
+                            echo $this->address; } 
                         else {
+                            echo "Address set: ";
                             $holdaddress= $_SESSION['address']="Strathmore School"; 
-                        $this->address=$holdaddress;
+                            $this->address=$holdaddress;
+                            echo $this->address;
                          } ?>
                    
                         <!-- <span><?php //echo $_POST['delivery']; ?></span><br>  
@@ -169,7 +171,7 @@ public function updateTable() {
     }
 
     $conn->close();
-    //unset($_SESSION['cart']);
+    unset($_SESSION['cart']);
 }
 
  }            

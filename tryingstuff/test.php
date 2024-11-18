@@ -25,7 +25,7 @@ $data = [
 $jsonData = json_encode($data);
 
 // Initialize cURL
-$ch = curl_init('https://7047-197-232-135-168.ngrok-free.app/TimBuys/tryingstuff/result.php');
+$ch = curl_init('https://d120-197-232-135-168.ngrok-free.app/TimBuys/tryingstuff/result.php');
 
 // Set cURL options
 curl_setopt($ch, CURLOPT_POST, 1);
