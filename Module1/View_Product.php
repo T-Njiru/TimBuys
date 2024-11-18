@@ -132,7 +132,7 @@ include 'C:/xampp/htdocs/TimBuys/Module3/cart_functions.php';
                 <div class="product-details">
                     <h1 class="product-title"><?php echo $product['ProductName']; ?></h1>
                     <h2 class="product-price">KSh <?php echo number_format($product['Price'], 2); ?></h2>
-                    <p class="product-description"><?php echo $product['Description']; ?></p>
+                    
                     <form method="post" action="../Module3/add_to_cart.php">
                         <input value="<?php echo $productID;?>" name="product_id" hidden >
                     <button type="submit" class="btn btn-add-to-cart">Add to Cart</button>
