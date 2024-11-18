@@ -30,7 +30,7 @@ public function viewOrders(){
             echo '<td>' . htmlspecialchars($list['Quantity']) . '</td>';
             echo '<td>' . htmlspecialchars($list['OrderDate']) . '</td>';
             echo '<td>' . htmlspecialchars($list['Address']) . '</td>';
-            echo '<td><a href="" class="btn">Track</a></td>';
+            echo '<td><a href="tracking_page.php?OrderID=' .htmlspecialchars($list['OrderID']).'"12 class="btn">Track</a></td>';
             // echo '<td>';
             // echo '<form method="POST" action="remove_from_cart.php" onsubmit="return confirm(\'Are you sure you want to remove this item?\');">';
             // echo '<input type="hidden" name="product_id" value="' . htmlspecialchars($item['ProductID']) . '">';
