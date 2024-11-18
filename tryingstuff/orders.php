@@ -49,6 +49,5 @@ public function viewOrders(){
   
 } 
 }
-$Orders=new Orders();
-$Orders->viewOrders();
+
 ?>
