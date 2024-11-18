@@ -2,9 +2,17 @@
 // Log the incoming request time
 include_once('checkoutfncs.php');
 require_once 'global.php';
+require 'C:\xampp\htdocs\TimBuys\tryingstuff\vendor\autoload.php'; // Adjust the path as necessary
+
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
 //echo $CustomerID."Separate<br>";
 
+
 $input = file_get_contents('php://input');
+if ($input==null){
+    echo json_encode(['status' => 'received']);
+}
 file_put_contents('log.txt', "Raw input: " . $input . "\n", FILE_APPEND);
 
 $servername="localhost"; 
@@ -127,13 +135,58 @@ function processTransaction($callbackItems) {
         
         $checkout = new checkout();
         $checkout->updateTable();
-        header( "Location:tryingstuff/orders.php");
-        exit;
+        if (isset($_SESSION['OrderID'])) {
+            $orderId = $_SESSION['OrderID'];
+            $updateOrderStatusSql = "UPDATE orderedproduct SET Status='Order Processed' WHERE OrderID=?";
+            $stmt = $conn->prepare($updateOrderStatusSql);
+            $stmt->bind_param("s", $orderId);
+            $stmt->execute();
+            $stmt->close();
+
+            // Send email notification using PHPMailer
+            $sql = "SELECT c.Email FROM orders o JOIN Customer c ON o.CustomerID = c.CustomerID WHERE o.OrderID=?";
+            $stmt = $conn->prepare($updateOrderStatusSql);
+            $stmt->bind_param("s", $orderId);
+            $stmt->execute();
+            $result=$stmt->get_result();
+            if ($result->num_rows > 0) {
+                $row = $result->fetch_assoc();
+                $customerEmail = $row['Email'];
+                sendEmailNotification($customerEmail, $orderId, 'Processed');
+                unset($_SESSION['cart']);
+            }
+        }
+
     } else {
         echo "Error updating record: " . $stmt->error;
     }
 
-   
-    
+    $conn->close();
 }
-    
+
+function sendEmailNotification($to, $orderId, $status) {
+    $mail = new PHPMailer(true);
+
+    try {
+        $mail->isSMTP();
+        $mail->Host = 'smtp.example.com'; // Specify main and backup SMTP servers
+        $mail->SMTPAuth = true;
+        $mail->Username = 'huberttim55@gmail.com'; // SMTP username
+        $mail->Password = 'hbpc oqqg jklq eqlk';   // SMTP password
+        $mail->SMTPSecure = 'tls';
+        $mail->Port = 587;
+
+        $mail->setFrom('no-reply@example.com', 'Tim Buys');
+        $mail->addAddress($to);
+
+        $mail->isHTML(true);
+        $mail->Subject = 'Order Status Update';
+        $mail->Body    = "Your order with ID $orderId has been updated to status: $status.";
+        $mail->AltBody = "Your order with ID $orderId has been updated to status: $status.";
+
+        $mail->send();
+    } catch (Exception $e) {
+        error_log("Mailer Error: " . $mail->ErrorInfo);
+    }
+}
+?>

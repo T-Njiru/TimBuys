@@ -28,7 +28,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         // Check for successful execution
         if ($stmt->execute([$name, $address, $email, $password, $contact])) {
             // Send notification to the admin
-            $adminEmail = 'fmarsa99@gmail.com';
+            $adminEmail = 'ted.njiru@strathmore.edu';
 
             // Create a new PHPMailer instance
             $mail = new PHPMailer(true);
@@ -43,7 +43,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $mail->Port       = 587;                                  // TCP port for TLS
 
                 // Recipients
-                $mail->setFrom('fatumamm99@gmail.com', 'Fatma');
+                $mail->setFrom('fatumamm99@gmail.com', 'Admin');
                 $mail->addAddress($adminEmail);                           // Add the admin's email as a recipient
 
                 // Content

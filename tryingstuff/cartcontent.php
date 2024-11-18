@@ -34,7 +34,7 @@ class cart{
                   <div class="ms-auto pb-1 mb-1"><h4 class="ms-auto text-dark"><?php echo $product['VendorName']; ?></h4></div>
                   
                   <div class="row">
-                  <div class="col-md-3 my-auto"><img src="food.jpg" class="img-thumbnail show" alt="Product" style="max-width: 150px; max-height: 150px; color: black;"> </div>
+                  <div class="col-md-3 my-auto"><img src="<?php echo $product['ProductImage'];?>" class="img-thumbnail show" alt="Product" style="max-width: 150px; max-height: 150px; color: black;"> </div>
                       <div class=" ms-5 d-flex flex-column col-md-8">
                           <div class="mx-auto p-0 m-0 text-dark"><h3><?php echo $product['ProductName'];?></h3></div>
                           <div class="p-0 m-0 "><?php print ($Specific[$product['ProductID']]['Quantity']>0)? "<p class='text-success'>In Stock</p>":"<p class='text-danger'>Out of Stock</p>"; ?></div> 

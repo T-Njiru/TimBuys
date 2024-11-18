@@ -1,7 +1,7 @@
 
 
  <?php 
- 
+
  require('auth.php');
 
  class checkout{
@@ -152,7 +152,7 @@ public function updateTable() {
 
     // Insert into `orders` table
     $OrderID = $_SESSION["OrderID"] = "TBY" . rand(10000, 99999);
-    $CustomerID = "1";
+    include 'global.php';
     $Address = $_SESSION['address'];
 
     $sql = "INSERT INTO orders (OrderID, CustomerID, Address) VALUES (?, ?, ?)";
@@ -163,15 +163,16 @@ public function updateTable() {
 
     // Insert into `orderedproduct` table for each cart item
     foreach ($_SESSION['cart'] as $order) {
-        $sql = "INSERT INTO orderedproduct (VendorProductID, OrderID, Quantity) VALUES (?, ?, ?)";
+        $status="Processed";
+        $sql = "INSERT INTO orderedproduct (VendorProductID, OrderID, Quantity, orderedproduct.Status) VALUES (?, ?, ?,?)";
         $stmt = $conn->prepare($sql);
-        $stmt->bind_param("isi", $order['ProductID'], $OrderID, $order['Quantity']);
+        $stmt->bind_param("isis", $order['ProductID'], $OrderID, $order['Quantity'],$status);
         $stmt->execute();
         $stmt->close();
     }
 
     $conn->close();
-    unset($_SESSION['cart']);
+    
 }
 
  }            
