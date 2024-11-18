@@ -22,7 +22,6 @@
         <h1>Add a New Product</h1>
         <form action="add_product.php" method="post" enctype="multipart/form-data" class="Box">
             <div class="Column">
-                <!-- Removed Vendor ID input field -->
                 <label for="product_name" class="title">Product Name:</label>
                 <input type="text" name="product_name" required><br><br>
 
@@ -50,50 +49,30 @@
                 <input type="submit" name="submit" value="Add Product" class="ReturnButton">
             </div>
         </form>
+
+        <h2>My Products</h2>
+        <?php
+        include 'add_product.php';
+        $stmt = $conn->prepare("SELECT p.ProductID, p.ProductName, p.ProductImage, v.Price, v.Quantity 
+                                FROM product p 
+                                JOIN vendorproduct v ON p.ProductID = v.ProductID 
+                                WHERE v.VendorID = ?");
+        $stmt->bind_param("i", $vendor_id);
+        $stmt->execute();
+        $result = $stmt->get_result();
+
+        while ($row = $result->fetch_assoc()): ?>
+            <div class="card">
+                <img src="<?php echo $row['ProductImage']; ?>" alt="Product Image" width="200" height="200">
+                <h3><?php echo $row['ProductName']; ?></h3>
+                <p>Price: Ksh <?php echo $row['Price']; ?></p>
+                <p>Quantity: <?php echo $row['Quantity']; ?></p>
+                <a href="add_product.php?delete_id=<?php echo $row['ProductID']; ?>" 
+                   onclick="return confirm('Are you sure you want to delete this product?');" 
+                   class="btn-primary">Delete</a>
+            </div>
+        <?php endwhile; ?>
+        <?php $stmt->close(); ?>
     </main>
 </body>
 </html>
-<style>
-        /* Navbar styling to match TimBuys theme */
-        .Navbar {
-            background-color: #000;
-            padding: 10px 0;
-        }
-        .Navbar-brand {
-            font-size: 24px;
-            font-weight: bold;
-            color: white;
-        }
-        .Navbar input[type="text"] {
-            width: 300px;
-            border-radius: 0;
-        }
-        .Navbar .btn-search {
-            background-color: #333;
-            color: white;
-            border: none;
-        }
-        
-        /* Product cards styling */
-        .card {
-            margin-bottom: 20px;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        }
-        .card-title {
-            font-size: 18px;
-            font-weight: bold;
-            color: #333;
-        }
-        .card-text {
-            font-size: 14px;
-            color: #555;
-        }
-        .btn-primary {
-            background-color:  #FFB700;
-            border: none;
-        }
-        .btn-primary:hover {
-            background-color:  #FFB700;
-        }
-    </style>

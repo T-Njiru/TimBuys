@@ -124,7 +124,7 @@ include 'C:/xampp/htdocs/TimBuys/Module3/cart_functions.php';
                 $product = mysqli_fetch_assoc($result);
     ?>
                 <div class="product-image">
-                    <img src="uploads/<?php echo $product['ProductImage']; ?>" alt="<?php echo $product['ProductName']; ?>">
+                    <img src="C:\xampp\htdocs\TimBuys\uploads<?php echo $product['ProductImage']; ?>" alt="<?php echo $product['ProductName']; ?>">
                 </div>
                 <div class="product-details">
                     <h1 class="product-title"><?php echo $product['ProductName']; ?></h1>
