@@ -169,14 +169,14 @@ function sendEmailNotification($to, $orderId, $status) {
 
     try {
         $mail->isSMTP();
-        $mail->Host = 'smtp.example.com'; // Specify main and backup SMTP servers
+        $mail->Host = 'smtp.gmail.com'; // Specify main and backup SMTP servers
         $mail->SMTPAuth = true;
         $mail->Username = 'huberttim55@gmail.com'; // SMTP username
         $mail->Password = 'hbpc oqqg jklq eqlk';   // SMTP password
         $mail->SMTPSecure = 'tls';
         $mail->Port = 587;
 
-        $mail->setFrom('no-reply@example.com', 'Tim Buys');
+        $mail->setFrom('huberttim55@gmail.com', 'Tim Buys');
         $mail->addAddress($to);
 
         $mail->isHTML(true);
