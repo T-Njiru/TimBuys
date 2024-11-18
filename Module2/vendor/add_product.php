@@ -1,8 +1,61 @@
 <?php
-// Remove session requirement for `VendorID`
-$vendor_id = 1; // Set to a default vendor ID if needed
+session_start(); // Start the session to access `$_SESSION` variables
 
-// Check if form is submitted
+// Check if the vendor is logged in
+if (!isset($_SESSION['vendor_id'])) {
+    die("Access denied: Please log in as a vendor.");
+}
+
+// Get the logged-in Vendor ID
+$vendor_id = $_SESSION['vendor_id'];
+
+
+// Database connection
+$conn = new mysqli('localhost:3306', 'root', '', 'timbuys');
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+
+// Handle product deletion
+if (isset($_GET['delete_id'])) {
+    $product_id = $_GET['delete_id'];
+
+    // Ensure the product belongs to the logged-in vendor before deleting
+    $query = "SELECT p.ProductImage 
+              FROM product p 
+              JOIN vendorproduct v ON p.ProductID = v.ProductID 
+              WHERE p.ProductID = ? AND v.VendorID = ?";
+    $stmt = $conn->prepare($query);
+    $stmt->bind_param("ii", $product_id, $vendor_id);
+    $stmt->execute();
+    $stmt->bind_result($product_image);
+    $stmt->fetch();
+    $stmt->close();
+
+    if ($product_image) {
+        // Delete the product image from the server
+        if (file_exists("C:/xampp/htdocs/TimBuys/uploads/" . basename($product_image))) {
+            unlink("C:/xampp/htdocs/TimBuys/uploads/" . basename($product_image));
+        }
+
+        // Delete from the database (both product and vendorproduct tables)
+        $stmt = $conn->prepare("DELETE FROM vendorproduct WHERE ProductID = ? AND VendorID = ?");
+        $stmt->bind_param("ii", $product_id, $vendor_id);
+        $stmt->execute();
+        $stmt->close();
+
+        $stmt = $conn->prepare("DELETE FROM product WHERE ProductID = ?");
+        $stmt->bind_param("i", $product_id);
+        $stmt->execute();
+        $stmt->close();
+
+        echo "<p>Product deleted successfully!</p>";
+    } else {
+        echo "<p>You do not have permission to delete this product.</p>";
+    }
+}
+
+// Handle product addition
 if (isset($_POST['submit'])) {
     $product_name = $_POST['product_name'];
     $category_id = $_POST['category_id'];
@@ -12,44 +65,25 @@ if (isset($_POST['submit'])) {
 
     // Image upload handling
     $product_image = $_FILES['product_image']['name'];
-    $image_extension = pathinfo($product_image, PATHINFO_EXTENSION);
-    
-    // Set the uploads directory using Windows path
     $target_dir = "C:/xampp/htdocs/TimBuys/uploads/";
-
-    // Ensure the uploads directory exists, create if not
-    if (!is_dir($target_dir)) {
-        mkdir($target_dir, 0777, true);
-    }
-
-    // Define the full path for saving the image
     $target_file = $target_dir . basename($product_image);
-
-    // Define the absolute URL for the image to be stored in the database
     $absolute_url = "http://localhost/TimBuys/uploads/" . basename($product_image);
 
-    // Move the uploaded file to the target directory
     if (move_uploaded_file($_FILES['product_image']['tmp_name'], $target_file)) {
-        // Database connection
-        $conn = new mysqli('localhost:3306', 'root', '', 'timbuys');
-        if ($conn->connect_error) {
-            die("Connection failed: " . $conn->connect_error);
-        }
-
-        // Store the absolute URL in the database
+        // Insert into `product` table
         $stmt = $conn->prepare("INSERT INTO product (ProductName, CategoryID, ProductImage) VALUES (?, ?, ?)");
         $stmt->bind_param("sis", $product_name, $category_id, $absolute_url);
         $stmt->execute();
         $product_id = $stmt->insert_id;
         $stmt->close();
 
-        // Insert into vendorproduct table
+        // Insert into `vendorproduct` table
         $stmt = $conn->prepare("INSERT INTO vendorproduct (VendorID, ProductID, Price, Quantity, Description) VALUES (?, ?, ?, ?, ?)");
         $stmt->bind_param("iidis", $vendor_id, $product_id, $price, $quantity, $description);
         $stmt->execute();
         $stmt->close();
 
-        echo "<p>Product added successfully with image!</p>";
+        echo "<p>Product added successfully!</p>";
     } else {
         echo "<p>Failed to upload image.</p>";
     }

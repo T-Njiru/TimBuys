@@ -69,6 +69,7 @@
 </nav>
 <div class="container mt-5">
     <?php
+    
     // Connect to the database
     $conn = new mysqli('localhost', 'root', '', 'timbuys');
 
@@ -129,11 +130,4 @@
     ?>
 </div>
 
-<<<<<<< HEAD
-</div>
-=======
-</div>
 
-</body>
-</html>
->>>>>>> 5aec4eef1f68205180d8a45367156a5dfa64484a
