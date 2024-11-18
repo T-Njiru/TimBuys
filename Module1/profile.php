@@ -187,6 +187,7 @@ $store_credit_balance = "KSh 0"; // Placeholder for store credit balance
         <a href="#"><i class="fas fa-envelope"></i> Inbox</a>
         <a href="#"><i class="fas fa-heart"></i> Saved Items</a>
         <a href="vendor.html"><i class="fas fa-store"></i> Register To Be A Seller</a>
+        <a href="vendorlogin.php"><i class="fas fa-store"></i> Login As A Seller</a>
         <a href="account_management.php"><i class="fas fa-cog"></i> Account Management</a>
         <a href="#"><i class="fas fa-address-book"></i> Address Book</a>
         <a href="#"><i class="fas fa-times-circle"></i> Close Account</a>
