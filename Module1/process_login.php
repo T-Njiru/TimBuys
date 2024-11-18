@@ -25,8 +25,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 $_SESSION['user_fname'] = $user['FirstName'];  // Store user's first name in the session
                 $_SESSION['customer_id'] = $user['CustomerID'];  // Optionally store user ID for later use
                 $_SESSION['Role_As'] = $user['role_as'];  // Store the role in the session
-               
-                
+
                 // Redirect based on role
                 if ($user['role_as'] == 1) {
                     // Redirect to admin dashboard if user is an admin
@@ -49,3 +48,4 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         echo "Both email and password are required.";
     }
 }
+?>
