@@ -112,11 +112,14 @@ include 'C:/xampp/htdocs/TimBuys/Module3/cart_functions.php';
 
             // Query to get the product details
             $query = "
-                SELECT p.ProductName, p.ProductImage, vp.Price, vp.Description 
+                SELECT p.ProductID, p.ProductName, p.ProductImage, vp.Price, vp.Quantity, v.Name AS VendorName
                 FROM product p
                 JOIN vendorproduct vp ON p.ProductID = vp.ProductID
-                WHERE p.ProductID = $productID
+                JOIN vendor v ON vp.VendorID = v.VendorID
+                WHERE vp.Quantity > 0
+                ORDER BY p.ProductID ASC
             ";
+            
             $result = mysqli_query($connect, $query);
 
             // Check if the product exists
@@ -124,7 +127,7 @@ include 'C:/xampp/htdocs/TimBuys/Module3/cart_functions.php';
                 $product = mysqli_fetch_assoc($result);
     ?>
                 <div class="product-image">
-                    <img src="C:\xampp\htdocs\TimBuys\uploads<?php echo $product['ProductImage']; ?>" alt="<?php echo $product['ProductName']; ?>">
+                    <img src="<?php echo $product['ProductImage']; ?>" alt="<?php echo $product['ProductName']; ?>">
                 </div>
                 <div class="product-details">
                     <h1 class="product-title"><?php echo $product['ProductName']; ?></h1>

@@ -69,6 +69,7 @@
 </nav>
 <div class="container mt-5">
     <?php
+    
     // Connect to the database
     $conn = new mysqli('localhost', 'root', '', 'timbuys');
 

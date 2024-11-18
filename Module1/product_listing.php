@@ -53,6 +53,8 @@
     <h1>Products</h1>
     <div class="row">
         <?php
+        include 'C:/xampp/htdocs/TimBuys/Module3/cart_functions.php';
+
             $connect = mysqli_connect('localhost', 'root', '', 'timbuys');
             
             // Modify the query to also join the Vendor table and retrieve vendor information
@@ -79,7 +81,7 @@
                     <h5 class="card-title"><?php echo $product['ProductName']; ?></h5>
                     <h4><?php echo "Ksh" . $product['Price']; ?></h4>
                     <p><strong>Vendor:</strong> <?php echo $product['VendorName']; ?></p> <!-- Display Vendor Name -->
-                    <form method="post" action="../../Module3/add_to_cart.php">
+                    <form method="post" action="../Module3/add_to_cart.php">
                         <input type="hidden" name="product_id" value="<?php echo $product['ProductID']?>">
                         <button type="submit" class="btn btn-success btn-block">Add to Cart</button>
                     </form>
