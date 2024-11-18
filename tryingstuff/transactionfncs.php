@@ -1,7 +1,11 @@
 <?php
-
+class Transaction{
+    private $timestamp;
 function generateAccessToken($consumer_key, $consumer_secret) {
-    date_default_timezone_set('Africa/Nairobi');
+    //date_default_timezone_set('Africa/Nairobi');
+    $this->timestamp = date('YmdHis');
+
+
     $url = 'https://sandbox.safaricom.co.ke/oauth/v1/generate?grant_type=client_credentials';
 
     // Encode key and secret
@@ -10,8 +14,10 @@ function generateAccessToken($consumer_key, $consumer_secret) {
     
     // cURL initialization
     $curl = curl_init($url);
-    curl_setopt($curl, CURLOPT_HTTPHEADER, ['Authorization: Basic ' . $credentials]);
+    curl_setopt($curl, CURLOPT_HTTPHEADER, ['Content-Type:application/json; charset=utf8']);
     curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($curl, CURLOPT_HEADER, FALSE);
+    curl_setopt($curl, CURLOPT_USERPWD, $consumer_key.':'.$consumer_secret);
 
     // Execute cURL and check for success
     $response = curl_exec($curl);
@@ -32,11 +38,11 @@ function generateAccessToken($consumer_key, $consumer_secret) {
 }
 
 function stkPushRequest($access_token, $shortcode, $amount, $phoneNumber, $callbackUrl, $accountReference, $transactionDesc) {
-    date_default_timezone_set('Africa/Nairobi');
+
     $url = 'https://sandbox.safaricom.co.ke/mpesa/stkpush/v1/processrequest';
 
     // Generate the password
-    $timestamp = date('YmdHis');
+    $timestamp = $this->timestamp;
     $passkey = 'bfb279f9aa9bdbcf158e97dd71a467cd2e0c893059b10f78e6b72ada1ed2c919'; // Replace with your actual passkey
     $password = base64_encode($shortcode . $passkey . $timestamp);
 
@@ -67,14 +73,14 @@ function stkPushRequest($access_token, $shortcode, $amount, $phoneNumber, $callb
 
     // Initialize cURL
 
-    curl_setopt($curl, CURLOPT_POSTFIELDS, json_encode($data));
     curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
     curl_setopt($curl, CURLOPT_POST, true);
+    curl_setopt($curl, CURLOPT_POSTFIELDS, json_encode($data));
 
     // Execute cURL and handle response
     $response = curl_exec($curl);
     $status = curl_getinfo($curl, CURLINFO_HTTP_CODE);
-    curl_close($curl);
+
 
     // Check for successful response
     if ($status == 200) {
@@ -87,6 +93,6 @@ function stkPushRequest($access_token, $shortcode, $amount, $phoneNumber, $callb
 }
 
 
-
+}
 
 ?>
