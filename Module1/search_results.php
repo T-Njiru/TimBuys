@@ -67,12 +67,11 @@
         </div>
     </div>
 </nav>
-
 <div class="container mt-5">
     <?php
     // Connect to the database
     $conn = new mysqli('localhost', 'root', '', 'timbuys');
-  
+
     // Check connection
     if ($conn->connect_error) {
         die("Connection failed: " . $conn->connect_error);
@@ -101,9 +100,13 @@
     if ($result->num_rows > 0) {
         echo "<h1 class='mb-4'>Search Results</h1><div class='row'>";
         while ($row = $result->fetch_assoc()) {
+            // Check if the image path is already an absolute URL
+            $image_path = $row['ProductImage'];
+            
+            // Display the product card
             echo "<div class='col-md-3'>";
             echo "<div class='card'>";
-            echo "<img src='uploads/" . htmlspecialchars($row['ProductImage']) . "' alt='" . htmlspecialchars($row['ProductName']) . "' class='card-img-top'>";
+            echo "<img src='" . htmlspecialchars($image_path) . "' alt='" . htmlspecialchars($row['ProductName']) . "' class='card-img-top' style='height:200px; object-fit:cover;'>";
             echo "<div class='card-body'>";
             echo "<h5 class='card-title'>" . htmlspecialchars($row['ProductName']) . "</h5>";
             echo "<p class='card-text'><strong>Price:</strong> KSh " . number_format($row['Price'], 2) . "</p>";
@@ -124,6 +127,8 @@
     // Close the database connection
     $conn->close();
     ?>
+</div>
+
 <<<<<<< HEAD
 </div>
 =======
