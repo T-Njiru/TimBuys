@@ -1,5 +1,5 @@
 <?php 
-require "global.php";
+require "C:/xampp/htdocs/TimBuys/tryingstuff/global.php";
 class Orders{
 public function viewOrders(){
     $connection= new mysqli("localhost","root","","timbuys");
