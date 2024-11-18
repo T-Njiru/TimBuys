@@ -128,15 +128,58 @@ function processTransaction($callbackItems) {
     $stmt->bind_param("ssid", $receiptNumber, $phoneNumber, $amount, $transactionDate);
 
     if ($stmt->execute()) {
-        
+        if (isset($_SESSION['OrderID'])) {
+            $orderId = $_SESSION['OrderID'];
+            $updateOrderStatusSql = "UPDATE orderedproduct SET Status='Order Processed' WHERE OrderID=?";
+            $stmt = $conn->prepare($updateOrderStatusSql);
+            $stmt->bind_param("s", $orderId);
+            $stmt->execute();
+            $stmt->close();
+
+            // Send email notification using PHPMailer
+            $sql = "SELECT c.Email FROM orders o JOIN Customer c ON o.CustomerID = c.CustomerID WHERE o.OrderID='$orderId'";
+            $result = $conn->query($sql);
+            if ($result->num_rows > 0) {
+                $row = $result->fetch_assoc();
+                $customerEmail = $row['Email'];
+                sendEmailNotification($customerEmail, $orderId, 'Order Processed');
+            }
+        }
+
         $checkout = new checkout();
         $checkout->updateTable();
-        
     } else {
         echo "Error updating record: " . $stmt->error;
     }
 
-   
-    
+    $conn->close();
 }
+
+function sendEmailNotification($to, $orderId, $status) {
+    $mail = new PHPMailer(true);
+
+    try {
+        $mail->isSMTP();
+        $mail->Host = 'smtp.example.com'; // Specify main and backup SMTP servers
+        $mail->SMTPAuth = true;
+        $mail->Username = 'your-email@example.com'; // SMTP username
+        $mail->Password = 'your-email-password';   // SMTP password
+        $mail->SMTPSecure = 'tls';
+        $mail->Port = 587;
+
+        $mail->setFrom('no-reply@example.com', 'Tim Buys');
+        $mail->addAddress($to);
+
+        $mail->isHTML(true);
+        $mail->Subject = 'Order Status Update';
+        $mail->Body    = "Your order with ID $orderId has been updated to status: $status.";
+        $mail->AltBody = "Your order with ID $orderId has been updated to status: $status.";
+
+        $mail->send();
+    } catch (Exception $e) {
+        error_log("Mailer Error: " . $mail->ErrorInfo);
+    }
+}
+?>
+
     
