@@ -2,14 +2,14 @@
 
 
 
-$CustomerID = 2;
+$CustomerID = 1;
 
 
  
-$CustomerID = 2;
+$CustomerID = 1;
 
 
-$CustomerID = 12;
+$CustomerID = 1;
 
 
 ?>
