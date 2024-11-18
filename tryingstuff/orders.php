@@ -49,6 +49,5 @@ echo '<td><a href="../Module 4/Tracking_page.php?OrderID=' .htmlspecialchars($li
   
 } 
 }
-$Orders=new Orders();
-$Orders->viewOrders();
+
 ?>
