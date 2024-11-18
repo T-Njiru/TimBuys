@@ -30,7 +30,15 @@ public function viewOrders(){
             echo '<td>' . htmlspecialchars($list['Quantity']) . '</td>';
             echo '<td>' . htmlspecialchars($list['OrderDate']) . '</td>';
             echo '<td>' . htmlspecialchars($list['Address']) . '</td>';
+<<<<<<< HEAD
             echo '<td><a href="...Module 4/Tracking_page.php?OrderID=' .htmlspecialchars($list['OrderID']).'"12 class="btn">Track</a></td>';
+=======
+<<<<<<< HEAD
+            echo '<td><a href="../Module 4/Tracking_page.php?OrderID=' .htmlspecialchars($list['OrderID']).'"12 class="btn">Track</a></td>';
+=======
+            echo '<td><a href="C:/xampp/htdocs/TimBuys/Module 4/Tracking_page.php?OrderID=' .htmlspecialchars($list['OrderID']).'"12 class="btn">Track</a></td>';
+>>>>>>> a6e4f4b3c38fcee885bedbef02a2b856d72919fb
+>>>>>>> f8eaef2b4c691a210f07b39824d33c8fefdad393
             // echo '<td>';
             // echo '<form method="POST" action="remove_from_cart.php" onsubmit="return confirm(\'Are you sure you want to remove this item?\');">';
             // echo '<input type="hidden" name="product_id" value="' . htmlspecialchars($item['ProductID']) . '">';
