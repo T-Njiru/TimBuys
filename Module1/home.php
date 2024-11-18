@@ -99,7 +99,7 @@ $productStmt = $pdo->prepare($productQuery);
 $productStmt->execute();
 $products = $productStmt->fetchAll(PDO::FETCH_ASSOC);
 ?>
-?>
+
 
 <!DOCTYPE html>
 <html lang="en">
