@@ -187,6 +187,6 @@ function sendEmailNotification($to, $orderId, $status) {
         $mail->send();
     } catch (Exception $e) {
         error_log("Mailer Error: " . $mail->ErrorInfo);
-    }
+    }
 }
 ?>
