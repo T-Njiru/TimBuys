@@ -6,6 +6,9 @@
     <title>Product Listing</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <style>
+        body {
+    background-color: #daa520;
+}
         .card {
             margin-bottom: 20px;
             border: 1px solid #ddd;
@@ -43,6 +46,7 @@
             background-color: #218838;
         }
         .container {
+           
             margin-top: 40px;
         }
     </style>
