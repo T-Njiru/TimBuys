@@ -9,6 +9,25 @@
         body {
     background-color: #daa520;
 }
+.navbar {
+            background-color: #000;
+            padding: 10px 0;
+        }
+        .navbar-brand {
+            font-size: 24px;
+            font-weight: bold;
+            color: white;
+        }
+        .navbar input[type="text"] {
+            width: 300px;
+            border-radius: 0;
+        }
+        .navbar .btn-search {
+            background-color: #333;
+            color: white;
+            border: none;
+        }
+        
         .card {
             margin-bottom: 20px;
             border: 1px solid #ddd;
@@ -50,7 +69,20 @@
     </style>
 </head>
 <body>
-
+<nav class="navbar navbar-expand-lg navbar-dark">
+    <div class="container">
+        <a class="navbar-brand" href="#">TIM BUYS</a>
+        <form class="form-inline mx-auto" action="search_results.php" method="GET">
+            <input class="form-control mr-sm-2" type="text" name="query" placeholder="Search products, brands, and categories" aria-label="Search">
+            <button class="btn btn-search my-2 my-sm-0" type="submit">Search</button>
+        </form>
+        <div class="navbar-nav">
+            <a class="nav-link text-white" href="#">Account</a>
+            <a class="nav-link text-white" href="#">Help</a>
+            <a class="nav-link text-white" href="#">Cart</a>
+        </div>
+    </div>
+</nav>
 <div class="container">
     <h1>Products</h1>
     <div class="row">
