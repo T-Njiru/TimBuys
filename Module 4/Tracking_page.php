@@ -1,3 +1,8 @@
+<?php $OrderID = isset($_GET['OrderID']) ? $_GET['OrderID'] : null; 
+if (!$OrderID) { die("Error: Order ID not found in URL parameters."); } 
+// Your existing code for tracking_page.php 
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
