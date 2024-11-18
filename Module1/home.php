@@ -1,5 +1,5 @@
 <?php
-session_start();
+//session_start();
 
 require_once('../Module3/cart_functions.php');
 require_once  '../tryingstuff/cartcontent.php';
@@ -194,17 +194,7 @@ $customer = $stmt->fetch(PDO::FETCH_ASSOC);
         Welcome, <?php echo htmlspecialchars($customer['FirstName']); ?>!
     </div>
 </header>
-    <!-- Categories -->
-    <section class="categories">
-        <p>CATEGORIES</p>
-        <button>TVs & Accessories</button>
-        <button>Phones & Tablets</button>
-        <button>Appliances</button>
-        <button>Health & Beauty</button>
-        <button>Fashion</button>
-        <button>Computing</button>
-        <button>Other Categories</button>
-    </section>
+    
 
     <!-- Hero Section -->
     <section class="hero">
