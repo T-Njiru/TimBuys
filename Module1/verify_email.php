@@ -37,7 +37,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $mail->Port       = 587;                                  // TCP port for TLS
 
             // Recipients
-            $mail->setFrom('fatumamm99@gmail.com', 'Fatma');   // Use your "from" email
+            $mail->setFrom('fatumamm99@gmail.com', 'TimBuys');   // Use your "from" email
             $mail->addAddress($email);                                // Add the recipient's email
 
             // Content
