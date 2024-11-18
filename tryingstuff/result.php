@@ -2,6 +2,10 @@
 // Log the incoming request time
 include_once('checkoutfncs.php');
 require_once 'global.php';
+require 'C:\xampp\htdocs\TimBuys\tryingstuff\vendor\autoload.php'; // Adjust the path as necessary
+
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
 //echo $CustomerID."Separate<br>";
 
 
