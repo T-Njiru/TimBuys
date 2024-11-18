@@ -1,5 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <link rel="stylesheet" href="Track.css">
+</body>
+</html>
+
 <?php 
-require "global.php";
+require "C:/xampp/htdocs/TimBuys/tryingstuffglobal.php";
 class Orders{
 public function viewOrders(){
     $connection= new mysqli("localhost","root","","timbuys");
@@ -10,18 +22,20 @@ public function viewOrders(){
     JOIN product p ON vp.ProductID= p.ProductID";
     $result=$connection->query($sql);
 
-    echo '<table class="table table-bordered">';
-        echo '<thead class="table-dark">';
-        echo '<tr>';
-        echo '<th>OrderID</th>';
-        echo '<th>ProductName(KSh)</th>';
-        echo '<th>Quantity(KSh)</th>';
-        echo '<th>OrderDate</th>';
-        echo '<th>Delivery Address</th>';
-        echo '<th>Actions</th>'; // Added column header for actions
-        echo '</tr>';
-        echo '</thead>';
-        echo '<tbody>';
+    echo '<div class="table-container">';
+    echo '<table class="table">';
+    echo '<thead class="table-dark">';
+    echo '<tr>';
+    echo '<th>OrderID</th>';
+    echo '<th>ProductName</th>';
+    echo '<th>Price (KSh)</th>';
+    echo '<th>Quantity</th>';
+    echo '<th>OrderDate</th>';
+    echo '<th>Delivery Address</th>';
+    echo '<th>Actions</th>'; 
+    echo '</tr>';
+    echo '</thead>';
+    echo '<tbody>';
 
         while($list=$result->fetch_assoc()){
             echo '<tr>';
@@ -36,6 +50,7 @@ public function viewOrders(){
 
         echo '</tbody>';
         echo '</table>';
+        echo '</div>';
 } 
 }
 $Orders=new Orders();

@@ -7,15 +7,15 @@ public function viewOrders(){
     from orders o
     JOIN orderedproduct op ON o.OrderID=op.OrderID
     JOIN vendorproduct vp ON op.VendorProductID=vp.VendorProductID
-    JOIN products p ON vp.ProductID= p.ProductID";
+    JOIN product p ON vp.ProductID= p.ProductID";
     $result=$connection->query($sql);
 
     echo '<table class="table table-bordered">';
         echo '<thead class="table-dark">';
         echo '<tr>';
         echo '<th>OrderID</th>';
-        echo '<th>ProductName(KSh)</th>';
-        echo '<th>Quantity(KSh)</th>';
+        echo '<th>ProductName</th>';
+        echo '<th>Quantity</th>';
         echo '<th>OrderDate</th>';
         echo '<th>Delivery Address</th>';
         echo '</tr>';
@@ -49,3 +49,6 @@ public function viewOrders(){
   
 } 
 }
+$Orders=new Orders();
+$Orders->viewOrders();
+?>

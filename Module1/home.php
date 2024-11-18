@@ -1,5 +1,5 @@
 <?php
-session_start();
+//session_start();
 
 require_once('../Module3/cart_functions.php');
 require_once  '../tryingstuff/cartcontent.php';

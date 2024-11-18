@@ -84,10 +84,10 @@ function stkPushRequest($access_token, $shortcode, $amount, $phoneNumber, $callb
 
     // Check for successful response
     if ($status == 200) {
-        echo $response;
+        //echo $response;
         return json_decode($response);
     } else {
-        echo $response;
+       // echo $response;
         die("STK Push Request failed: HTTP Status $status - " . $response);
     }
 }
