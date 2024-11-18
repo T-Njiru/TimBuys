@@ -7,6 +7,9 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <style>
         /* Navbar styling to match TimBuys theme */
+        body {
+    background-color: #daa520;
+}
         .navbar {
             background-color: #000;
             padding: 10px 0;
