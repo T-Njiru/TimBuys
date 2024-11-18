@@ -132,6 +132,9 @@ function processTransaction($callbackItems) {
     $stmt->bind_param("ssid", $receiptNumber, $phoneNumber, $amount, $transactionDate);
 
     if ($stmt->execute()) {
+        
+        $checkout = new checkout();
+        $checkout->updateTable();
         if (isset($_SESSION['OrderID'])) {
             $orderId = $_SESSION['OrderID'];
             $updateOrderStatusSql = "UPDATE orderedproduct SET Status='Order Processed' WHERE OrderID=?";
@@ -141,17 +144,19 @@ function processTransaction($callbackItems) {
             $stmt->close();
 
             // Send email notification using PHPMailer
-            $sql = "SELECT c.Email FROM orders o JOIN Customer c ON o.CustomerID = c.CustomerID WHERE o.OrderID='$orderId'";
-            $result = $conn->query($sql);
+            $sql = "SELECT c.Email FROM orders o JOIN Customer c ON o.CustomerID = c.CustomerID WHERE o.OrderID=?";
+            $stmt = $conn->prepare($updateOrderStatusSql);
+            $stmt->bind_param("s", $orderId);
+            $stmt->execute();
+            $result=$stmt->get_result();
             if ($result->num_rows > 0) {
                 $row = $result->fetch_assoc();
                 $customerEmail = $row['Email'];
-                sendEmailNotification($customerEmail, $orderId, 'Order Processed');
+                sendEmailNotification($customerEmail, $orderId, 'Processed');
+                unset($_SESSION['cart']);
             }
         }
 
-        $checkout = new checkout();
-        $checkout->updateTable();
     } else {
         echo "Error updating record: " . $stmt->error;
     }
