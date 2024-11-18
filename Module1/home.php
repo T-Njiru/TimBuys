@@ -54,7 +54,7 @@ if (file_put_contents($globalFile, $updatedContent) === false) {
     die("Error writing to global.php.");
 }
 
-echo "global.php updated successfully!";
+
 
 
 
