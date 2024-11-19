@@ -1,11 +1,17 @@
 <?php
 // Start session at the top of the script
+
+
 include_once('checkoutfncs.php');
 require_once 'global.php';
-require 'C:/xampp/htdocs/TimBuys/tryingstuff/vendor/autoload.php'; // Adjust the path as necessary
+require 'vendor/autoload.php'; // Adjust the path as necessary
+require 'vendor/phpmailer/phpmailer/src/Exception.php';
+require 'vendor/phpmailer/phpmailer/src/PHPMailer.php';
+require 'vendor/phpmailer/phpmailer/src//SMTP.php';
 
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
+
 
 $input = file_get_contents('php://input');
 if ($input == null) {
@@ -161,12 +167,12 @@ function sendEmailNotification($to, $orderId, $status) {
         $mail->isSMTP();
         $mail->Host = 'smtp.gmail.com';
         $mail->SMTPAuth = true;
-        $mail->Username = 'huberttim55@gmail.com'; // SMTP username
-        $mail->Password = 'fbgc rtaj itsm tlcn';   // SMTP password
+        $mail->Username = 'alvin.muriithi23@strathmore.edu'; // SMTP username
+        $mail->Password = 'miqilzigdxknaslf';   // SMTP password
         $mail->SMTPSecure = 'tls';
-        $mail->Port = 587;
+        $mail->Port = 465;
 
-        $mail->setFrom('huberttim55@gmail.com', 'Tim Buys');
+        $mail->setFrom('alvin.muriithi23@strathmore.edu', 'Tim Buys');
         $mail->addAddress($to);
 
         $mail->isHTML(true);
