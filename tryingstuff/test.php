@@ -35,28 +35,12 @@ curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 
 // Execute the request and handle potential errors
 $response = curl_exec($ch);
-// Check for JSON decoding errors
-if (json_last_error() !== JSON_ERROR_NONE) {
-    echo "Error: Invalid JSON received from result.php.";
-    exit;
-}
-
-// Handle the response based on the status
-if (isset($responseData['status'])) {
-    if ($responseData['status'] === 'success') {
-        // Redirect to another page if success
-        header("Location: viewOrders.php");
-        exit;
-    } else {
-        // Display the error message
-        echo "Error: " . $responseData['message'];
-    }
-} else {
-    echo "Error: Invalid response format from result.php.";
+if ($response === false) {
+    error_log('cURL Error: ' . curl_error($ch));
 }
 curl_close($ch);
-?>
-
+header( "Location:vieworders.php");
+        exit;
 
 // Output the response
 //echo $response;
