@@ -132,7 +132,19 @@ public function beginAuth($CheckoutObj,$bddress){
             $auth=new auth();
             $auth->Payment($CheckoutObj);
             //print_r($_SESSION['cart']);
-        
+
+        $responseData = json_decode($response, true);
+
+        // Handle the response
+        if ($responseData['status'] === 'success') {
+            // Redirect on success
+            echo "<script>window.location.href = 'ViewOrders.php';</script>";
+            exit;
+        } else {
+            // Display an error message
+            echo "Error: " . $responseData['message'];
+        }
+          
          } 
 }
 }

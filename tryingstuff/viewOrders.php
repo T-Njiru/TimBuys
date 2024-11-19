@@ -1,7 +1,8 @@
 <?php
 session_start();
-require 'connection.php'; // Include your connection file
-
+require '../Module1/connection.php'; // Include your connection file
+require 'orders.php';
+$orders= new Orders();
 // Create a new instance of the Database class
 $database = new Database();
 $pdo = $database->getConnection(); // Get the PDO connection
@@ -47,6 +48,7 @@ $store_credit_balance = "KSh 0"; // Placeholder for store credit balance
 <html>
 <head>
     <title>Your Profile</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <style>
         body {
@@ -182,45 +184,19 @@ $store_credit_balance = "KSh 0"; // Placeholder for store credit balance
         </div>
     </div>
     <div class="sidebar">
-        <a href="#"><i class="fas fa-user"></i> My TIMBUYS Account</a>
-        <a href="../tryingstuff/viewOrders.php"><i class="fas fa-box"></i> Orders</a>
+        <a href="../Module1/profile.php"><i class="fas fa-user"></i> My TIMBUYS Account</a>
+        <a href="#"><i class="fas fa-box"></i> Orders</a>
         <a href="#"><i class="fas fa-envelope"></i> Inbox</a>
+        <a href="#"><i class="fas fa-heart"></i> Saved Items</a>
         <a href="vendor.html"><i class="fas fa-store"></i> Register To Be A Seller</a>
         <a href="vendorlogin.php"><i class="fas fa-store"></i> Login As A Seller</a>
         <a href="account_management.php"><i class="fas fa-cog"></i> Account Management</a>
-        <a href="add_address.php"><i class="fas fa-address-book"></i> Address Book</a>
+        <a href="#"><i class="fas fa-address-book"></i> Address Book</a>
         <a href="#"><i class="fas fa-times-circle"></i> Close Account</a>
         <a href="logout.php" class="logout">LOGOUT</a>
     </div>
     <div class="content">
-        <div class="profile-title">
-            <i class="fas fa-user-circle"></i>
-            <h1>Your Profile</h1>
-        </div>
-        <div class="card">
-            <i class="fas fa-user-circle"></i>
-            <div>
-                <h3>ACCOUNT DETAILS</h3>
-                <p><?php echo $customer['FirstName'] . ' ' . $customer['LastName']; ?></p>
-                <p><?php echo $customer['Email']; ?></p>
-            </div>
-        </div>
-        <div class="card">
-            <i class="fas fa-map-marker-alt"></i>
-            <div>
-                <h3>ADDRESS BOOK</h3>
-                <p>Your default shipping address:</p>
-                <p><?php echo $default_shipping_address; ?></p>
-                <a href="add_address.php">ADD DEFAULT ADDRESS</a>
-            </div>
-        </div>
-        <div class="card">
-            <i class="fas fa-credit-card"></i>
-            <div>
-                <h3>TIMBUYS STORE CREDIT</h3>
-                <a href="#">Store credit balance: <?php echo $store_credit_balance; ?></a>
-            </div>
-        </div>
+        <?php $orders->viewOrders();?>
     </div>
 </body>
 </html>

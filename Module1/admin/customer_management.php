@@ -59,7 +59,7 @@ $customers = $stmt->fetchAll(PDO::FETCH_ASSOC);
                     <th>Name</th>
                     <th>Email</th>
                     <th>Contact</th>
-                    <th>Actions</th>
+                    
                 </tr>
             </thead>
             <tbody>
@@ -69,9 +69,7 @@ $customers = $stmt->fetchAll(PDO::FETCH_ASSOC);
                         <td><?php echo htmlspecialchars($customer['FirstName'] . ' ' . $customer['LastName']); ?></td>
                         <td><?php echo htmlspecialchars($customer['Email']); ?></td>
                         <td><?php echo htmlspecialchars($customer['Contact']); ?></td>
-                        <td>
-                            <a href="view_customer.php?customer_id=<?php echo htmlspecialchars($customer['CustomerID']); ?>" class="btn btn-info">View</a>
-                        </td>
+                        
                     </tr>
                 <?php endforeach; ?>
             </tbody>

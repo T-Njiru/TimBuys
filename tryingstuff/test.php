@@ -39,7 +39,7 @@ if ($response === false) {
     error_log('cURL Error: ' . curl_error($ch));
 }
 curl_close($ch);
-header( "Location:orders.php");
+header( "Location:vieworders.php");
         exit;
 
 // Output the response
