@@ -1,22 +1,10 @@
 <p align="center">
-    <img src=" " align="center" width="30%">
+    <img src=""C:\Users\user\OneDrive\Desktop\Screenshot 2024-11-19 151532.png "alt="Tim Buys Logo" " align="center" width="30%">
 </p>
 <p align="center"><h1 align="center">TIMBUYS.GIT</h1></p>
 <p align="center">
-	<em><code>❯ REPLACE-ME</code></em>
-</p>
-<p align="center">
-	<img src="https://img.shields.io/github/license/T-Njiru/TimBuys.git?style=default&logo=opensourceinitiative&logoColor=white&color=0080ff" alt="license">
-	<img src="https://img.shields.io/github/last-commit/T-Njiru/TimBuys.git?style=default&logo=git&logoColor=white&color=0080ff" alt="last-commit">
-	<img src="https://img.shields.io/github/languages/top/T-Njiru/TimBuys.git?style=default&color=0080ff" alt="repo-top-language">
-	<img src="https://img.shields.io/github/languages/count/T-Njiru/TimBuys.git?style=default&color=0080ff" alt="repo-language-count">
-</p>
-<p align="center"><!-- default option, no dependency badges. -->
-</p>
-<p align="center">
-	<!-- default option, no dependency badges. -->
-</p>
-<br>
+	
+
 
 ## 🔗 Table of Contents
 
@@ -48,9 +36,10 @@ efficient, and community-focused.</code>
 
 ## 👾 Features
 
-<code>❯ - Buyers: Students looking for affordable, convenient, and local items.
- - Sellers: Students who want to sell goods or services to peers on campus.
- - Admins: Responsible for managing the platform, user accounts, and data</code>
+<code>❯
+- Buyers: Students looking for affordable, convenient, and local items.
+- Sellers: Students who want to sell goods or services to peers on campus.
+- Admins: Responsible for managing the platform, user accounts, and data</code>
 
 ---
 
@@ -1615,7 +1604,7 @@ efficient, and community-focused.</code>
 
 ### ☑️ Prerequisites
 
-Before getting started with TimBuys.git, ensure your runtime environment meets the following requirements:
+Before getting started with TimBuys.git, ensure your runtime environment has the following:
 
 - **Programming Language:** PHP
 - **Package Manager:** Composer
@@ -1648,49 +1637,30 @@ Install TimBuys.git using one of the following methods:
 
 
 
-
-### 🤖 Usage
-Run TimBuys.git using the following command:
-**Using `composer`** &nbsp; [<img align="center" src="https://img.shields.io/badge/PHP-777BB4.svg?style={badge_style}&logo=php&logoColor=white" />](https://www.php.net/)
-
-```sh
-❯ php {entrypoint}
-```
-
-
-### 🧪 Testing
-Run the test suite using the following command:
-**Using `composer`** &nbsp; [<img align="center" src="https://img.shields.io/badge/PHP-777BB4.svg?style={badge_style}&logo=php&logoColor=white" />](https://www.php.net/)
-
-```sh
-❯ vendor/bin/phpunit
-```
-
-
 ---
 ## 📌 Project Roadmap
 
--  **`Task 1`**: <strike>Module 1: User Registration and Authentication
-FatUma and Alysa
+-  **`Task 1`**: Module 1: User Registration and Authentication
+Fatuma Marsa and Alysa Macharia
 - Implemented secure user registration, login, and profile management.
 - Features password recovery and role-based access control (admin, buyer, seller).
 - 
 -  **`Task 2`**: Module 2: Product Listing and Search
-Nicole Njeri
+Nicole Njeri and Ted Njiru
 - Designed a dynamic product listing system.
 - Integrated advanced search features with filtering by category and tags.
 - Created an intuitive interface for sellers to add, update, and delete products.
 - 
 -  **`Task 3`**: Module 3: Shopping Cart and Checkout
-Jason Kiragu
+Jason Kiragu and Billy John
 - Developed shopping cart functionality allowing users to add, update, and remove items.
 - Integrated a payment gateway for secure transactions.
 - Automated order confirmation and receipt generation.
 
 -  **`Task 4`**: Module 4: Delivery and Tracking
-Tim Osmond
+Tim Osmond and Alvin Muriithi
 - Created a delivery tracking system using live location updates.
-- Notifications via email and SMS for order status updates.</strike>
+- Notifications via email and SMS for order status updates.
 ---
 
 ## 🔰 Contributing
@@ -1724,15 +1694,7 @@ Tim Osmond
 8. **Review**: Once your PR is reviewed and approved, it will be merged into the main branch. Congratulations on your contribution!
 </details>
 
-<details closed>
-<summary>Contributor Graph</summary>
-<br>
-<p align="left">
-   <a href="https://github.com{/T-Njiru/TimBuys.git/}graphs/contributors">
-      <img src="https://contrib.rocks/image?repo=T-Njiru/TimBuys.git">
-   </a>
-</p>
-</details>
+
 
 ---
 
