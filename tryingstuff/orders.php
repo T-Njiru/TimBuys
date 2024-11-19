@@ -1,5 +1,4 @@
 <?php 
-require "global.php";
 class Orders{
 public function viewOrders(){
     $connection= new mysqli("localhost","root","","timbuys");
