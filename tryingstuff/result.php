@@ -142,11 +142,13 @@ function processTransaction($callbackItems) {
                 $row = $result->fetch_assoc();
                 $customerEmail = $row['Email'];
                 sendEmailNotification($customerEmail, $orderId, 'Processed');
+                echo json_encode(['status' => 'success', 'message' => 'Order processed successfully']);
                 unset($_SESSION['cart']);
             }
         }
     } else {
         echo "Error updating record: " . $stmt->error;
+        echo json_encode(['status' => 'error', 'message' => 'There was an error updating']);
     }
 
     $conn->close();
@@ -160,7 +162,7 @@ function sendEmailNotification($to, $orderId, $status) {
         $mail->Host = 'smtp.gmail.com';
         $mail->SMTPAuth = true;
         $mail->Username = 'huberttim55@gmail.com'; // SMTP username
-        $mail->Password = 'fbgc rtaj itsn tlcn'; // App password
+        $mail->Password = 'fbgc rtaj itsm tlcn';   // SMTP password
         $mail->SMTPSecure = 'tls';
         $mail->Port = 587;
 
