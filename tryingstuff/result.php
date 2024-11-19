@@ -167,12 +167,12 @@ function sendEmailNotification($to, $orderId, $status) {
         $mail->isSMTP();
         $mail->Host = 'smtp.gmail.com';
         $mail->SMTPAuth = true;
-        $mail->Username = 'alvin.muriithi23@strathmore.edu'; // SMTP username
-        $mail->Password = 'miqilzigdxknaslf';   // SMTP password
+        $mail->Username = 'huberttim55@gmail.com'; // SMTP username
+        $mail->Password = 'lyhv kvfv ngnn zzdl';   // SMTP password
         $mail->SMTPSecure = 'tls';
-        $mail->Port = 465;
+        $mail->Port = 587;
 
-        $mail->setFrom('alvin.muriithi23@strathmore.edu', 'Tim Buys');
+        $mail->setFrom('huberttim55@gmail.com', 'Tim Buys');
         $mail->addAddress($to);
 
         $mail->isHTML(true);
