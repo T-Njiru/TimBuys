@@ -1670,24 +1670,24 @@ Run the test suite using the following command:
 ---
 ## 📌 Project Roadmap
 
-- [X] **`Task 1`**: <strike>Module 1: User Registration and Authentication
+-  **`Task 1`**: <strike>Module 1: User Registration and Authentication
 FatUma and Alysa
 - Implemented secure user registration, login, and profile management.
 - Features password recovery and role-based access control (admin, buyer, seller).
 - 
-- [ ] **`Task 2`**: Module 2: Product Listing and Search
+-  **`Task 2`**: Module 2: Product Listing and Search
 Nicole Njeri
 - Designed a dynamic product listing system.
 - Integrated advanced search features with filtering by category and tags.
 - Created an intuitive interface for sellers to add, update, and delete products.
 - 
-- [ ] **`Task 3`**: Module 3: Shopping Cart and Checkout
+-  **`Task 3`**: Module 3: Shopping Cart and Checkout
 Jason Kiragu
 - Developed shopping cart functionality allowing users to add, update, and remove items.
 - Integrated a payment gateway for secure transactions.
 - Automated order confirmation and receipt generation.
 
-- [ ] **`Task 4`**: Module 4: Delivery and Tracking
+-  **`Task 4`**: Module 4: Delivery and Tracking
 Tim Osmond
 - Created a delivery tracking system using live location updates.
 - Notifications via email and SMS for order status updates.</strike>
@@ -1738,13 +1738,20 @@ Tim Osmond
 
 
 ## 🙌 Acknowledgments
-- **Ted Njiru- Group President**
--**Nicole Njeri**
--**Tim Osmond**
--**Alyssa Macharia**
--**Jason Kiragu**
--**Fatuma Marsa**
--**Billy John**
--**Alvin Muriithi**
+- **Ted Njiru**- Group President
+
+-**Nicole Njeri**...2
+
+-**Tim Osmond**...3
+
+-**Alyssa Macharia**...4
+
+-**Jason Kiragu**...5
+
+-**Fatuma Marsa**...6
+
+-**Billy John**...7
+
+-**Alvin Muriithi**...8
 
 ---
