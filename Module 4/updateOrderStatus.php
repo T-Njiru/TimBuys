@@ -1,5 +1,8 @@
 <?php
 require 'C:/xampp/htdocs/TimBuys2/Module 4/vendor/autoload.php';
+require 'PHPMailer/Exception.php';
+require 'PHPMailer/PHPMailer.php';
+require 'PHPMailer/SMTP.php';
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 

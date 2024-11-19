@@ -3,6 +3,9 @@
 include_once('checkoutfncs.php');
 require_once 'global.php';
 require 'C:/xampp/htdocs/TimBuys/tryingstuff/vendor/autoload.php'; // Adjust the path as necessary
+require 'PHPMailer/Exception.php';
+require 'PHPMailer/PHPMailer.php';
+require 'PHPMailer/SMTP.php';
 
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
