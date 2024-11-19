@@ -30,6 +30,7 @@
                     <option value="1">Electronics</option>
                     <option value="2">Clothing</option>
                     <option value="3">Home Appliances</option>
+                    <option value="4">Fragrances</option>
                 </select><br><br>
 
                 <label for="product_image" class="title">Product Image:</label>
