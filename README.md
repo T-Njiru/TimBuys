@@ -1738,14 +1738,13 @@ Tim Osmond
 
 
 ## 🙌 Acknowledgments
-Ted Njiru - Group Presiedent
-Nicole Njeri
-Tim Osmond
-Alyssa Macharia
-Jason Kiragu
-Fatuma Marsa
-Billy John
-Alvin Muriithi
-
+- **Ted Njiru- Group President**
+-**Nicole Njeri**
+-**Tim Osmond**
+-**Alyssa Macharia**
+-**Jason Kiragu**
+-**Fatuma Marsa**
+-**Billy John**
+-**Alvin Muriithi**
 
 ---
