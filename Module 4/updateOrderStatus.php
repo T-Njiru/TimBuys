@@ -4,7 +4,7 @@ require_once 'global.php';
 require 'vendor/autoload.php'; // Adjust the path as necessary
 require 'vendor/phpmailer/phpmailer/src/Exception.php';
 require 'vendor/phpmailer/phpmailer/src/PHPMailer.php';
-require 'vendor/phpmailer/phpmailer/src//SMTP.php';
+require 'vendor/phpmailer/phpmailer/src/SMTP.php';
 
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
@@ -39,7 +39,7 @@ if ($stmt->execute()) {
     $stmt->execute();
     $stmt->bind_result($customerEmail);
     $stmt->fetch();
-
+    
     if ($customerEmail) {
         // Send email notification
         $mail = new PHPMailer(true);
@@ -51,8 +51,12 @@ if ($stmt->execute()) {
             $mail->Password = 'lyhv kvfv ngnn zzdl';   // SMTP password
             $mail->SMTPSecure = 'tls';
             $mail->Port = 587;
+            
+            // Enable verbose debug output
+            $mail->SMTPDebug = 2;
+            $mail->Debugoutput = 'error_log';
 
-            $mail->setFrom('ahuberttim55@gmail.com', 'Tim Buys');
+            $mail->setFrom('huberttim55@gmail.com', 'Tim Buys');
             $mail->addAddress($customerEmail);
 
             $mail->isHTML(true);
