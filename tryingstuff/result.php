@@ -3,9 +3,6 @@
 include_once('checkoutfncs.php');
 require_once 'global.php';
 require 'C:/xampp/htdocs/TimBuys/tryingstuff/vendor/autoload.php'; // Adjust the path as necessary
-require 'PHPMailer/Exception.php';
-require 'PHPMailer/PHPMailer.php';
-require 'PHPMailer/SMTP.php';
 
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
@@ -145,13 +142,13 @@ function processTransaction($callbackItems) {
                 $row = $result->fetch_assoc();
                 $customerEmail = $row['Email'];
                 sendEmailNotification($customerEmail, $orderId, 'Processed');
+                echo json_encode(['status' => 'success', 'message' => 'Order processed successfully']);
                 unset($_SESSION['cart']);
-            } else {
-                error_log("No customer email found for Order ID: $orderId");
             }
         }
     } else {
         echo "Error updating record: " . $stmt->error;
+        echo json_encode(['status' => 'error', 'message' => 'There was an error updating']);
     }
 
     $conn->close();
@@ -165,12 +162,9 @@ function sendEmailNotification($to, $orderId, $status) {
         $mail->Host = 'smtp.gmail.com';
         $mail->SMTPAuth = true;
         $mail->Username = 'huberttim55@gmail.com'; // SMTP username
-        $mail->Password = 'fbgc rtaj itsn tlcn'; // App password
+        $mail->Password = 'fbgc rtaj itsm tlcn';   // SMTP password
         $mail->SMTPSecure = 'tls';
-        $mail->Port = 465;
-
-        // Enable verbose debug output
-        $mail->SMTPDebug = 2;
+        $mail->Port = 587;
 
         $mail->setFrom('huberttim55@gmail.com', 'Tim Buys');
         $mail->addAddress($to);
@@ -181,9 +175,8 @@ function sendEmailNotification($to, $orderId, $status) {
         $mail->AltBody = "Your order with ID $orderId has been updated to status: $status.";
 
         $mail->send();
-        error_log("Email sent to: $to");
     } catch (Exception $e) {
-        error_log("Mailer Error: " . $mail->ErrorInfo);
+        echo "Mailer Error: {$mail->ErrorInfo}";
     }
 }
 ?>
