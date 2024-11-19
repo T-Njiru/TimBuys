@@ -12,10 +12,6 @@
             <input type="text" placeholder="Search for products...">
             <button>Search</button>
         </div>
-        <div class="UserActions">
-            <span><i class="icon-user">Account</i></span>
-            <span><i class="icon-cart">Logout</i></span>
-        </div>
     </header>
 
     <main class="Container">

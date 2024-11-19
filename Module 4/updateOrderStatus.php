@@ -1,5 +1,11 @@
 <?php
-require 'C:/xampp/htdocs/TimBuys2/Module 4/vendor/autoload.php';
+include_once('checkoutfncs.php');
+require_once 'global.php';
+require 'vendor/autoload.php'; // Adjust the path as necessary
+require 'vendor/phpmailer/phpmailer/src/Exception.php';
+require 'vendor/phpmailer/phpmailer/src/PHPMailer.php';
+require 'vendor/phpmailer/phpmailer/src/SMTP.php';
+
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 
@@ -12,12 +18,14 @@ $OrderID = isset($_GET['OrderID']) ? $_GET['OrderID'] : null;
 $newStatus = isset($_GET['status']) ? $_GET['status'] : null;
 
 if (!$OrderID || !$newStatus) {
+    error_log("OrderID or status missing");
     echo json_encode(['status' => 'error', 'message' => 'OrderID or status missing']);
     exit;
 }
 
 $conn = new mysqli($servername, $username, $password, $dbname);
 if ($conn->connect_error) {
+    error_log("Connection failed: " . $conn->connect_error);
     die("Connection failed: " . $conn->connect_error);
 }
 
@@ -26,6 +34,8 @@ $sql = "UPDATE orderedproduct SET Status=? WHERE OrderID=?";
 $stmt = $conn->prepare($sql);
 $stmt->bind_param("ss", $newStatus, $OrderID);
 if ($stmt->execute()) {
+    error_log("Order status updated successfully for OrderID: $OrderID to status: $newStatus");
+
     // Get customer email
     $sql = "SELECT c.Email FROM orders o JOIN Customer c ON o.CustomerID = c.CustomerID WHERE o.OrderID=?";
     $stmt = $conn->prepare($sql);
@@ -35,16 +45,22 @@ if ($stmt->execute()) {
     $stmt->fetch();
 
     if ($customerEmail) {
+        error_log("Customer email found: $customerEmail");
+
         // Send email notification
         $mail = new PHPMailer(true);
         try {
             $mail->isSMTP();
             $mail->Host = 'smtp.gmail.com';
             $mail->SMTPAuth = true;
-            $mail->Username = 'huberttim55@gmail.com';
-            $mail->Password = 'hbpc oqqg jklq eqlk'; // Replace with an application-specific password
+            $mail->Username = 'huberttim55@gmail.com'; // SMTP username
+            $mail->Password = 'lyhv kvfv ngnn zzdl';   // SMTP password
             $mail->SMTPSecure = 'tls';
             $mail->Port = 587;
+
+            // Enable verbose debug output
+            $mail->SMTPDebug = 2;
+            $mail->Debugoutput = 'error_log';
 
             $mail->setFrom('huberttim55@gmail.com', 'Tim Buys');
             $mail->addAddress($customerEmail);
@@ -54,6 +70,7 @@ if ($stmt->execute()) {
             $mail->Body    = "Your order with ID $OrderID has been updated to status: $newStatus.";
 
             $mail->send();
+            error_log("Email sent to: $customerEmail");
             echo json_encode(['status' => 'success', 'message' => 'Order updated and email sent']);
         } catch (Exception $e) {
             echo json_encode(['status' => 'error', 'message' => 'Mailer Error: ' . $mail->ErrorInfo]);
