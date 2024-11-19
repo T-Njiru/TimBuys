@@ -44,7 +44,7 @@ if ($stmt->execute()) {
             $mail->Username = 'huberttim55@gmail.com';
             $mail->Password = 'fbgc rtaj itsn tlcn'; // Replace with an application-specific password
             $mail->SMTPSecure = 'tls';
-            $mail->Port = 587;
+            $mail->Port = 465;
 
             $mail->setFrom('huberttim55@gmail.com', 'Tim Buys');
             $mail->addAddress($customerEmail);

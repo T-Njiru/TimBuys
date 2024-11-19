@@ -164,7 +164,7 @@ function sendEmailNotification($to, $orderId, $status) {
         $mail->Username = 'huberttim55@gmail.com'; // SMTP username
         $mail->Password = 'fbgc rtaj itsn tlcn'; // App password
         $mail->SMTPSecure = 'tls';
-        $mail->Port = 587;
+        $mail->Port = 465;
 
         // Enable verbose debug output
         $mail->SMTPDebug = 2;
