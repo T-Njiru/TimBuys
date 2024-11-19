@@ -50,7 +50,7 @@ if ($stmt->execute()) {
             $mail->Username = 'huberttim55@gmail.com'; // SMTP username
             $mail->Password = 'lyhv kvfv ngnn zzdl';   // SMTP password
             $mail->SMTPSecure = 'tls';
-            $mail->Port = 465;
+            $mail->Port = 587;
 
             $mail->setFrom('ahuberttim55@gmail.com', 'Tim Buys');
             $mail->addAddress($customerEmail);
