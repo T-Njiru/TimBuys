@@ -162,9 +162,9 @@ function sendEmailNotification($to, $orderId, $status) {
         $mail->Host = 'smtp.gmail.com';
         $mail->SMTPAuth = true;
         $mail->Username = 'huberttim55@gmail.com'; // SMTP username
-        $mail->Password = 'fbgc rtaj itsn tlcn'; // App password
+        $mail->Password = 'fbgc rtaj itsm tlcn';   // SMTP password
         $mail->SMTPSecure = 'tls';
-        $mail->Port = 456;
+        $mail->Port = 587;
 
         $mail->setFrom('huberttim55@gmail.com', 'Tim Buys');
         $mail->addAddress($to);
