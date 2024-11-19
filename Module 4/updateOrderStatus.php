@@ -42,7 +42,7 @@ if ($stmt->execute()) {
             $mail->Host = 'smtp.gmail.com';
             $mail->SMTPAuth = true;
             $mail->Username = 'huberttim55@gmail.com';
-            $mail->Password = 'hbpc oqqg jklq eqlk'; // Replace with an application-specific password
+            $mail->Password = 'fbgc rtaj itsn tlcn'; // Replace with an application-specific password
             $mail->SMTPSecure = 'tls';
             $mail->Port = 587;
 
