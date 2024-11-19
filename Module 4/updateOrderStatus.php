@@ -18,12 +18,14 @@ $OrderID = isset($_GET['OrderID']) ? $_GET['OrderID'] : null;
 $newStatus = isset($_GET['status']) ? $_GET['status'] : null;
 
 if (!$OrderID || !$newStatus) {
+    error_log("OrderID or status missing");
     echo json_encode(['status' => 'error', 'message' => 'OrderID or status missing']);
     exit;
 }
 
 $conn = new mysqli($servername, $username, $password, $dbname);
 if ($conn->connect_error) {
+    error_log("Connection failed: " . $conn->connect_error);
     die("Connection failed: " . $conn->connect_error);
 }
 
@@ -32,6 +34,8 @@ $sql = "UPDATE orderedproduct SET Status=? WHERE OrderID=?";
 $stmt = $conn->prepare($sql);
 $stmt->bind_param("ss", $newStatus, $OrderID);
 if ($stmt->execute()) {
+    error_log("Order status updated successfully for OrderID: $OrderID to status: $newStatus");
+
     // Get customer email
     $sql = "SELECT c.Email FROM orders o JOIN Customer c ON o.CustomerID = c.CustomerID WHERE o.OrderID=?";
     $stmt = $conn->prepare($sql);
@@ -39,8 +43,10 @@ if ($stmt->execute()) {
     $stmt->execute();
     $stmt->bind_result($customerEmail);
     $stmt->fetch();
-    
+
     if ($customerEmail) {
+        error_log("Customer email found: $customerEmail");
+
         // Send email notification
         $mail = new PHPMailer(true);
         try {
@@ -51,7 +57,7 @@ if ($stmt->execute()) {
             $mail->Password = 'lyhv kvfv ngnn zzdl';   // SMTP password
             $mail->SMTPSecure = 'tls';
             $mail->Port = 587;
-            
+
             // Enable verbose debug output
             $mail->SMTPDebug = 2;
             $mail->Debugoutput = 'error_log';
@@ -64,6 +70,7 @@ if ($stmt->execute()) {
             $mail->Body    = "Your order with ID $OrderID has been updated to status: $newStatus.";
 
             $mail->send();
+            error_log("Email sent to: $customerEmail");
             echo json_encode(['status' => 'success', 'message' => 'Order updated and email sent']);
         } catch (Exception $e) {
             echo json_encode(['status' => 'error', 'message' => 'Mailer Error: ' . $mail->ErrorInfo]);
