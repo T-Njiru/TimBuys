@@ -22,7 +22,7 @@ $result = $stmt->fetch(PDO::FETCH_ASSOC);
 $totalOrders = $result['totalOrders'] ?? 0;
 
 // Fetch today's new users count
-$stmt = $pdo->prepare("SELECT COUNT(*) AS newUsers FROM Customer WHERE DATE(DOB) = CURDATE()");
+$stmt = $pdo->prepare("SELECT COUNT(*) AS newUsers FROM Customer");
 $stmt->execute();
 $result = $stmt->fetch(PDO::FETCH_ASSOC);
 $newUsers = $result['newUsers'] ?? 0;
@@ -87,7 +87,7 @@ while (count($salesData) < 7) { // Fill in missing days if there are fewer than 
         <div class="col-md-3">
             <div class="card text-center">
                 <div class="card-body">
-                    <h5>Today's New Users</h5>
+                    <h5>Total Users</h5>
                     <h3><?php echo $newUsers; ?></h3>
                 </div>
             </div>
@@ -126,17 +126,7 @@ while (count($salesData) < 7) { // Fill in missing days if there are fewer than 
             </div>
         </div>
 
-        <!-- Website Views Graph -->
-        <div class="col-md-4">
-            <div class="card">
-                <div class="card-body">
-                    <h5>Website Views</h5>
-                    <canvas id="websiteViewsChart"></canvas>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+        
 
 <!-- Include Chart.js for graphs -->
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
