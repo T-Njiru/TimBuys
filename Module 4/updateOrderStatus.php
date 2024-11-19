@@ -1,8 +1,11 @@
 <?php
-require 'C:/xampp/htdocs/TimBuys2/Module 4/vendor/autoload.php';
-require 'PHPMailer/Exception.php';
-require 'PHPMailer/PHPMailer.php';
-require 'PHPMailer/SMTP.php';
+include_once('checkoutfncs.php');
+require_once 'global.php';
+require 'vendor/autoload.php'; // Adjust the path as necessary
+require 'vendor/phpmailer/phpmailer/src/Exception.php';
+require 'vendor/phpmailer/phpmailer/src/PHPMailer.php';
+require 'vendor/phpmailer/phpmailer/src//SMTP.php';
+
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 
@@ -44,12 +47,12 @@ if ($stmt->execute()) {
             $mail->isSMTP();
             $mail->Host = 'smtp.gmail.com';
             $mail->SMTPAuth = true;
-            $mail->Username = 'huberttim55@gmail.com';
-            $mail->Password = 'fbgc rtaj itsn tlcn'; // Replace with an application-specific password
+            $mail->Username = 'huberttim55@gmail.com'; // SMTP username
+            $mail->Password = 'lyhv kvfv ngnn zzdl';   // SMTP password
             $mail->SMTPSecure = 'tls';
             $mail->Port = 465;
 
-            $mail->setFrom('huberttim55@gmail.com', 'Tim Buys');
+            $mail->setFrom('ahuberttim55@gmail.com', 'Tim Buys');
             $mail->addAddress($customerEmail);
 
             $mail->isHTML(true);
