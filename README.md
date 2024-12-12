@@ -1,5 +1,5 @@
 <p align="center">
-    <img src="\\addd logo" align="center" width="30%">
+    <img src="https://raw.githubusercontent.com/PKief/vscode-material-icon-theme/ec559a9f6bfd399b82bb44393651661b08aaf7ba/icons/folder-markdown-open.svg" align="center" width="30%">
 </p>
 <p align="center"><h1 align="center">TIMBUYS.GIT</h1></p>
 <p align="center">
@@ -11,10 +11,10 @@
 	<img src="https://img.shields.io/github/languages/top/T-Njiru/TimBuys.git?style=default&color=0080ff" alt="repo-top-language">
 	<img src="https://img.shields.io/github/languages/count/T-Njiru/TimBuys.git?style=default&color=0080ff" alt="repo-language-count">
 </p>
-<p align="center">
+<p align="center"><!-- default option, no dependency badges. -->
 </p>
 <p align="center">
-	
+	<!-- default option, no dependency badges. -->
 </p>
 <br>
 
@@ -38,13 +38,20 @@
 
 ## 📍 Overview
 
-<code>❯ REPLACE-ME</code>
+<code>❯ The vision for TimBuys is to create a secure and easy-to-use online marketplace for university 
+students. It connects students within their campus community, making it simple to buy and sell 
+items. Unlike large, impersonal platforms, TimBuys offers a personalized shopping experience with 
+secure payments and localized delivery options. The goal is to make campus trading more accessible, 
+efficient, and community-focused.</code>
 
 ---
 
 ## 👾 Features
 
-<code>❯ REPLACE-ME</code>
+<code>❯
+- Buyers: Students looking for affordable, convenient, and local items.
+- Sellers: Students who want to sell goods or services to peers on campus.
+- Admins: Responsible for managing the platform, user accounts, and data</code>
 
 ---
 
@@ -1609,7 +1616,7 @@
 
 ### ☑️ Prerequisites
 
-Before getting started with TimBuys.git, ensure your runtime environment meets the following requirements:
+Before getting started with TimBuys.git, ensure your runtime environment has the following:
 
 - **Programming Language:** PHP
 - **Package Manager:** Composer
@@ -1642,32 +1649,30 @@ Install TimBuys.git using one of the following methods:
 
 
 
-
-### 🤖 Usage
-Run TimBuys.git using the following command:
-**Using `composer`** &nbsp; [<img align="center" src="https://img.shields.io/badge/PHP-777BB4.svg?style={badge_style}&logo=php&logoColor=white" />](https://www.php.net/)
-
-```sh
-❯ php {entrypoint}
-```
-
-
-### 🧪 Testing
-Run the test suite using the following command:
-**Using `composer`** &nbsp; [<img align="center" src="https://img.shields.io/badge/PHP-777BB4.svg?style={badge_style}&logo=php&logoColor=white" />](https://www.php.net/)
-
-```sh
-❯ vendor/bin/phpunit
-```
-
-
 ---
 ## 📌 Project Roadmap
 
-- [X] **`Task 1`**: <strike>Implement feature one.</strike>
-- [ ] **`Task 2`**: Implement feature two.
-- [ ] **`Task 3`**: Implement feature three.
+-  **`Task 1`**: Module 1: User Registration and Authentication
+Fatuma Marsa and Alysa Macharia
+- Implemented secure user registration, login, and profile management.
+- Features password recovery and role-based access control (admin, buyer, seller).
+- 
+-  **`Task 2`**: Module 2: Product Listing and Search
+Nicole Njeri and Ted Njiru
+- Designed a dynamic product listing system.
+- Integrated advanced search features with filtering by category and tags.
+- Created an intuitive interface for sellers to add, update, and delete products.
+- 
+-  **`Task 3`**: Module 3: Shopping Cart and Checkout
+Jason Kiragu and Billy John
+- Developed shopping cart functionality allowing users to add, update, and remove items.
+- Integrated a payment gateway for secure transactions.
+- Automated order confirmation and receipt generation.
 
+-  **`Task 4`**: Module 4: Delivery and Tracking
+Tim Osmond and Alvin Muriithi
+- Created a delivery tracking system using live location updates.
+- Notifications via email and SMS for order status updates.
 ---
 
 ## 🔰 Contributing
@@ -1675,7 +1680,7 @@ Run the test suite using the following command:
 
 - **💬 [Join the Discussions](https://github.com/T-Njiru/TimBuys.git/discussions)**: Share your insights, provide feedback, or ask questions.
 - **🐛 [Report Issues](https://github.com/T-Njiru/TimBuys.git/issues)**: Submit bugs found or log feature requests for the `TimBuys.git` project.
-- **💡 [Submit Pull Requests](https://github.com/T-Njiru/TimBuys.git/blob/main/CONTRIBUTING.md)**: Review open PRs, and submit your own PRs.
+- **💡 [Submit Pull Requests](https://github.com/T-Njiru/TimBuys.git/blob/main/CONTRIBUTING.md)**: Review open Pull Requests, and submit your own Pull Requests.
 
 <details closed>
 <summary>Contributing Guidelines</summary>
@@ -1702,26 +1707,26 @@ Run the test suite using the following command:
 8. **Review**: Once your PR is reviewed and approved, it will be merged into the main branch. Congratulations on your contribution!
 </details>
 
-<details closed>
-<summary>Contributor Graph</summary>
-<br>
-<p align="left">
-   <a href="https://github.com{/T-Njiru/TimBuys.git/}graphs/contributors">
-      <img src="https://contrib.rocks/image?repo=T-Njiru/TimBuys.git">
-   </a>
-</p>
-</details>
+
 
 ---
 
-## 🎗 License
-
-This project is protected under the [SELECT-A-LICENSE](https://choosealicense.com/licenses) License. For more details, refer to the [LICENSE](https://choosealicense.com/licenses/) file.
-
----
 
 ## 🙌 Acknowledgments
+- **Ted Njiru**- Group President
 
-- List any resources, contributors, inspiration, etc. here.
+-**Nicole Njeri**...2
+
+-**Tim Osmond**...3
+
+-**Alyssa Macharia**...4
+
+-**Jason Kiragu**...5
+
+-**Fatuma Marsa**...6
+
+-**Billy John**...7
+
+-**Alvin Muriithi**...8
 
 ---

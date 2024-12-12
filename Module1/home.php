@@ -184,6 +184,7 @@ $products = $productStmt->fetchAll(PDO::FETCH_ASSOC);
             <option value="fashion">Fashion</option>
             <option value="books">Books</option>
             <option value="furniture">Furniture</option>
+            <option value="Fragrances">Fragrances</option>
           </select>
           <button type="submit">Search</button>
         </form>

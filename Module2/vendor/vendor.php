@@ -12,10 +12,6 @@
             <input type="text" placeholder="Search for products...">
             <button>Search</button>
         </div>
-        <div class="UserActions">
-            <span><i class="icon-user">Account</i></span>
-            <span><i class="icon-cart">Logout</i></span>
-        </div>
     </header>
 
     <main class="Container">
@@ -30,6 +26,7 @@
                     <option value="1">Electronics</option>
                     <option value="2">Clothing</option>
                     <option value="3">Home Appliances</option>
+                    <option value="4">Fragrances</option>
                 </select><br><br>
 
                 <label for="product_image" class="title">Product Image:</label>

@@ -65,7 +65,7 @@ class cart{
               
             elseif($_SESSION['cart']==null):
                   echo "<p class='text-dark'>Your Cart is empty! </p>";
-                  echo '<a href="../Module2/listing/product_listing.php" class="btn btn-secondary mb-3">Browse the Store</a>';
+                  echo '<a href="../Module1/product_listing.php" class="btn btn-secondary mb-3">Browse the Store</a>';
               endif;
                  
                 ?>

@@ -112,13 +112,13 @@ include 'C:/xampp/htdocs/TimBuys/Module3/cart_functions.php';
 
             // Query to get the product details
             $query = "
-                SELECT p.ProductID, p.ProductName, p.ProductImage, vp.Price, vp.Quantity, v.Name AS VendorName
-                FROM product p
-                JOIN vendorproduct vp ON p.ProductID = vp.ProductID
-                JOIN vendor v ON vp.VendorID = v.VendorID
-                WHERE vp.Quantity > 0
-                ORDER BY p.ProductID ASC
-            ";
+            SELECT p.ProductID, p.ProductName, p.ProductImage, vp.Price, vp.Quantity, v.Name AS VendorName
+            FROM product p
+            JOIN vendorproduct vp ON p.ProductID = vp.ProductID
+            JOIN vendor v ON vp.VendorID = v.VendorID
+            WHERE vp.Quantity > 0 AND p.ProductID = '$productID'
+        ";
+        
             
             $result = mysqli_query($connect, $query);
 

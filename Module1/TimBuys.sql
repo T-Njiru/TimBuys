@@ -216,3 +216,45 @@ CREATE TABLE contact_messages (
     message TEXT NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
+
+-- Insert counties into the County table
+INSERT INTO County (CountyName) VALUES
+('Nairobi'),
+('Mombasa'),
+('Kisumu'),
+('Nakuru'),
+('Kiambu'),
+('Machakos'),
+('Nyeri'),
+('Uasin Gishu'),
+('Kakamega'),
+('Meru');
+
+-- Insert cities into the City table
+INSERT INTO City (CityName) VALUES
+-- Nairobi County
+('Nairobi'),
+-- Mombasa County
+('Mombasa'),
+-- Kisumu County
+('Kisumu'),
+-- Nakuru County
+('Nakuru'),
+('Naivasha'),
+-- Kiambu County
+('Thika'),
+('Ruiru'),
+-- Machakos County
+('Machakos'),
+('Athi River'),
+-- Nyeri County
+('Nyeri'),
+('Karatina'),
+-- Uasin Gishu County
+('Eldoret'),
+-- Kakamega County
+('Kakamega'),
+('Mumias'),
+-- Meru County
+('Meru'),
+('Timau');
